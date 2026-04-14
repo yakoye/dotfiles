@@ -1,0 +1,261 @@
+/* ===== 基于 newsprint，书籍章节结构版 ===== */
+
+@include-when-export url(https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700,700italic&subset=latin);
+
+/* ========== 变量（保留） ========== */
+:root {
+	--bg-color: #f3f2ee;
+	--text-color: #1f0909;
+}
+
+/* ========== 基础排版 ========== */
+html {
+	font-size: 17.5px;
+	-webkit-font-smoothing: antialiased;
+}
+
+html, body {
+	background-color: #f3f2ee;
+	font-family: "KingHwaOldSong", "KingHwa OldSong", "京華老宋体", serif !important;
+	color: #1f0909;
+	line-height: 1.7;
+	letter-spacing: 0.02em;
+}
+
+/* 页面宽度 */
+#write {
+	max-width: 40em;
+	margin: 0 auto;
+}
+
+@media only screen and (min-width: 1200px) {
+	#write {
+		max-width: 50em;
+	}
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 60em;
+	}
+}
+
+/* ========== 段落（书籍感） ========== */
+p {
+	margin: 0.9em 0;
+	text-align: justify;
+}
+
+/* ============================= */
+/* ===== 章节系统（核心） ===== */
+/* ============================= */
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "KingHwaOldSong", serif !important;
+	font-weight: bold;
+	line-height: 1.4;
+}
+
+/* ===== h1 = 章 ===== */
+h1 {
+	font-size: 2.2em;
+	text-align: center;
+
+	margin-top: 2.5em;
+	margin-bottom: 1.2em;
+
+	letter-spacing: 0.08em;
+
+	border-bottom: 1px solid #c5c5c5;
+	padding-bottom: 0.6em;
+}
+
+/* ===== h2 = 节 ===== */
+h2 {
+	font-size: 1.6em;
+
+	margin-top: 2.2em;
+	margin-bottom: 0.8em;
+
+	padding-left: 0.4em;
+	border-left: 4px solid #999;
+}
+
+/* ===== h3 = 小节 ===== */
+h3 {
+	font-size: 1.35em;
+
+	margin-top: 1.8em;
+	margin-bottom: 0.6em;
+}
+
+/* ===== h4 = 段标题（关键优化点） ===== */
+h4 {
+	font-size: 1.15em;
+
+	margin-top: 1.6em;
+	margin-bottom: 0.4em;   /* 👈 关键：贴正文 */
+
+	color: #222;
+}
+
+/* ===== h5 / h6 ===== */
+h5 {
+	font-size: 1.05em;
+	margin-top: 1.4em;
+	margin-bottom: 0.3em;
+}
+
+h6 {
+	font-size: 1em;
+	margin-top: 1.2em;
+	margin-bottom: 0.2em;
+	color: #666;
+}
+
+/* ========== 列表 ========== */
+ul, ol {
+	margin: 0.8em 0 1.2em 1.2em;
+	padding-left: 0;
+}
+
+/* ========== 引用（书评风） ========== */
+blockquote {
+	font-style: italic;
+	border-left: 4px solid #bbb;
+	padding-left: 1em;
+	margin: 1.5em 0;
+	color: #555;
+}
+
+/* ========== 引用 ========== */
+/* blockquote {
+	font-style: italic;
+	border-left: 5px solid;
+	margin-left: 2em;
+	padding-left: 1em;
+} */
+
+/* ========== 代码 ========== */
+code,
+.md-fences {
+	background-color: #dadada;
+}
+
+code {
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.md-fences {
+	margin-left: 2em;
+	margin-bottom: 3em;
+	padding-left: 1ch;
+	padding-right: 1ch;
+}
+
+pre,
+code,
+tt {
+	font-size: .875em;
+	line-height: 1.714285em;
+}
+
+/* ========== 表格 ========== */
+/* table {
+	margin: 1.5em 0;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 0.4em 0.6em;
+	border: 1px solid #ccc;
+}
+
+thead {
+	background-color: #dadada;
+}
+
+tr:nth-child(even) {
+	background: #e8e7e7;
+} */
+
+/* ========== 表格 ========== */
+.md-meta,.md-before, .md-after {
+	color:#999;
+}
+
+table {
+	margin-bottom: 1.5em;
+	font-size: 1em;
+}
+thead th,
+tfoot th {
+	padding: .25em .25em .25em .4em;
+	text-transform: uppercase;
+}
+th {
+	text-align: left;
+}
+td {
+	vertical-align: top;
+	padding: .25em .25em .25em .4em;
+}
+
+/* ========== 链接 ========== */
+a {
+	color: #065588;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+/* ========== 分割线 ========== */
+hr {
+	border: none;
+	border-bottom: 1px solid #c5c5c5;
+	margin: 2em 0;
+}
+
+/* 列表项 */
+li {
+	margin: 0.4em 0;
+}
+
+/* 列表内文本：强制左对齐 */
+li p {
+	text-align: left;
+	margin: 0.3em 0;
+}
+
+/* 二级列表 */
+li > ul,
+li > ol {
+	margin-top: 0.4em;
+	margin-bottom: 0.4em;
+	margin-left: 1.2em;   /* ✅ 不再过大 */
+}
+
+/* 三级列表（更紧凑） */
+li > ul > li > ul,
+li > ol > li > ol {
+	margin-left: 1em;
+}
+
+/* ========== 列表符号优化（更像书） ========== */
+
+/* 一级 */
+ul li {
+	list-style-type: disc;
+}
+
+/* 二级 */
+ul ul li {
+	list-style-type: circle;
+}
+
+/* 三级 */
+ul ul ul li {
+	list-style-type: square;
+}
