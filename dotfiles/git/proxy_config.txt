@@ -1,0 +1,16 @@
+$ git config --global http.proxy http://127.0.0.1:6984
+$ git config --global https.proxy http://127.0.0.1:6984
+
+# 这个不能用，当做例子
+$ git config --global http.proxy socks5://127.0.0.1:6985
+$ git config --global https.proxy socks5://127.0.0.1:6985
+
+
+临时单次代理（只对这一次 clone 有效）
+
+
+# HTTP
+git clone -c http.proxy=http://127.0.0.1:6984 https://github.com/xxx/xxx.git
+
+# SOCKS5
+git clone -c http.proxy=socks5://127.0.0.1:6985 https://github.com/xxx/xxx.git
