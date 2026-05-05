@@ -1,0 +1,16 @@
+
+方法1.使用certutil命令
+路径或命令：powershell.exe
+参数：
+$$ -noexit "echo Hash: \"{context}\""; echo "MD5:" (certutil -hashfile \"{context}\" MD5)[1].Trim(); echo "SHA1:" (certutil -hashfile \"{context}\" SHA1)[1].Trim();echo "SHA256:" (certutil -hashfile \"{context}\" SHA256)[1].Trim();
+测试命令：certutil -hashfile "文件名" MD5/SHA1/SHA256
+  或者详细的命令：echo "MD5:" (certutil -hashfile "文件名" MD5)[1].Trim()
+
+
+方法2. 使用7z命令
+路径或命令：powershell.exe
+参数：
+$$ -noexit "echo 7z-Hash: \"{context}\""; "7z h -scrc* \"{context}\" | findstr \"for data\""
+测试命令：7z h -scrc* "文件名" | findstr \"for data\"
+
+
