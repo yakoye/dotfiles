@@ -26,41 +26,67 @@ except Exception as e:
     print(f"⚠️ 警告：未找到中文字体 {font_path}，将使用默认英文字体！中文可能会乱码。")
     CHINESE_FONT = "Helvetica"
 
-# ================= 2. 深度提取文本逻辑 (终极修复版：全节点覆盖遍历) =================
-def extract_texts_from_block(block):
-    """递归深入 MinerU 的 json，提取真正的文字和对应的坐标，完美支持表格和复杂嵌套"""
+# ================= 2. 深度提取文本逻辑 (跨页路由分发版) =================
+def extract_texts_from_block(block, root_bbox=None, current_page=0):
+    """
+    递归深入 MinerU 的 json 提取真正的文字。
+    【核心升级】：增加 current_page 参数，不再删除越界文本，而是给它们重新分配正确的目标页码。
+    """
     extracted = []
     
+    # 记录最外层父块的边界（用于坐标回跃检测）
+    if root_bbox is None:
+        root_bbox = block.get("bbox", block.get("bbox_fs", []))
+
+    def get_target_page(item_data, item_bbox):
+        """路由裁判：决定这段文字该画在哪一页"""
+        # 1. 官方明示：如果 JSON 带有 cross_page 标签，直接发配到下一页
+        if item_data.get("cross_page") is True:
+            return current_page + 1
+            
+        # 2. 物理坐标回跃检测：MinerU 的 Y 坐标是往下递增的。
+        # 如果一个子句子的 Y 坐标突然比父段落的顶部还要高出很多（< root_bbox[1] - 150），
+        # 绝对说明它折行翻页到了下一页的顶部。
+        if item_bbox and len(item_bbox) == 4 and root_bbox and len(root_bbox) == 4:
+            if item_bbox[1] < root_bbox[1] - 150:
+                return current_page + 1
+                
+        # 默认留在当前页
+        return current_page
+
     # 1. 如果存在子 blocks（如表格、多列排版），递归深入
     if "blocks" in block and isinstance(block["blocks"], list):
         for sub_block in block["blocks"]:
-            extracted.extend(extract_texts_from_block(sub_block))
+            extracted.extend(extract_texts_from_block(sub_block, root_bbox, current_page))
             
-    # 2. 如果存在 lines 层级，递归处理（因为 line 本质上也是一层包裹）
+    # 2. 如果存在 lines 层级，递归处理
     lines = block.get("lines", [])
     if lines:
         for line in lines:
-            extracted.extend(extract_texts_from_block(line))
+            extracted.extend(extract_texts_from_block(line, root_bbox, current_page))
             
-    # 3. 如果存在 spans 层级（核心修复：针对直接挂载 spans 的异常结构）
+    # 3. 如果存在 spans 层级，执行页码判定后抓取
     spans = block.get("spans", [])
     if spans:
         for span in spans:
             text = span.get("content", span.get("text", "")).strip()
             bbox = span.get("bbox", [])
             if text and len(bbox) == 4:
-                extracted.append((text, bbox))
+                # ★ 核心改动：获取目标页码并一并返回
+                target_page = get_target_page(span, bbox)
+                extracted.append((text, bbox, target_page))
                 
     # 4. 如果当前节点既没有 blocks、没有 lines、也没有 spans，尝试直接抓取（兜底）
     if not block.get("blocks") and not block.get("lines") and not block.get("spans"):
         text = block.get("content", block.get("text", "")).strip()
         bbox = block.get("bbox", [])
         if text and len(bbox) == 4:
-            extracted.append((text, bbox))
+            target_page = get_target_page(block, bbox)
+            extracted.append((text, bbox, target_page))
             
     return extracted
 
-# ================= 3. 主程序（全量处理版） =================
+# ================= 3. 主程序（全局文本池版） =================
 def build_searchable_pdf():
     # ========== 请修改为你的文件路径 ==========
     pdf_path = "哈萨比斯谷歌AI之脑_1_origin.pdf"
@@ -83,38 +109,64 @@ def build_searchable_pdf():
     
     print(f"⏳ 开始全量处理，原 PDF 共 {total_pdf_pages} 页...")
 
-    # ================= 核心修复 1：构建精准的页码映射字典 =================
-    # 防止因 MinerU 跳过空白页导致前后页码错位
+    # ================= 阶段 1：构建精准的页码映射字典 =================
     page_data_map = {}
     for idx, p_data in enumerate(pages_data):
-        # 尝试获取 MinerU 记录的真实页码 (page_idx通常为0起跳，page_no通常为1起跳)
         p_idx = p_data.get("page_idx", p_data.get("page_no"))
         if p_idx is not None:
             page_data_map[int(p_idx)] = p_data
         else:
-            page_data_map[idx] = p_data  # 降级处理
+            page_data_map[idx] = p_data 
 
-    # 自动识别 JSON 的页码是 0 还是 1 开始。如果是 1 开始，整体减 1 对齐 PDF 数组
     if page_data_map and min(page_data_map.keys()) == 1:
         page_data_map = {k - 1: v for k, v in page_data_map.items()}
-    # ======================================================================
 
+    # ================= 阶段 2：预读并构建全局文本池 =================
+    print("⏳ 正在预读并分发跨页文本...")
+    global_spans = {}  # 数据结构: {页码: [(text, bbox), ...]}
+    
+    for p_idx, page_data in page_data_map.items():
+        blocks = page_data.get("para_blocks", [])
+        if not blocks: 
+            blocks = page_data.get("preproc_blocks", [])
+            
+        for block in blocks:
+            # 提取文本，并且拿到它们真正属于的页码 (target_page)
+            items = extract_texts_from_block(block, current_page=p_idx)
+            for text, bbox, target_page in items:
+                if target_page not in global_spans:
+                    global_spans[target_page] = []
+                # 将文本丢入对应页码的池子里（跨页文本此时被成功转移给下一页）
+                global_spans[target_page].append((text, bbox))
+
+    # ================= 阶段 3：正式渲染图层 =================
+    print("⏳ 正在生成透明图层并合并...")
     for i in range(total_pdf_pages):
         original_page = reader.pages[i]
-        page_data = page_data_map.get(i)
+        
+        # ★ 从全局池中捞出属于这一页的所有文字（包含了上一页送过来的折行文本）
+        text_items = global_spans.get(i, [])
 
-        # 如果这一页在 MinerU 中根本没有数据（比如纯空白页），直接合并原页并跳过
-        if not page_data:
+        # 如果这一页真的连一个字都没有，直接合并原页并跳过
+        if not text_items:
             writer.add_page(original_page)
-            print(f"👉 第 {i + 1}/{total_pdf_pages} 页：安全跳过（JSON 中无此页数据）。")
+            print(f"👉 第 {i + 1}/{total_pdf_pages} 页：无文本内容，安全跳过。")
             continue
 
-        # 获取当前页的物理尺寸
+        page_data = page_data_map.get(i, {})
         pdf_w = float(original_page.mediabox.width)
         pdf_h = float(original_page.mediabox.height)
 
-        # 获取 MinerU 记录的尺寸以计算缩放比
-        page_size_data = page_data.get("page_size", [pdf_w, pdf_h])
+        # 获取缩放基准，如果当前页 JSON 丢失，找其他页的尺寸借用以保证缩放比例不崩
+        page_size_data = page_data.get("page_size")
+        if not page_size_data:
+            for pd in page_data_map.values():
+                if "page_size" in pd:
+                    page_size_data = pd["page_size"]
+                    break
+            if not page_size_data:
+                page_size_data = [pdf_w, pdf_h]
+
         layout_w = page_size_data[0] if page_size_data[0] else pdf_w
         layout_h = page_size_data[1] if page_size_data[1] else pdf_h
         
@@ -124,90 +176,69 @@ def build_searchable_pdf():
         packet = io.BytesIO()
         c = canvas.Canvas(packet, pagesize=(pdf_w, pdf_h))
 
-        # ================= 核心修复 2：更健壮的块选择 =================
-        blocks = page_data.get("para_blocks", [])
-        if not blocks: # 如果没有排版块，降级使用原始块
-            blocks = page_data.get("preproc_blocks", [])
-            
         count = 0
-        seen_items = set() # 【新增兼容性增强】：单页去重集合
+        seen_items = set() 
         
-        for block in blocks:
-            text_items = extract_texts_from_block(block)
-            for text, bbox in text_items:
-                
-                # 【新增兼容性增强】：利用集合进行强制去重，防御 MinerU 重复输出脏数据
-                item_key = (text, tuple(bbox))
-                if item_key in seen_items:
-                    continue
-                seen_items.add(item_key)
+        for text, bbox in text_items:
+            # 过滤重合度高的重复元素（防御 MinerU 输出脏数据）
+            item_key = (text, tuple(bbox))
+            if item_key in seen_items:
+                continue
+            seen_items.add(item_key)
 
-                # 缩放坐标：增加提取 x1 用于计算宽度
-                x0 = bbox[0] * scale_x
-                y0 = bbox[1] * scale_y
-                x1 = bbox[2] * scale_x
-                y1 = bbox[3] * scale_y
-                
-                # 文本块实际宽度和高度
-                w = x1 - x0
-                h = y1 - y0 
-                
-                # 【新增兼容性增强】：安全保护，防止异常框导致宽或高为 0，引发后续计算崩溃
-                if w <= 0.1 or h <= 0.1:
-                    continue
-                
-                # ReportLab 是左下角原点，MinerU 是左上角原点
-                rx = x0
-                # 【纵向对齐】：基线补偿
-                # 加上 h * 0.15 作为向上偏移补偿，把基线稍微抬高。
-                # 0.15 是经验值，适用于大多数字体和字号，既能避免文字被切掉，又能保持在框内。
-                # 这个可以根据实际情况微调，如果发现某些字体或字号有轻微偏差，可以适当增加或减少这个值。
-                ry = pdf_h - y1 + h * 0.15
-                font_size = max(4, h * 0.8)
+            x0 = bbox[0] * scale_x
+            y0 = bbox[1] * scale_y
+            x1 = bbox[2] * scale_x
+            y1 = bbox[3] * scale_y
+            
+            w = x1 - x0
+            h = y1 - y0 
+            
+            # 防崩溃保护：如果异常框导致宽或高为 0，引发后续计算崩溃
+            if w <= 0.1 or h <= 0.1:
+                continue
+            
+            rx = x0
+            # 【纵向对齐】：基线补偿 (0.15 经验值抬高)
+            ry = pdf_h - y1 + h * 0.15
+            font_size = max(4, h * 0.8)
 
-                textob = c.beginText()               
-                textob.setTextOrigin(rx, ry)         
-                textob.setFont(CHINESE_FONT, font_size) 
+            textob = c.beginText()               
+            textob.setTextOrigin(rx, ry)         
+            textob.setFont(CHINESE_FONT, font_size) 
+            
+            # 【横向对齐】：两端对齐计算
+            text_natural_width = stringWidth(text, CHINESE_FONT, font_size)
+            if len(text) > 1:
+                char_space = (w - text_natural_width) / (len(text) - 1)
+                # 保护机制：防止极端的 OCR 框导致文字无限拉长或挤成一团黑
+                char_space = max(-font_size * 0.3, min(char_space, font_size * 2))
+            else:
+                char_space = 0
                 
-                # ================= 【横向对齐】：两端对齐 =================
-                # 测量这段文字在当前字号下的“自然物理宽度”
-                text_natural_width = stringWidth(text, CHINESE_FONT, font_size)
-                # 计算两端对齐间距，需要拉伸或压缩的平均字符间距
-                if len(text) > 1:
-                    char_space = (w - text_natural_width) / (len(text) - 1)
-                    # 保护机制：防止极端的 OCR 框导致文字无限拉长或挤成一团黑
-                    char_space = max(-font_size * 0.3, min(char_space, font_size * 2))
-                else:
-                    char_space = 0
-                    
-                # 设置字符间距（正数拉伸，负数压缩，文字内容本身不受影响）
-                textob.setCharSpace(char_space)
+            textob.setCharSpace(char_space)
 
-                # 双重隐形策略：完全透明 + PDF 隐身渲染模式
-                c.setFillColor(Color(0, 0, 0, alpha=0)) 
-                textob.setTextRenderMode(3)             
-                
-                # 写入画布
-                textob.textOut(text)                 
-                c.drawText(textob)                   
-                count += 1
+            # 双重隐形策略：完全透明 + PDF 隐身渲染模式 3
+            c.setFillColor(Color(0, 0, 0, alpha=0)) 
+            textob.setTextRenderMode(3)             
+            
+            # 写入画布
+            textob.textOut(text)                 
+            c.drawText(textob)                   
+            count += 1
 
-        # 强制生成该页面（防止遇上无文字的图片页、空白页报错）
         c.showPage() 
         c.save()
         packet.seek(0)
         
-        # 将刚才画好的这1页透明图层合并到原 PDF 的当前页上
         text_layer_pdf = PdfReader(packet)
         if len(text_layer_pdf.pages) > 0:
             text_page = text_layer_pdf.pages[0]
             original_page.merge_page(text_page)
         
-        # 将合并好的页面放入写入器
         writer.add_page(original_page)
         print(f"👉 第 {i + 1}/{total_pdf_pages} 页：成功写入 {count} 段隐形文字。")
 
-    # 循环结束后，一次性写入磁盘
     print("⏳ 正在保存最终的 PDF 文件，请稍候...")
     with open(output_path, "wb") as f:
         writer.write(f)
