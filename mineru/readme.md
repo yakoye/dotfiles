@@ -2,7 +2,7 @@
 
 #  (MinerU PDF Layers Builder)
 
-这是一个专为 **MinerU (Magic-PDF)** 设计的后处理工具。它可以将 MinerU 输出的 `middle.json` 文本信息精准地回填至原始扫描版 PDF 中，生成一个**保持原貌、可检索、可选中复制**的双层 PDF 文件。
+这是一个专为 [**MinerU (Magic-PDF)**](https://github.com/opendatalab/MinerU/blob/master/README_zh-CN.md) 设计的后处理工具。它可以将 MinerU 输出的 `middle.json` 文本信息精准地回填至原始扫描版 PDF 中，生成一个**保持原貌、可检索、可选中复制**的双层 PDF 文件。
 
 
 
