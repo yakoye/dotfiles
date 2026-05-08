@@ -26,35 +26,33 @@ except Exception as e:
     print(f"⚠️ 警告：未找到中文字体 {font_path}，将使用默认英文字体！中文可能会乱码。")
     CHINESE_FONT = "Helvetica"
 
-# ================= 2. 深度提取文本逻辑 (升级版：支持无限递归嵌套) =================
+# ================= 2. 深度提取文本逻辑 (终极修复版：全节点覆盖遍历) =================
 def extract_texts_from_block(block):
     """递归深入 MinerU 的 json，提取真正的文字和对应的坐标，完美支持表格和复杂嵌套"""
     extracted = []
     
-    # 1. 如果存在子 blocks（如表格、多列排版），先递归深入
+    # 1. 如果存在子 blocks（如表格、多列排版），递归深入
     if "blocks" in block and isinstance(block["blocks"], list):
         for sub_block in block["blocks"]:
             extracted.extend(extract_texts_from_block(sub_block))
             
-    # 2. 提取当前层级的 lines -> spans
+    # 2. 如果存在 lines 层级，递归处理（因为 line 本质上也是一层包裹）
     lines = block.get("lines", [])
     if lines:
         for line in lines:
-            spans = line.get("spans", [])
-            if spans:
-                for span in spans:
-                    text = span.get("content", span.get("text", "")).strip()
-                    bbox = span.get("bbox", [])
-                    if text and len(bbox) == 4:
-                        extracted.append((text, bbox))
-            else:
-                text = line.get("content", line.get("text", "")).strip()
-                bbox = line.get("bbox", [])
-                if text and len(bbox) == 4:
-                    extracted.append((text, bbox))
-                    
-    # 3. 如果当前 block 既没有嵌套的 blocks，也没有 lines，尝试直接抓取外层
-    elif not block.get("blocks"):
+            extracted.extend(extract_texts_from_block(line))
+            
+    # 3. 如果存在 spans 层级（核心修复：针对直接挂载 spans 的异常结构）
+    spans = block.get("spans", [])
+    if spans:
+        for span in spans:
+            text = span.get("content", span.get("text", "")).strip()
+            bbox = span.get("bbox", [])
+            if text and len(bbox) == 4:
+                extracted.append((text, bbox))
+                
+    # 4. 如果当前节点既没有 blocks、没有 lines、也没有 spans，尝试直接抓取（兜底）
+    if not block.get("blocks") and not block.get("lines") and not block.get("spans"):
         text = block.get("content", block.get("text", "")).strip()
         bbox = block.get("bbox", [])
         if text and len(bbox) == 4:
@@ -132,22 +130,35 @@ def build_searchable_pdf():
             blocks = page_data.get("preproc_blocks", [])
             
         count = 0
+        seen_items = set() # 【新增兼容性增强】：单页去重集合
+        
         for block in blocks:
             text_items = extract_texts_from_block(block)
             for text, bbox in text_items:
+                
+                # 【新增兼容性增强】：利用集合进行强制去重，防御 MinerU 重复输出脏数据
+                item_key = (text, tuple(bbox))
+                if item_key in seen_items:
+                    continue
+                seen_items.add(item_key)
+
                 # 缩放坐标：增加提取 x1 用于计算宽度
                 x0 = bbox[0] * scale_x
                 y0 = bbox[1] * scale_y
                 x1 = bbox[2] * scale_x
                 y1 = bbox[3] * scale_y
-				
+                
                 # 文本块实际宽度和高度
                 w = x1 - x0
                 h = y1 - y0 
-				
+                
+                # 【新增兼容性增强】：安全保护，防止异常框导致宽或高为 0，引发后续计算崩溃
+                if w <= 0.1 or h <= 0.1:
+                    continue
+                
                 # ReportLab 是左下角原点，MinerU 是左上角原点
                 rx = x0
-				# 【纵向对齐】：基线补偿
+                # 【纵向对齐】：基线补偿
                 # 加上 h * 0.15 作为向上偏移补偿，把基线稍微抬高。
                 # 0.15 是经验值，适用于大多数字体和字号，既能避免文字被切掉，又能保持在框内。
                 # 这个可以根据实际情况微调，如果发现某些字体或字号有轻微偏差，可以适当增加或减少这个值。
@@ -159,9 +170,9 @@ def build_searchable_pdf():
                 textob.setFont(CHINESE_FONT, font_size) 
                 
                 # ================= 【横向对齐】：两端对齐 =================
-				# 测量这段文字在当前字号下的“自然物理宽度”
+                # 测量这段文字在当前字号下的“自然物理宽度”
                 text_natural_width = stringWidth(text, CHINESE_FONT, font_size)
-				# 计算两端对齐间距，需要拉伸或压缩的平均字符间距
+                # 计算两端对齐间距，需要拉伸或压缩的平均字符间距
                 if len(text) > 1:
                     char_space = (w - text_natural_width) / (len(text) - 1)
                     # 保护机制：防止极端的 OCR 框导致文字无限拉长或挤成一团黑
