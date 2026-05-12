@@ -28,11 +28,15 @@ git remote set-url origin git@github.com:yakoye/dotfiles.git
 
 修改~/.ssh/config
 Host github.com
-  HostName github.com
-  User yakoye
-  ProxyCommand connect -H 127.0.0.1:6999 %h %p   (添加这一行)
+  HostName ssh.github.com
+  User git
+  Port 443
+  ProxyCommand connect -H 127.0.0.1:6999 %h %p
   IdentityFile ~/.ssh/id_ed25519
   StrictHostKeyChecking no
+  IdentitiesOnly yes
+
+注意：(这一行，-S对应socks5，-H对应HTTP/HTTPS)
 
 测试：
 ssh -T git@github.com
