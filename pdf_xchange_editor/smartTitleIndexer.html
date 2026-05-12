@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>智能标题索引工具 V6.5 (原汁原味版)</title>
+    <style>
+        :root { --bg: #f4f6f8; --primary: #2c3e50; --accent: #007bff; --success: #28a745; --warning: #f39c12; --border: #ced4da; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: var(--bg); margin: 0; padding: 15px 20px; color: #333; }
+        .container { max-width: 1500px; margin: 0 auto; display: flex; flex-direction: column; height: 96vh; }
+        
+        .header { margin-bottom: 15px; }
+        .header h2 { margin: 0; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        
+        /* 模板设置区面板 */
+        .template-panel { background: white; border: 1px solid var(--accent); border-radius: 8px; padding: 15px 20px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,123,255,0.08); }
+        .template-panel h4 { margin: 0 0 10px 0; color: var(--accent); font-size: 15px; }
+        .settings-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+        .setting-card { background: #f8f9fa; padding: 12px; border-radius: 6px; border: 1px solid var(--border); }
+        .setting-card label { display: block; font-size: 12px; font-weight: bold; color: var(--primary); margin-bottom: 5px; }
+        .setting-card input[type="text"] { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: monospace; font-size: 13px; margin-bottom: 8px; }
+        .setting-card .inline-flex { display: flex; align-items: center; gap: 5px; margin-bottom: 5px; }
+        .setting-card input[type="checkbox"] { margin: 0; cursor: pointer; }
+        
+        .hints { font-size: 12px; color: #666; margin-top: 10px; background: #e9ecef; padding: 8px; border-radius: 4px; }
+
+        .main-grid { display: flex; flex: 1; gap: 15px; overflow: hidden; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .editor-box { flex: 1; display: flex; flex-direction: column; }
+        .label-bar { font-size: 14px; font-weight: bold; color: var(--primary); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        
+        textarea, .preview-area { flex: 1; background: #fafafa; border: 1px solid var(--border); border-radius: 6px; padding: 15px; font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.6; overflow-y: auto; outline: none; white-space: pre; tab-size: 4; }
+        textarea:focus { border-color: var(--accent); background: white; }
+        .preview-area { border-left: 4px solid var(--success); }
+
+        .middle-controls { display: flex; flex-direction: column; justify-content: center; gap: 15px; padding: 0 5px; }
+        button { padding: 12px 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; color: white; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        button:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .btn-forward { background: var(--accent); }
+        .btn-backward { background: var(--success); }
+        .btn-clear { background: #dc3545; padding: 6px 12px; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>📚 Smart Title Indexer <small style="font-size: 14px; color:#888; font-weight: normal;">v6.5 原汁原味版 (绝不改动原内容及缩进)</small></h2>
+    </div>
+
+    <!-- 模板设置区 -->
+    <div class="template-panel">
+        <h4>⚙️ 格式与锚点定义区</h4>
+        <div class="settings-grid">
+            <!-- 顶级锚点 -->
+            <div class="setting-card">
+                <div class="inline-flex">
+                    <input type="checkbox" id="useL1" checked>
+                    <label style="margin:0; color:#d35400; cursor: pointer;" for="useL1">顶级锚点 (默认启用)</label>
+                </div>
+                <label>触发关键词 (逗号分隔):</label>
+                <input type="text" id="kwL1" value="Chapter, Appendices">
+                <label>新增前缀格式:</label>
+                <input type="text" id="fmtL1" value="{N}. ">
+            </div>
+            
+            <!-- 二级锚点：加回来了！ -->
+            <div class="setting-card">
+                <div class="inline-flex">
+                    <input type="checkbox" id="useL2">
+                    <label style="margin:0; color:#2980b9; cursor: pointer;" for="useL2">二级锚点 (默认关闭，备用)</label>
+                </div>
+                <label>触发关键词 (逗号分隔):</label>
+                <input type="text" id="kwL2" value="Appendix">
+                <label>新增前缀格式:</label>
+                <input type="text" id="fmtL2" value="{N} ">
+            </div>
+
+            <!-- 常规子项 & 豁免名单 -->
+            <div class="setting-card">
+                <div class="inline-flex">
+                    <label style="margin:0; color:#e74c3c;">⭐ 纯保留 (原样输出，不加序号)</label>
+                </div>
+                <input type="text" id="ignoreKws" value="Part, Glossary">
+                
+                <label style="color:#27ae60; margin-top: 8px;">常规子项前缀格式:</label>
+                <input type="text" id="fmtL3" value="{N} ">
+                <div style="margin-top:8px; font-size: 12px;">
+                    <!-- 最温柔的清理：只扫除开头类似 1.1.1 这种数字，绝不动其他文字 -->
+                    <input type="checkbox" id="stripNumbers" checked> 清除原有的纯数字旧序号
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-grid">
+        <div class="editor-box">
+            <div class="label-bar">
+                <span>1. 源文本区 (粘贴乱序文本)</span>
+                <button class="btn-clear" onclick="clearAll()">🧹 清空</button>
+            </div>
+            <textarea id="userInput" spellcheck="false" placeholder="在此粘贴源文本..."></textarea>
+        </div>
+
+        <div class="middle-controls">
+            <button class="btn-forward" onclick="formatIndex()">智能排版 ➡️</button>
+            <button class="btn-backward" onclick="syncToLeft()">⬅️ 反向同步</button>
+        </div>
+
+        <div class="editor-box">
+            <div class="label-bar">
+                <span>2. 结果编辑区</span>
+                <button class="btn-forward" style="padding: 5px 15px; font-size: 12px;" onclick="copyText()">📋 复制</button>
+            </div>
+            <div id="resultOutput" class="preview-area" contenteditable="true" spellcheck="false"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function checkKeywords(line, kwStr) {
+        if (!kwStr || !kwStr.trim()) return false;
+        const kws = kwStr.split(',').map(k => k.trim().toLowerCase()).filter(k => k);
+        const lowerLine = line.toLowerCase();
+        return kws.some(kw => lowerLine.includes(kw));
+    }
+
+    function applyFormat(formatStr, counters, level) {
+        let fullNum = counters.join('.');
+        return formatStr.replace(/\{N\}/g, fullNum);
+    }
+
+    function formatIndex() {
+        const input = document.getElementById('userInput').value;
+        const lines = input.split('\n');
+        
+        const rawKwL1 = document.getElementById('kwL1').value.trim();
+        const useL1 = document.getElementById('useL1').checked && rawKwL1 !== "";
+        const fmtL1 = document.getElementById('fmtL1').value;
+        
+        // 获取二级锚点配置
+        const rawKwL2 = document.getElementById('kwL2').value.trim();
+        const useL2 = document.getElementById('useL2').checked && rawKwL2 !== "";
+        const fmtL2 = document.getElementById('fmtL2').value;
+
+        const ignoreKws = document.getElementById('ignoreKws').value.trim();
+        const fmtL3 = document.getElementById('fmtL3').value;
+        const stripNumbers = document.getElementById('stripNumbers').checked;
+
+        let output = [];
+        let counters = []; 
+        let indentStack = [-1];
+
+        // 层级初始化
+        let baseL1 = useL1 ? 0 : -1;
+        let baseL2 = useL2 ? (useL1 ? 1 : 0) : -1;
+        let minSubLevel = useL1 ? (useL2 ? 2 : 1) : (useL2 ? 1 : 0);
+
+        lines.forEach((line) => {
+            // 【核心原则1】：完整提取原始的空白符（Tab或空格），不动它一分一毫
+            const originalIndentStr = (line.match(/^(\s*)/) || [""])[0];
+            const spaces = originalIndentStr.replace(/\t/g, '    ').length;
+            const raw = line.trim();
+            if (!raw) { output.push(""); return; }
+
+            // 【核心原则2】：豁免名单完全跳过。如果匹配，把整行原封不动塞进数组，终止本次循环！
+            if (checkKeywords(raw, ignoreKws)) {
+                output.push(line); 
+                return; 
+            }
+
+            // 【核心原则3】：只去掉前缀数字，剩余文字全部保留。
+            let titleText = raw;
+            if (stripNumbers) {
+                // 这个正则只匹配行首的纯数字+标点 (例如 1.1.1 )，不会匹配 Chapter 1
+                const cleanRegex = /^([0-9]+(\.[0-9]+)*\s*[\.\:：\\]+\s*|[0-9]+(\.[0-9]+)*\s+)/;
+                titleText = raw.replace(cleanRegex, "");
+            }
+
+            // 判定层级
+            let level = -1;
+            let isL1 = useL1 && checkKeywords(raw, rawKwL1);
+            let isL2 = useL2 && checkKeywords(raw, rawKwL2);
+
+            if (isL1) {
+                level = baseL1;
+                indentStack = [];
+                indentStack[level] = spaces;
+            } else if (isL2) {
+                level = baseL2;
+                indentStack.length = level;
+                indentStack[level] = spaces;
+            } else {
+                while (indentStack.length > 0 && indentStack[indentStack.length - 1] > spaces) {
+                    indentStack.pop();
+                }
+                if (indentStack.length === 0 || spaces > indentStack[indentStack.length - 1]) {
+                    indentStack.push(spaces);
+                }
+                level = indentStack.length - 1;
+
+                if (level < minSubLevel) {
+                    level = minSubLevel;
+                    indentStack[level] = spaces;
+                }
+            }
+
+            // 计数
+            while (counters.length <= level) counters.push(0);
+            counters[level]++;
+            counters.length = level + 1;
+
+            // 应用前缀
+            let finalFormat = "";
+            if (isL1) finalFormat = fmtL1;
+            else if (isL2) finalFormat = fmtL2;
+            else finalFormat = fmtL3;
+
+            const prefixStr = applyFormat(finalFormat, counters, level);
+            
+            // 【核心原则4】：原封不动的缩进 + 生成的序号前缀 + 清理过的保留文字
+            output.push(originalIndentStr + prefixStr + titleText);
+        });
+
+        document.getElementById('resultOutput').innerText = output.join('\n');
+    }
+
+    function syncToLeft() {
+        document.getElementById('userInput').value = document.getElementById('resultOutput').innerText;
+        formatIndex();
+        const btn = document.querySelector('.btn-backward');
+        btn.innerHTML = `✅ 已同步！`;
+        setTimeout(() => btn.innerHTML = `⬅️ 反向同步`, 1500);
+    }
+
+    function copyText() {
+        navigator.clipboard.writeText(document.getElementById('resultOutput').innerText).then(() => {
+            alert("✅ 内容已复制！");
+        });
+    }
+
+    function clearAll() {
+        if(confirm("确定清空吗？")) {
+            document.getElementById('userInput').value = "";
+            document.getElementById('resultOutput').innerText = "";
+        }
+    }
+
+    window.onload = () => {
+        document.getElementById('userInput').value = 
+`Part One\\: The Big Picture; 66
+Chapter 1\\: Background; 68
+\t1.0.1 Introduction; 68
+\tPCI and PCI-X; 69
+Appendices; 974
+\tAppendix A\\: Debugging; 976`;
+        formatIndex();
+    };
+</script>
+
+</body>
+</html>
