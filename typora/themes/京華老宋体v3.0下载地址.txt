@@ -13,3 +13,9 @@ https://drive.google.com/drive/folders/1oajMquLYxmPykYE6Lyf_klt3hLVHIpRM?usp=sha
 https://onedrive.live.com/?redeem=aHR0cHM6Ly8xZHJ2Lm1zL2YvcyFBdWp1VVhBa29CM2JrQ3pZWm9ucXp1N0p2Y1JV&id=DB1DA0247051EEE8%212092&cid=DB1DA0247051EEE8
 
 
+推荐使用字体：
+京華老宋体-GJ古籍表字形.ttf【强烈推荐】
+京華老宋体v3.0.ttf
+
+DrakeTyporaTheme:
+https://github.com/liangjingkanji/DrakeTyporaTheme
