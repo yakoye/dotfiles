@@ -1,0 +1,38 @@
+
+
+$ git push origin main 报错，解决办法
+ssh: Could not resolve hostname github.com: Name or service not known
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists
+
+
+-----------
+github使用HTTPS方式：
+
+设置代理，在bash中执行：（根据情况修改端口号码6999）
+git config --global http.proxy http://127.0.0.1:6999
+
+git config --global https.proxy http://127.0.0.1:6999
+
+这种情况适用于HTTPS：
+git remote set-url origin https://github.com/yakoye/dotfiles.git
+
+测试：
+ssh -T git@github.com
+
+-----------
+github 使用SSH方式：
+git remote set-url origin git@github.com:yakoye/dotfiles.git
+
+修改~/.ssh/config
+Host github.com
+  HostName github.com
+  User yakoye
+  ProxyCommand connect -H 127.0.0.1:6999 %h %p   (添加这一行)
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking no
+
+测试：
+ssh -T git@github.com
