@@ -946,9 +946,6 @@ div.code-tooltip-content {
     color: var(--outline-active-color);
     font-weight: bold;
     background-color: #ffe880;
-    border-radius: 4px;
-    padding: 2px 6px;
-    display: inline-block;
 }
 
 .file-list-item.active {
