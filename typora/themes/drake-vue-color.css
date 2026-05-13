@@ -946,6 +946,10 @@ div.code-tooltip-content {
     color: var(--outline-active-color);
     font-weight: bold;
     background-color: #ffe880;
+    /* 边框圆角, 左上角、右上角、右下角、左下角 四个角，统一用 2px 的圆角弧度 */
+    border-radius: 2px;
+    /* 1个值:上下左右都一样; 2个值:上下|左右; 3个值:上|左右|下; 4个值:上 右 下 左 */
+    padding: 1px 2px 1px 0px;
 }
 
 .file-list-item.active {
