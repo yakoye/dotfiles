@@ -648,25 +648,32 @@ kbd {
     bottom: .375rem;
 }
 
-#write > h3.md-focus:before {
-    left: -1.5625rem;
-    top: .375rem;
+#write h1.md-heading.md-focus::before,
+#write h2.md-heading.md-focus::before,
+#write h3.md-heading.md-focus::before,
+#write h4.md-heading.md-focus::before,
+#write h5.md-heading.md-focus::before,
+#write h6.md-heading.md-focus::before {
+    position: absolute !important;
+    left: -1.5625rem !important;
+
+    display: inline-block !important;
+    color: #bbb !important;
+    border: 1px solid #ddd !important;
+    border-radius: 3px !important;
+    padding: 0 3px !important;
+    font-size: 12px !important;
+    font-weight: normal !important;
+    line-height: 1.2 !important;
+    background: #fff !important;
 }
 
-#write > h4.md-focus:before {
-    left: -1.5625rem;
-    top: .285714286rem;
-}
-
-#write > h5.md-focus:before {
-    left: -1.5625rem;
-    top: .285714286rem;
-}
-
-#write > h6.md-focus:before {
-    left: -1.5625rem;
-    top: .285714286rem;
-}
+#write h1.md-heading.md-focus::before { content: "h1" !important; top: .70rem !important; }
+#write h2.md-heading.md-focus::before { content: "h2" !important; top: .65rem !important; }
+#write h3.md-heading.md-focus::before { content: "h3" !important; top: .37rem !important; }
+#write h4.md-heading.md-focus::before { content: "h4" !important; top: .28rem !important; }
+#write h5.md-heading.md-focus::before { content: "h5" !important; top: .10rem !important; }
+#write h6.md-heading.md-focus::before { content: "h6" !important; top: .10rem !important; }
 
 .md-image > .md-meta {
     border-radius: 2px;
