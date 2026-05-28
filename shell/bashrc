@@ -161,7 +161,7 @@ find-c() {
 }
 
 # 安全删除函数：替代原始 rm
-rm() {
+function rm_my() {
     local trash_base="/tmp/trash"
     local date_str=$(date +%y%m%d_%H%M%S)
     local trash_dir="$trash_base/$date_str"
@@ -190,7 +190,7 @@ rm() {
     echo -e "\e[33m[Trash]\e[0m Moving $* to $trash_dir"
     
     # 执行移动
-    mv -- "$@" "$trash_dir"
+    /bin/mv -- "$@" "$trash_dir"
     
     if [ $? -eq 0 ]; then
         echo -e "\e[32m[Success]\e[0m Delete Finish."
@@ -199,8 +199,11 @@ rm() {
     fi
 }
 
+alias rm='rm_my'
+
 # 依然保留一个“真删除”命令，以防万一需要彻底清理磁盘
 alias rmrm='/bin/rm -iv'
+
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
