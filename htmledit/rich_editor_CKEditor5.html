@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rich Editor</title>
+        <style>
+            /* Keep the original light background and editor width. */
+            #container {
+                width: 1000px;
+                margin: 20px auto;
+            }
+            .ck-editor__editable[role="textbox"] {
+                /* Editing area */
+                min-height: 600px;
+            }
+            .ck-content .image {
+                /* Block images */
+                max-width: 80%;
+                margin: 20px auto;
+            }
+            /* Center editor title */
+            h2 {
+                text-align: center;
+            }
+            #titleBar {
+                width: 1000px;
+                margin: 20px auto 0;
+                position: relative;
+            }
+            #titleBar h2 {
+                margin: 0;
+                line-height: 1.4;
+            }
+            #titleActions {
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            #themeToggle,
+            #clearLocalData {
+                border: 1px solid #ccd1d8;
+                border-radius: 6px;
+                background: #fff;
+                color: #333;
+                cursor: pointer;
+                line-height: 1.4;
+            }
+            #themeToggle {
+                width: 30px;
+                height: 28px;
+                padding: 0;
+                font-size: 15px;
+            }
+            #clearLocalData {
+                padding: 3px 9px;
+                font-size: 12px;
+            }
+            #themeToggle:hover,
+            #clearLocalData:hover {
+                background: #f0f0f0;
+            }
+
+            html[data-theme="dark"] {
+                --ck-color-base-foreground: #2b2d31;
+                --ck-color-base-background: #1f2023;
+                --ck-color-base-border: #4a4d55;
+                --ck-color-base-action: #6ea8ff;
+                --ck-color-text: #e6e6e6;
+                --ck-color-button-default-hover-background: #3a3d44;
+                --ck-color-button-default-active-background: #454954;
+                --ck-color-button-on-background: #454954;
+                --ck-color-button-on-hover-background: #505562;
+                --ck-color-list-background: #2b2d31;
+                --ck-color-list-button-hover-background: #3a3d44;
+                --ck-color-list-button-on-background: #454954;
+                --ck-color-panel-background: #2b2d31;
+                --ck-color-panel-border: #4a4d55;
+                --ck-color-input-background: #1f2023;
+                --ck-color-input-border: #4a4d55;
+                --ck-color-input-text: #e6e6e6;
+            }
+            html[data-theme="dark"] body {
+                background: #1e1f22;
+                color: #e6e6e6;
+            }
+            html[data-theme="dark"] #themeToggle,
+            html[data-theme="dark"] #clearLocalData {
+                background: #2b2d31;
+                border-color: #555a64;
+                color: #e6e6e6;
+            }
+            html[data-theme="dark"] #themeToggle:hover,
+            html[data-theme="dark"] #clearLocalData:hover {
+                background: #3a3d44;
+            }
+            html[data-theme="dark"] .ck.ck-editor__main > .ck-editor__editable {
+                background: #1f2023;
+                color: #e6e6e6;
+            }
+            html[data-theme="dark"] .ck.ck-toolbar,
+            html[data-theme="dark"] .ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content,
+            html[data-theme="dark"] .ck.ck-dropdown__panel,
+            html[data-theme="dark"] .ck.ck-balloon-panel {
+                background: #2b2d31;
+                border-color: #4a4d55;
+            }
+            html[data-theme="dark"] .ck.ck-button,
+            html[data-theme="dark"] .ck.ck-button .ck-button__label,
+            html[data-theme="dark"] .ck.ck-dropdown__button,
+            html[data-theme="dark"] .ck.ck-dropdown__button .ck-button__label {
+                color: #e6e6e6;
+            }
+            html[data-theme="dark"] .ck.ck-button svg,
+            html[data-theme="dark"] .ck.ck-dropdown__button svg {
+                color: #e6e6e6;
+            }
+            html[data-theme="dark"] .ck-content a {
+                color: #8ab4ff;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="titleBar">
+            <h2>Rich Editor</h2>
+            <div id="titleActions">
+                <button id="themeToggle" type="button" title="Switch theme" aria-label="Switch theme">🌙</button>
+                <button id="clearLocalData" type="button">Clear local draft</button>
+            </div>
+        </div>
+
+        <div id="container">
+            <div id="editor"></div>
+        </div>
+
+        <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/super-build/ckeditor.js"></script>
+
+        <!-- Uncomment to load the Spanish translation -->
+        <!-- <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/super-build/translations/es.js"></script> -->
+
+        <script>
+            const STORAGE_KEY = 'richEditor.autoSavedData.v1';
+            const STORAGE_TIME_KEY = 'richEditor.autoSavedTime.v1';
+            const THEME_KEY = 'richEditor.theme.v1';
+            const AUTO_SAVE_DELAY = 500;
+
+            const clearLocalDataButton = document.getElementById('clearLocalData');
+            const themeToggleButton = document.getElementById('themeToggle');
+
+            let activeEditor = null;
+            let saveTimer = null;
+            let isSaving = false;
+            let skipNextAutoSave = false;
+
+            function applyTheme(theme) {
+                const normalizedTheme = theme === 'dark' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', normalizedTheme);
+                themeToggleButton.textContent = normalizedTheme === 'dark' ? '☀️' : '🌙';
+                themeToggleButton.title = normalizedTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
+                themeToggleButton.setAttribute('aria-label', themeToggleButton.title);
+                localStorage.setItem(THEME_KEY, normalizedTheme);
+            }
+
+            applyTheme(localStorage.getItem(THEME_KEY) || 'light');
+
+            themeToggleButton.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+                applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+            });
+
+            function formatTime(timestamp) {
+                if (!timestamp) return '';
+                const date = new Date(Number(timestamp));
+                if (Number.isNaN(date.getTime())) return '';
+                return date.toLocaleString();
+            }
+
+            function setStatus(text) {
+                // Keep auto-save status internal. The title bar stays clean.
+                console.debug(text);
+            }
+
+            function getEditorData() {
+                return activeEditor ? activeEditor.getData() : '';
+            }
+
+            function saveNow() {
+                if (!activeEditor || isSaving || skipNextAutoSave) return;
+                isSaving = true;
+                try {
+                    const data = getEditorData();
+                    const now = Date.now();
+                    localStorage.setItem(STORAGE_KEY, data);
+                    localStorage.setItem(STORAGE_TIME_KEY, String(now));
+                    setStatus('Auto saved locally: ' + formatTime(now));
+                } catch (error) {
+                    console.error(error);
+                    setStatus('Auto save failed. Local storage may be full.');
+                } finally {
+                    isSaving = false;
+                }
+            }
+
+            function scheduleAutoSave() {
+                skipNextAutoSave = false;
+                setStatus('Editing... auto save pending');
+                window.clearTimeout(saveTimer);
+                saveTimer = window.setTimeout(saveNow, AUTO_SAVE_DELAY);
+            }
+
+            function restoreLocalDraft(editor) {
+                const savedData = localStorage.getItem(STORAGE_KEY);
+                const savedTime = localStorage.getItem(STORAGE_TIME_KEY);
+                if (savedData) {
+                    editor.setData(savedData);
+                    setStatus('Restored local draft: ' + formatTime(savedTime));
+                } else {
+                    setStatus('Ready. Content will be auto saved locally.');
+                }
+            }
+
+            // Save once more when the page is hidden or closed.
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'hidden') {
+                    saveNow();
+                }
+            });
+
+            window.addEventListener('pagehide', () => {
+                saveNow();
+            });
+
+            // Browser will show its own standard warning text.
+            // Custom warning text is ignored by most modern browsers.
+            window.addEventListener('beforeunload', event => {
+                saveNow();
+                const hasContent = getEditorData().replace(/<[^>]*>/g, '').trim().length > 0;
+                if (hasContent) {
+                    event.preventDefault();
+                    event.returnValue = '';
+                }
+            });
+
+            clearLocalDataButton.addEventListener('click', () => {
+                const confirmed = window.confirm('Clear the local draft saved in this browser? The current editor content will not be cleared until you edit again.');
+                if (!confirmed) return;
+                window.clearTimeout(saveTimer);
+                skipNextAutoSave = true;
+                localStorage.removeItem(STORAGE_KEY);
+                localStorage.removeItem(STORAGE_TIME_KEY);
+                setStatus('Local draft cleared. Edit again to create a new local draft.');
+            });
+
+            CKEDITOR.ClassicEditor.create(document.getElementById('editor'), {
+                toolbar: {
+                    items: [
+                        'exportPDF','exportWord', '|',
+                        'findAndReplace', 'selectAll', '|',
+                        'heading', '|',
+                        'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                        'bulletedList', 'numberedList', 'todoList', '|',
+                        'outdent', 'indent', '|',
+                        'undo', 'redo',
+                        '-',
+                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                        'alignment', '|',
+                        'link', 'uploadImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+                        'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+                        'textPartLanguage', '|',
+                        'sourceEditing'
+                    ],
+                    shouldNotGroupWhenFull: true
+                },
+                language: {
+                    textPartLanguage: [
+                        { title: 'Arabic', languageCode: 'ar' },
+                        { title: '中文', languageCode: 'zh' },
+                        { title: 'English', languageCode: 'en' },
+                        { title: 'French', languageCode: 'fr' },
+                        { title: 'Hebrew', languageCode: 'he' },
+                        { title: 'español', languageCode: 'es' }
+                    ]
+                },
+                list: {
+                    properties: {
+                        styles: true,
+                        startIndex: true,
+                        reversed: true
+                    }
+                },
+                heading: {
+                    options: [
+                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                        { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                        { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                        { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                    ]
+                },
+                placeholder: 'Welcome to CKEditor 5!',
+                fontFamily: {
+                    options: [
+                        'default',
+                        'Ubuntu, Arial, sans-serif',
+                        'Ubuntu Mono, Courier New, Courier, monospace',
+                        'Arial, Helvetica, sans-serif',
+                        'Courier New, Courier, monospace',
+                        'Georgia, serif',
+                        'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                        'Tahoma, Geneva, sans-serif',
+                        'Times New Roman, Times, serif',
+                        'Trebuchet MS, Helvetica, sans-serif',
+                        'Verdana, Geneva, sans-serif'
+                    ],
+                    supportAllValues: true
+                },
+                fontSize: {
+                    options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+                    supportAllValues: true
+                },
+                htmlSupport: {
+                    allow: [
+                        {
+                            name: /.*/,
+                            attributes: true,
+                            classes: true,
+                            styles: true
+                        }
+                    ]
+                },
+                htmlEmbed: {
+                    showPreviews: true
+                },
+                link: {
+                    decorators: {
+                        addTargetToExternalLinks: true,
+                        defaultProtocol: 'https://',
+                        toggleDownloadable: {
+                            mode: 'manual',
+                            label: 'Downloadable',
+                            attributes: {
+                                download: 'file'
+                            }
+                        }
+                    }
+                },
+                mention: {
+                    feeds: [
+                        {
+                            marker: '@',
+                            feed: [
+                                '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                '@sugar', '@sweet', '@topping', '@wafer'
+                            ],
+                            minimumCharacters: 1
+                        }
+                    ]
+                },
+                removePlugins: [
+                    'AIAssistant',
+                    'CKBox',
+                    'CKFinder',
+                    'EasyImage',
+                    'RealTimeCollaborativeComments',
+                    'RealTimeCollaborativeTrackChanges',
+                    'RealTimeCollaborativeRevisionHistory',
+                    'PresenceList',
+                    'Comments',
+                    'TrackChanges',
+                    'TrackChangesData',
+                    'RevisionHistory',
+                    'Pagination',
+                    'WProofreader',
+                    'MathType',
+                    'SlashCommand',
+                    'Template',
+                    'DocumentOutline',
+                    'FormatPainter',
+                    'TableOfContents',
+                    'PasteFromOfficeEnhanced',
+                    'CaseChange'
+                ]
+            }).then(editor => {
+                activeEditor = editor;
+                restoreLocalDraft(editor);
+
+                editor.model.document.on('change:data', () => {
+                    scheduleAutoSave();
+                });
+            }).catch(error => {
+                console.error(error);
+                setStatus('Editor load failed. Please check console.');
+            });
+        </script>
+    </body>
+</html>
