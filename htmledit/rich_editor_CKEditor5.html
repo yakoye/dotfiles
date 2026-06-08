@@ -51,15 +51,12 @@
                 cursor: pointer;
                 line-height: 1.4;
             }
-            #themeToggle {
+            #themeToggle,
+            #clearLocalData {
                 width: 30px;
                 height: 28px;
                 padding: 0;
                 font-size: 15px;
-            }
-            #clearLocalData {
-                padding: 3px 9px;
-                font-size: 12px;
             }
             #themeToggle:hover,
             #clearLocalData:hover {
@@ -130,7 +127,7 @@
             <h2>Rich Editor</h2>
             <div id="titleActions">
                 <button id="themeToggle" type="button" title="Switch theme" aria-label="Switch theme">🌙</button>
-                <button id="clearLocalData" type="button">Clear local draft</button>
+                <button id="clearLocalData" type="button" title="Clear local draft and editor content" aria-label="Clear local draft and editor content">🧹</button>
             </div>
         </div>
 
@@ -189,11 +186,21 @@
                 return activeEditor ? activeEditor.getData() : '';
             }
 
+            function hasMeaningfulEditorData(data) {
+                return String(data).replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim().length > 0;
+            }
+
             function saveNow() {
                 if (!activeEditor || isSaving || skipNextAutoSave) return;
                 isSaving = true;
                 try {
                     const data = getEditorData();
+                    if (!hasMeaningfulEditorData(data)) {
+                        localStorage.removeItem(STORAGE_KEY);
+                        localStorage.removeItem(STORAGE_TIME_KEY);
+                        setStatus('No local draft to save.');
+                        return;
+                    }
                     const now = Date.now();
                     localStorage.setItem(STORAGE_KEY, data);
                     localStorage.setItem(STORAGE_TIME_KEY, String(now));
@@ -207,6 +214,12 @@
             }
 
             function scheduleAutoSave() {
+                if (skipNextAutoSave) {
+                    skipNextAutoSave = false;
+                    window.clearTimeout(saveTimer);
+                    setStatus('Auto save skipped.');
+                    return;
+                }
                 skipNextAutoSave = false;
                 setStatus('Editing... auto save pending');
                 window.clearTimeout(saveTimer);
@@ -239,7 +252,7 @@
             // Custom warning text is ignored by most modern browsers.
             window.addEventListener('beforeunload', event => {
                 saveNow();
-                const hasContent = getEditorData().replace(/<[^>]*>/g, '').trim().length > 0;
+                const hasContent = hasMeaningfulEditorData(getEditorData());
                 if (hasContent) {
                     event.preventDefault();
                     event.returnValue = '';
@@ -247,13 +260,14 @@
             });
 
             clearLocalDataButton.addEventListener('click', () => {
-                const confirmed = window.confirm('Clear the local draft saved in this browser? The current editor content will not be cleared until you edit again.');
+                const confirmed = window.confirm('Clear the local draft saved in this browser and all current editor content?');
                 if (!confirmed) return;
                 window.clearTimeout(saveTimer);
                 skipNextAutoSave = true;
+                if (activeEditor) activeEditor.setData('');
                 localStorage.removeItem(STORAGE_KEY);
                 localStorage.removeItem(STORAGE_TIME_KEY);
-                setStatus('Local draft cleared. Edit again to create a new local draft.');
+                setStatus('Local draft and editor content cleared.');
             });
 
             CKEDITOR.ClassicEditor.create(document.getElementById('editor'), {
