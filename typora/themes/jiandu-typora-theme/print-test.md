@@ -42,19 +42,19 @@ Use **strong emphasis / 加粗强调**, *italic emphasis / 斜体强调*, `Compl
 
 ### 2.1 Wide technical diagram / 超宽技术示意图
 
-![Wide PCIe diagram](assets/wide-pcie-diagram.png)
+![Wide PCIe diagram](assets/wide-pcie-diagram.svg)
 
 *Expected / 预期：图片居中、保持比例、左右边框完整可见，不得出现右侧裁切。*
 
 ### 2.2 Tall image / 竖向长图
 
-![Tall image test](assets/tall-image-test.png)
+![Tall image test](assets/tall-image-test.svg)
 
 *Expected / 预期：长图优先完整缩放；不得拉伸变形；尽量不在图片中间断页。*
 
 ### 2.3 Square image / 方图
 
-![Square image test](assets/square-image-test.png)
+![Square image test](assets/square-image-test.svg)
 
 *Expected / 预期：方图居中，与上下正文保持稳定留白。*
 
@@ -109,9 +109,6 @@ flowchart LR
 ---
 
 ## 6. Task List / 任务列表
-
-**Expected / 预期：** The checkbox is the native browser control, vertically aligned by Chromium rather than a manually positioned `✓`.  
-**预期：** 复选框使用浏览器原生控件，由 Chromium 自动完成垂直对齐，而不是手工定位的 `✓`。
 
 - [ ] Verify the wide SVG has no right-edge clipping.  
       确认超宽 SVG 的右侧没有被裁切。
@@ -169,31 +166,3 @@ A Completion Timeout range should match the platform requirement rather than bei
       Mermaid 图能放入页面。
 - [ ] The hierarchy is clear in grayscale.  
       灰阶打印时层级仍然清晰。
-
----
-
-## Single-layer Code Fence Test / 单层代码围栏测试
-
-The following fence should render as one card only: one background, one border, and one padding layer.
-Move the caret inside the fence: no full-line current-caret tint should appear.
-
-下面这段围栏代码应只呈现为一张卡片：一层背景、一层边框、一层内边距。
-将光标移入代码块：不应出现整行的光标行背景色。
-
-```css
-/* Outer fence only / 只美化外层围栏 */
-.md-fences {
-    padding: 0.92rem 1.08rem;
-    border: 1px solid var(--jiandu-code-border);
-}
-
-/* Internal layers stay flat / 内部层保持扁平 */
-.md-fences pre,
-.md-fences .CodeMirror {
-    margin: 0;
-    padding: 0;
-    background: transparent;
-    border: 0;
-}
-```
-

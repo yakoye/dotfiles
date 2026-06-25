@@ -1,9 +1,8 @@
 /*
  * Jiandu Core / 简读核心排版
- * Professional publishing-style screen reading: hierarchy comes from spacing,
- * weight and rules rather than rainbow heading colours or decorative markers.
- * 正式出版式屏幕阅读：主要用间距、字重与细线建立层级，
- * 不依赖彩虹标题或装饰性标记。
+ * Screen reading is intentionally restrained; hierarchy comes from spacing,
+ * weight and rules rather than rainbow heading colours.
+ * 屏幕阅读保持克制；主要用间距、字重与细线建立层级，不依赖彩虹标题。
  */
 
 html {
@@ -20,10 +19,6 @@ body {
     line-height: var(--jiandu-screen-line-height);
     font-kerning: normal;
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
-    font-variant-east-asian: proportional-width;
-    text-align: justify;
-    text-justify: inter-ideograph;
-    line-break: strict;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
@@ -72,9 +67,8 @@ h1, h2, h3, h4, h5, h6 {
     margin: 2.2rem 0 0.9rem;
     color: var(--jiandu-heading);
     font-family: var(--jiandu-heading-font) !important;
-    font-weight: 650;
+    font-weight: 700;
     line-height: 1.42;
-    text-align: left;
     letter-spacing: 0.015em;
     cursor: text;
     page-break-after: avoid;
@@ -100,10 +94,31 @@ h2 {
     border-bottom: 1px solid var(--jiandu-heading-rule);
 }
 
+h2::before {
+    display: inline-block;
+    width: 4px;
+    height: 1.05em;
+    margin: 0 0.58rem -0.14em 0;
+    content: "";
+    background: var(--jiandu-accent);
+    border-radius: 999px;
+}
+
 h3 {
     margin-top: 2.05rem;
     color: var(--jiandu-heading);
     font-size: 1.28rem;
+}
+
+h3::before {
+    display: inline-block;
+    width: 0.42em;
+    height: 0.42em;
+    margin: 0 0.5em 0.08em 0;
+    content: "";
+    vertical-align: middle;
+    background: var(--jiandu-accent);
+    border-radius: 50%;
 }
 
 h4 {
@@ -180,7 +195,6 @@ li {
 
 li > p {
     margin: 0.25em 0;
-    text-align: left;
 }
 
 li > ul,
@@ -208,8 +222,6 @@ hr {
 /* Quote / 引用 */
 blockquote {
     position: relative;
-    text-align: justify;
-    text-justify: inter-ideograph;
     box-sizing: border-box;
     margin: 1.25rem 0;
     padding: 0.82rem 1.12rem 0.82rem 1.32rem;
@@ -250,29 +262,13 @@ blockquote strong { color: inherit; }
 }
 
 /* Tables / 表格 */
-/*
- * Stable width allocation / 稳定列宽分配
- *
- * Markdown tables do not carry semantic column widths.  `table-layout: auto`
- * lets one long register identifier claim a disproportionate share of the
- * table, squeezing the explanatory columns.  Fixed layout gives every column
- * a predictable budget, then the six-column PCIe pattern below reserves more
- * room for behavior and firmware notes.
- * Markdown 表格不携带语义列宽。`table-layout: auto` 会让一个很长的寄存器名
- * 占据过多宽度，从而挤压说明列。固定布局先为每列分配稳定空间；下面再针对
- * 六列表 PCIe 表格，为行为说明和固件备注保留更多宽度。
- */
 #write table {
     display: table;
-    box-sizing: border-box;
-    table-layout: fixed;
-    text-align: left;
     width: 100%;
     max-width: 100%;
     margin: 1.28rem 0;
     overflow: visible;
     color: var(--jiandu-text);
-    font-family: var(--jiandu-table-font);
     border-spacing: 0;
     border-collapse: separate;
     border: 1px solid var(--jiandu-table-border);
@@ -282,33 +278,14 @@ blockquote strong { color: inherit; }
     line-height: 1.62;
 }
 
-/*
- * Header colour belongs to the header only.
- * 表头颜色只用于表头，不再误作用到第一条数据行。
- *
- * Typora emits a normal <thead> + <tbody> table. Do not use `tr:first-child`:
- * in <tbody>, it is the first data row and would make the visual second row
- * look like a second header.
- * Typora 会输出标准的 <thead> + <tbody> 表格。这里不能使用 `tr:first-child`：
- * 它在 <tbody> 内代表第一条数据行，会让视觉上的第二行误用表头颜色。
- */
-#write table > thead {
+#write thead,
+#write table tr:first-child {
     background: var(--jiandu-table-header);
-}
-
-/* Zebra stripes start from the second data row / 斑马纹从第二条数据行开始 */
-#write table > tbody > tr:nth-child(odd) {
-    background: var(--jiandu-table-bg);
-}
-
-#write table > tbody > tr:nth-child(even) {
-    background: var(--jiandu-table-stripe);
 }
 
 #write th,
 #write td {
-    box-sizing: border-box;
-    min-width: 0;
+    min-width: 2.7em;
     padding: 0.58rem 0.72rem;
     vertical-align: top;
     overflow-wrap: anywhere;
@@ -323,36 +300,8 @@ blockquote strong { color: inherit; }
     font-weight: 700;
 }
 
-/*
- * Common six-column PCIe table / 常见六列 PCIe 表格
- * Register | Bits | Access | Reset | Behavior | Firmware notes
- * 寄存器名不再吞掉前半张表，说明列获得主要阅读空间。
- */
-#write table > thead > tr > th:nth-child(1):nth-last-child(6),
-#write table > tbody > tr > td:nth-child(1):nth-last-child(6) { width: 19%; }
-
-#write table > thead > tr > th:nth-child(2):nth-last-child(5),
-#write table > tbody > tr > td:nth-child(2):nth-last-child(5) { width: 8%; }
-
-#write table > thead > tr > th:nth-child(3):nth-last-child(4),
-#write table > tbody > tr > td:nth-child(3):nth-last-child(4) { width: 8%; }
-
-#write table > thead > tr > th:nth-child(4):nth-last-child(3),
-#write table > tbody > tr > td:nth-child(4):nth-last-child(3) { width: 12%; }
-
-#write table > thead > tr > th:nth-child(5):nth-last-child(2),
-#write table > tbody > tr > td:nth-child(5):nth-last-child(2) { width: 26%; }
-
-#write table > thead > tr > th:nth-child(6):last-child,
-#write table > tbody > tr > td:nth-child(6):last-child { width: 27%; }
-
-/* Allow long register identifiers to wrap inside table cells / 表格内的长寄存器名允许换行 */
-#write table code,
-#write table tt {
-    white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-    font-size: 0.84em;
+#write tr:nth-child(2n) {
+    background: var(--jiandu-table-stripe);
 }
 
 #write tr:last-child td { border-bottom: 0; }
@@ -385,36 +334,21 @@ kbd {
 }
 
 /* Task list / 任务列表 */
-/*
- * Follow Typora's GitHub theme: keep Chromium's native checkbox and avoid
- * rebuilding the control. The first task paragraph must be inline; Typora's
- * default task paragraph can carry a width rule, and `inline-block` therefore
- * pushes it onto the next line in some export layouts.
- *
- * 参考 Typora 内置 GitHub 主题：保留 Chromium 原生复选框，不重画控件。
- * 任务首段必须改为 inline。Typora 的默认段落有时带宽度规则，若使用
- * inline-block，会在部分导出布局中被挤到复选框下一行。
- */
-#write .md-task-list-item > p.first,
-#write .md-task-list-item > p:first-of-type {
-    display: inline !important;
-    margin: 0 !important;
+#write input[type="checkbox"] {
+    width: 1.04em;
+    height: 1.04em;
+    margin: 0 0.44em 0 0;
+    vertical-align: -0.13em;
+    accent-color: var(--jiandu-checkbox);
 }
 
-#write .md-task-list-item > input {
-    /* Same anchor rule as Typora's GitHub theme / 与 GitHub 主题同样回到列表标记位置 */
-    margin: 0 0.38em 0 -1.3em;
-    /* Native control only: no custom drawing and no relative-position offset.
-       只使用原生控件：不自绘，也不使用 relative/top 造成布局偏移。 */
-    position: static !important;
-    top: auto !important;
-    vertical-align: var(--jiandu-task-checkbox-align);
-}
-
-/* Keep Typora's own completed-state structure; only tune its text colour. */
-/* 保留 Typora 原生的完成态结构；这里只微调完成项文字颜色。 */
 .md-task-list-item.task-list-done {
     color: var(--jiandu-muted);
+}
+
+.md-task-list-item.task-list-done > p {
+    text-decoration: line-through;
+    text-decoration-color: var(--jiandu-task-strike);
 }
 
 /* YAML, footnotes and TOC / YAML、脚注与目录 */

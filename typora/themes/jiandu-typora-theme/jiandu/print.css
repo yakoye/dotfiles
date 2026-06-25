@@ -1,9 +1,9 @@
 /*
  * Jiandu A4 Print Engine / 简读 A4 打印引擎
  *
- * Every Jiandu theme enters this stable, white-paper publishing layout automatically
+ * Every Jiandu theme enters this stable, white-paper layout automatically
  * when printing or exporting PDF. No manual theme switch is required.
- * 所有简读主题在打印或导出 PDF 时都会自动进入这套稳定的白纸出版排版，
+ * 所有简读主题在打印或导出 PDF 时都会自动进入这套稳定的白纸排版，
  * 无需手动切换主题。
  */
 
@@ -14,7 +14,6 @@
 
 @media print {
     :root {
-        color-scheme: light !important;
         /* Force a single print palette / 强制统一的打印色板 */
         --bg-color: #ffffff !important;
         --text-color: #1f2428 !important;
@@ -74,65 +73,31 @@
         --jiandu-diagram-activation: #e5ebee !important;
     }
 
-    /*
-     * Page canvas / 页面画布
-     * Give every page-level layer the SAME solid white paper colour.  The
-     * previous transparent-layer approach let Typora's screen canvas leak into
-     * blank top/bottom pagination areas, producing coloured bands in the PDF.
-     * This is not “a coloured page covered by a white card”: the page root,
-     * export wrapper and document root are all white.
-     *
-     * 页面级容器统一使用同一种纯白纸张色。此前透明层方案会让 Typora 的屏幕
-     * 画布渗入分页顶部和底部空白区，形成 PDF 色带。这里不是“彩色背景上盖
-     * 白色内容卡片”，而是页面根、导出容器和正文根本身都统一为白色。
-     */
     html,
-    body,
-    .typora-export,
-    .typora-export-content,
-    #write {
+    body {
         width: auto !important;
         min-width: 0 !important;
         height: auto !important;
-        min-height: 0 !important;
         margin: 0 !important;
         padding: 0 !important;
         color: var(--jiandu-text) !important;
         background: #ffffff !important;
-        background-color: #ffffff !important;
-        background-image: none !important;
-        box-shadow: none !important;
-    }
-
-    html,
-    body {
         font-family: var(--jiandu-print-body-font) !important;
         font-size: 10.7pt !important;
         line-height: 1.62 !important;
-        text-align: justify !important;
-        text-justify: inter-ideograph !important;
-        line-break: strict !important;
-        /* Do not force screen page backgrounds into the PDF canvas.
-           不强制把屏幕页面背景写入 PDF 画布。 */
-        -webkit-print-color-adjust: auto;
-        print-color-adjust: auto;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
 
     #write {
         width: auto !important;
         max-width: none !important;
-    }
-
-    /* Preserve intended subtle fills only inside document blocks.
-       仅为正文内部必要的浅色结构块保留颜色。 */
-    blockquote,
-    #write table thead,
-    #write table tbody tr:nth-child(even) td,
-    .md-fences,
-    #write pre.md-meta-block,
-    .md-toc {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        color: var(--jiandu-text) !important;
+        background: #ffffff !important;
+        box-shadow: none !important;
     }
 
     #typora-sidebar,
@@ -158,23 +123,14 @@
         color: var(--jiandu-text) !important;
     }
 
-    #write table,
-    #write table th,
-    #write table td {
-        font-family: var(--jiandu-print-table-font) !important;
-    }
-
     p {
         margin: 0 0 0.74em !important;
-        text-align: justify !important;
-        text-justify: inter-ideograph !important;
         orphans: 3;
         widows: 3;
     }
 
     h1, h2, h3, h4, h5, h6 {
         color: var(--jiandu-heading) !important;
-        text-align: left !important;
         font-family: var(--jiandu-print-heading-font) !important;
         page-break-after: avoid !important;
         break-after: avoid-page !important;
@@ -182,15 +138,7 @@
         break-inside: avoid-page !important;
     }
 
-    /* Formal book-style headings: no coloured bars or dot markers.
-       正式书刊式标题：不使用彩色竖条或圆点装饰。 */
-    h2::before,
-    h3::before {
-        display: none !important;
-    }
-
     h1 {
-        text-align: center !important;
         margin: 0 0 14pt !important;
         padding: 0 0 8pt !important;
         font-size: 20pt !important;
@@ -205,9 +153,23 @@
         border-bottom: 0.6pt solid var(--jiandu-heading-rule) !important;
     }
 
+    h2::before {
+        width: 3pt !important;
+        height: 14pt !important;
+        margin-right: 7pt !important;
+        background: var(--jiandu-accent) !important;
+    }
+
     h3 {
         margin: 14pt 0 6pt !important;
         font-size: 12.5pt !important;
+    }
+
+    h3::before {
+        width: 4pt !important;
+        height: 4pt !important;
+        margin-right: 6pt !important;
+        background: var(--jiandu-accent) !important;
     }
 
     h4 { margin: 11pt 0 5pt !important; font-size: 11.4pt !important; }
@@ -219,14 +181,6 @@
     h3 + p, h3 + ul, h3 + ol, h3 + blockquote {
         page-break-before: avoid !important;
         break-before: avoid-page !important;
-    }
-
-    li,
-    th,
-    td,
-    pre,
-    code {
-        text-align: left !important;
     }
 
     a,
@@ -310,50 +264,6 @@
         break-inside: auto !important;
     }
 
-    /*
-     * Fixed print layout prevents a long register name from squeezing the
-     * explanation columns. Six-column PCIe tables get a deliberate budget.
-     * 固定打印列宽避免长寄存器名挤压说明列；六列 PCIe 表格使用明确的列宽配额。
-     */
-    #write table,
-    table {
-        table-layout: fixed !important;
-    }
-
-    #write th,
-    #write td,
-    th,
-    td {
-        box-sizing: border-box !important;
-        min-width: 0 !important;
-    }
-
-    #write table > thead > tr > th:nth-child(1):nth-last-child(6),
-    #write table > tbody > tr > td:nth-child(1):nth-last-child(6) { width: 19% !important; }
-
-    #write table > thead > tr > th:nth-child(2):nth-last-child(5),
-    #write table > tbody > tr > td:nth-child(2):nth-last-child(5) { width: 8% !important; }
-
-    #write table > thead > tr > th:nth-child(3):nth-last-child(4),
-    #write table > tbody > tr > td:nth-child(3):nth-last-child(4) { width: 8% !important; }
-
-    #write table > thead > tr > th:nth-child(4):nth-last-child(3),
-    #write table > tbody > tr > td:nth-child(4):nth-last-child(3) { width: 12% !important; }
-
-    #write table > thead > tr > th:nth-child(5):nth-last-child(2),
-    #write table > tbody > tr > td:nth-child(5):nth-last-child(2) { width: 26% !important; }
-
-    #write table > thead > tr > th:nth-child(6):last-child,
-    #write table > tbody > tr > td:nth-child(6):last-child { width: 27% !important; }
-
-    #write table code,
-    #write table tt {
-        white-space: normal !important;
-        overflow-wrap: anywhere !important;
-        word-break: break-word !important;
-        font-size: 0.84em !important;
-    }
-
     thead {
         display: table-header-group !important;
         background: var(--jiandu-table-header) !important;
@@ -385,13 +295,10 @@
         background: var(--jiandu-table-stripe) !important;
     }
 
-    /*
-     * Code blocks: outer `.md-fences` only / 代码块：只处理外层 `.md-fences`
-     * Avoid globally styling `pre`; Typora can nest a `pre` inside the fence.
-     * 不全局处理 `pre`，避免 Typora 围栏代码内部嵌套时出现多层卡片。
-     */
+    /* Code blocks: wrap rather than cut off / 代码块：优先换行，避免右侧被裁切 */
     .md-fences,
-    pre.md-fences {
+    #write pre,
+    pre {
         margin: 8pt 0 !important;
         padding: 6pt 7pt !important;
         overflow: visible !important;
@@ -409,24 +316,6 @@
         break-inside: avoid-page !important;
     }
 
-    .md-fences pre,
-    .md-fences .CodeMirror,
-    .md-fences .CodeMirror-scroll,
-    .md-fences .CodeMirror-sizer,
-    .md-fences .CodeMirror-lines,
-    pre.md-fences pre {
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow: visible !important;
-        color: inherit !important;
-        background: transparent !important;
-        border: 0 !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
-        font: inherit !important;
-        line-height: inherit !important;
-    }
-
     #write code,
     #write tt {
         padding: 0 !important;
@@ -438,30 +327,13 @@
         font-size: 0.91em !important;
     }
 
-    .md-fences code,
-    pre.md-fences code {
-        color: inherit !important;
-        font: inherit !important;
-    }
-
     /* Mermaid / Mermaid 图 */
-    /*
-     * Mermaid / Mermaid 图
-     * Keep the interactive preview SVG out of forced sizing. Typora measures
-     * it after opening the raw-block editor; forcing height can create an
-     * empty preview panel. The rendered chart remains constrained to A4 width.
-     * 交互预览 SVG 不强制高度：Typora 在打开源码编辑后会自行测量；强制高度
-     * 可能留下空白预览框。已渲染图仍限制在 A4 可用宽度内。
-     */
     [id^="mermaidChart"],
-    .md-diagram-panel-preview {
+    .md-diagram-panel-preview,
+    [id^="mermaidChart"] svg,
+    .md-diagram-panel-preview svg {
         max-width: 100% !important;
-        page-break-inside: avoid !important;
-        break-inside: avoid-page !important;
-    }
-
-    [id^="mermaidChart"] svg {
-        max-width: 100% !important;
+        height: auto !important;
         page-break-inside: avoid !important;
         break-inside: avoid-page !important;
     }
@@ -485,25 +357,12 @@
         margin: 1.8pt 0 !important;
     }
 
-    /*
-     * Follow Typora's GitHub-theme task-list rule.  Do not draw a replacement
-     * checkbox or force task items into a custom layout.
-     * 参考 Typora GitHub 主题的任务列表规则：不自绘替代方框，也不强制重排
-     * 任务项，仅使用原生复选框与负左边距。
-     */
-    #write .md-task-list-item > p.first,
-    #write .md-task-list-item > p:first-of-type {
-        display: inline !important;
-        margin: 0 !important;
-    }
-
-    #write .md-task-list-item > input {
-        margin: 0 0.38em 0 -1.3em !important;
-        /* Keep the native control in normal inline flow. Do not apply `top`.
-           让原生控件保留在正常行内流中；不再使用 `top` 偏移。 */
-        position: static !important;
-        top: auto !important;
-        vertical-align: var(--jiandu-task-checkbox-align) !important;
+    #write input[type="checkbox"] {
+        width: 8pt !important;
+        height: 8pt !important;
+        margin-right: 4pt !important;
+        vertical-align: -1pt !important;
+        accent-color: var(--jiandu-accent) !important;
     }
 
     #write pre.md-meta-block {
@@ -537,24 +396,8 @@
         font-size: 8.8pt !important;
     }
 
-    /*
-     * Remove Typora's pagination spacer from exported pages.
-     * The spacer may otherwise show as a pale header/footer band between A4
-     * pages.  Keep real document blocks intact; only the empty pairing helper
-     * is removed.
-     * 移除 Typora 的分页辅助空白块。它有时会在 A4 页面之间显示为浅灰的
-     * 页眉/页脚色带；这里只移除空的辅助块，不影响真实文档内容。
-     */
-    .md-pair-skip {
-        /* Keep Typora's pagination helper structurally intact, but make it white.
-           保留 Typora 分页辅助节点的结构，仅统一为白色，避免色带。 */
-        background: #ffffff !important;
-        background-color: #ffffff !important;
-        background-image: none !important;
-        border: 0 !important;
-        box-shadow: none !important;
-    }
-
+    /* Avoid blank print pages from fixed-height UI / 避免固定高度界面导致空白页 */
+    .md-pair-skip,
     .md-end-block {
         min-height: 0 !important;
     }
