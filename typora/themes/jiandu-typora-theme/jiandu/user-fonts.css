@@ -35,13 +35,10 @@
 /*
  * Optional layout tuning / 可选布局微调
  *
- * Native task-checkbox vertical position. Larger means lower; smaller means
- * higher. Recommended range: 0.08em–0.20em. This keeps Typora/Chromium's
- * native checkbox; the theme does not redraw it.
- *
- * 原生任务方框的垂直位置。数值越大方框越靠下，数值越小方框越靠上。
- * 建议范围：0.08em–0.20em。仍使用 Typora/Chromium 原生方框，主题不重画。
+ * Native checkbox baseline alignment / 原生复选框基线对齐
+ * Negative values move the box slightly down; positive values move it up.
+ * 负值让方框略向下；正值让方框略向上。一般不需要修改。
  */
 :root {
-    --jiandu-task-checkbox-y: 0.13em;
+    --jiandu-task-checkbox-align: -0.08em;
 }
