@@ -3,7 +3,7 @@
 > A reading-first Typora theme pack with an A4-oriented print / PDF engine.  
 > 一套以阅读体验为先、并重点面向 A4 打印 / 导出 PDF 的 Typora 主题包。
 
-**Version / 版本：** `0.1.0`  
+**Version / 版本：** `0.1.2`  
 **Default screen theme / 默认屏幕主题：** `Jiandu Natural Paper`
 
 ---
@@ -25,13 +25,11 @@
 
 ## Default Typography / 默认排版方向
 
-Jiandu now defaults to `--jiandu-font-formal`, which prefers **KingHwa OldSong / 京华老宋体** and then falls back to modern Song-style families. The aim is the restrained, formal tone of books, theses, newspapers, and technical reference material rather than a handwritten-note style.  
-简读现在默认使用 `--jiandu-font-formal`，优先调用 **KingHwa OldSong / 京华老宋体**，再回退到现代宋体类字体。目标是书籍、论文、报刊和技术参考资料的克制正式感，而不是手写笔记风格。
+Jiandu now defaults to `--jiandu-font-publishing`, a publication-oriented Song-serif stack that prefers **Source Han Serif SC / 思源宋体** and then uses Noto Serif CJK SC and system Song fallbacks. This is intentionally a clean, modern Chinese publishing face: suitable for books, academic papers, newspapers, and PCIe technical reference material, rather than handwritten or decorative reading styles.  
+简读现在默认使用 `--jiandu-font-publishing`，这是一套面向出版排版的宋体回退链，优先调用 **Source Han Serif SC / 思源宋体**，再使用 Noto Serif CJK SC 与系统宋体回退。它刻意采用干净、现代、适合出版物的中文宋体风格，用于书籍、论文、报刊和 PCIe 技术参考资料，而不是手写体或装饰性阅读字体。
 
 Screen headings use the same formal family and rely on size, weight, spacing, and thin rules for hierarchy. Coloured bars and dot markers are intentionally removed.  
 屏幕标题默认与正文使用同一正式字体，通过字号、字重、留白和细分隔线建立层级；已刻意去除彩色竖条和圆点装饰。
-
----
 
 ## Theme Names / 主题名称
 
@@ -93,26 +91,20 @@ Open `jiandu/user-fonts.css`, then change **only** this line:
 打开 `jiandu/user-fonts.css`，只修改下面这一行：
 
 ```css
---jiandu-reading-font: var(--jiandu-font-formal);
+--jiandu-reading-font: var(--jiandu-font-publishing);
 ```
 
 Available choices / 可选字体预设：
 
 ```css
-/* Formal Book / Thesis / Newspaper — default / 正式书籍、论文、报刊体（默认） */
---jiandu-reading-font: var(--jiandu-font-formal);
+/* Source Han Serif / 思源宋体 — default / 默认：正式书籍、论文、报刊与技术资料 */
+--jiandu-reading-font: var(--jiandu-font-publishing);
 
-/* LXGW WenKai / 霞鹜文楷 — relaxed notes and journals / 轻松笔记与日记 */
---jiandu-reading-font: var(--jiandu-font-wenkai);
+/* System Song fallback / 系统宋体回退 — compact system-native book layout / 紧凑的系统原生书面布局 */
+--jiandu-reading-font: var(--jiandu-font-system-song);
 
-/* KingHwa OldSong / 京华老宋体 — compatibility alias of `formal` / `formal` 的兼容别名 */
---jiandu-reading-font: var(--jiandu-font-old-song);
-
-/* System Sans / 系统无衬线 — denser technical editing / 紧凑技术编辑 */
---jiandu-reading-font: var(--jiandu-font-system);
-
-/* Modern Serif / 现代宋体风格 — formal long-form reading / 正式长文阅读 */
---jiandu-reading-font: var(--jiandu-font-serif);
+/* Technical sans / 技术无衬线 — dense engineering editing only / 仅适合密集工程编辑 */
+--jiandu-reading-font: var(--jiandu-font-technical-sans);
 ```
 
 ### Important font behavior / 字体逻辑说明
@@ -121,12 +113,20 @@ Available choices / 可选字体预设：
   这一行会影响屏幕正文、标题、引用和表格。
 - Code, register fields, commands, and ASCII diagrams remain in a monospace font.  
   代码、寄存器字段、命令行和 ASCII 图始终使用等宽字体。
-- Print / PDF uses a dedicated, stable formal book-style body font, heading font, and code font. It deliberately does **not** follow the screen-font switch.  
-  打印 / PDF 使用独立、稳定的正式书刊体正文与标题字体，以及独立代码字体；不会跟随屏幕字体开关，从而减少分页和表格宽度变化。
-- A font must already be installed on your system. If it is not installed, the next font in the fallback list is used.  
-  对应字体需要已安装在系统中；未安装时会自动使用后面的回退字体。
+- Print / PDF uses a dedicated, stable Source Han Serif–first publishing stack for body and headings, plus a separate code font. It deliberately does **not** follow the screen-font switch.  
+  打印 / PDF 使用独立、稳定、以思源宋体为优先的出版级正文与标题字体，并使用独立代码字体；不会跟随屏幕字体开关，从而减少分页和表格宽度变化。
+- A font must already be installed on your system. If Source Han Serif is missing, the next family in the fallback chain is used.  
+  对应字体需要已安装在系统中；若未安装思源宋体，会自动使用回退链中的下一种字体。
 
----
+## Code Blocks / 代码块
+
+Jiandu styles only Typora’s outer fenced-code shell, `.md-fences`. Internal `pre` and CodeMirror layers are explicitly flattened, so one Markdown fence receives **one** background, **one** border, and **one** padding layer.
+
+简读只美化 Typora 围栏代码的外层 `.md-fences`。内部的 `pre` 与 CodeMirror 层会被显式压平，因此一个 Markdown 代码块只会有**一层**背景、**一层**边框和**一层**内边距。
+
+This follows the safer compatibility pattern used by Drake: style `.md-fences` instead of applying a global `#write pre` card style.
+
+这一处理参考了 Drake 更稳妥的兼容逻辑：美化 `.md-fences`，而不是给全局 `#write pre` 套卡片样式。
 
 ## Print and PDF / 打印与导出 PDF
 

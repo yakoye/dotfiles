@@ -166,3 +166,29 @@ A Completion Timeout range should match the platform requirement rather than bei
       Mermaid 图能放入页面。
 - [ ] The hierarchy is clear in grayscale.  
       灰阶打印时层级仍然清晰。
+
+---
+
+## Single-layer Code Fence Test / 单层代码围栏测试
+
+The following fence should render as one card only: one background, one border, and one padding layer.
+
+下面这段围栏代码应只呈现为一张卡片：一层背景、一层边框、一层内边距。
+
+```css
+/* Outer fence only / 只美化外层围栏 */
+.md-fences {
+    padding: 0.92rem 1.08rem;
+    border: 1px solid var(--jiandu-code-border);
+}
+
+/* Internal layers stay flat / 内部层保持扁平 */
+.md-fences pre,
+.md-fences .CodeMirror {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+}
+```
+
