@@ -3,7 +3,7 @@
 > A reading-first Typora theme pack with an A4-oriented print / PDF engine.  
 > 一套以阅读体验为先、并重点面向 A4 打印 / 导出 PDF 的 Typora 主题包。
 
-**Version / 版本：** `0.1.2`  
+**Version / 版本：** `0.1.4`  
 **Default screen theme / 默认屏幕主题：** `Jiandu Natural Paper`
 
 ---
@@ -103,9 +103,18 @@ Available choices / 可选字体预设：
 /* System Song fallback / 系统宋体回退 — compact system-native book layout / 紧凑的系统原生书面布局 */
 --jiandu-reading-font: var(--jiandu-font-system-song);
 
+/* LXGW WenKai / 霞鹜文楷 — optional screen reading / 可选：屏幕长文、笔记与日记 */
+--jiandu-reading-font: var(--jiandu-font-wenkai);
+
+/* KingHwa OldSong / 京华老宋体 — optional traditional book feeling / 可选：传统旧书阅读气质 */
+--jiandu-reading-font: var(--jiandu-font-kinghwa-old-song);
+
 /* Technical sans / 技术无衬线 — dense engineering editing only / 仅适合密集工程编辑 */
 --jiandu-reading-font: var(--jiandu-font-technical-sans);
 ```
+
+> Common aliases are also available: `--jiandu-font-lxgw-wenkai`, `--jiandu-font-kinghwa`, and `--jiandu-font-old-song`.  
+> 同时提供常用别名：`--jiandu-font-lxgw-wenkai`、`--jiandu-font-kinghwa` 与 `--jiandu-font-old-song`。
 
 ### Important font behavior / 字体逻辑说明
 
@@ -127,6 +136,10 @@ Jiandu styles only Typora’s outer fenced-code shell, `.md-fences`. Internal `p
 This follows the safer compatibility pattern used by Drake: style `.md-fences` instead of applying a global `#write pre` card style.
 
 这一处理参考了 Drake 更稳妥的兼容逻辑：美化 `.md-fences`，而不是给全局 `#write pre` 套卡片样式。
+
+Jiandu also removes CodeMirror’s full-line current-caret highlight. The caret remains visible, and text selection still has a selection highlight; only the distracting background tint of the current line is disabled.
+
+简读同时移除了 CodeMirror 的“光标所在行整行高亮”。光标仍会正常显示，选中文本仍保留选中高亮；仅关闭容易分散注意力的当前行背景色。
 
 ## Print and PDF / 打印与导出 PDF
 
