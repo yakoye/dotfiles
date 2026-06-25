@@ -1,4 +1,6 @@
-/* Jiandu Bright White / 简读·明亮白 */
+/* Jiandu Bright White / 简读·明亮白
+ * PDF keeps the active screen font preset / PDF 保留当前屏幕字体套餐。
+ */
 @import url("./jiandu/base.css");
 
 :root {

@@ -1,4 +1,6 @@
-/* Jiandu Warm Beige / 简读·暖米色 */
+/* Jiandu Warm Beige / 简读·暖米色
+ * PDF keeps the active screen font preset / PDF 保留当前屏幕字体套餐。
+ */
 @import url("./jiandu/base.css");
 
 :root {

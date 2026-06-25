@@ -1,0 +1,13 @@
+/* GitHub Modern / GitHub 现代
+ * README, developer notes, project documentation, and engineering references.
+ * README、开发笔记、项目文档和工程资料。
+ */
+:root {
+    --jiandu-heading-font: var(--jiandu-font-github-modern);
+    --jiandu-reading-font: var(--jiandu-font-github-modern);
+    --jiandu-table-font: var(--jiandu-font-github-modern);
+    --jiandu-quote-font: var(--jiandu-font-github-modern);
+    --jiandu-caption-font: var(--jiandu-font-github-modern);
+    --jiandu-ui-font: var(--jiandu-font-github-modern);
+    --jiandu-code-font: var(--jiandu-font-github-mono);
+}

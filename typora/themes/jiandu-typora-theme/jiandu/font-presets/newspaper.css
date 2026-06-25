@@ -1,0 +1,13 @@
+/* Newspaper / 报刊风格
+ * Editorial and newspaper-like hierarchy; use for reviews, archives, commentary.
+ * 评论、史料与报刊式长文；正文稳重，标题更有力度。
+ */
+:root {
+    --jiandu-heading-font: var(--jiandu-font-fz-cuhe);
+    --jiandu-reading-font: var(--jiandu-font-fz-baosong);
+    --jiandu-table-font: var(--jiandu-font-fz-baosong);
+    --jiandu-quote-font: var(--jiandu-font-fz-baosong);
+    --jiandu-caption-font: var(--jiandu-font-fz-baosong);
+    --jiandu-ui-font: var(--jiandu-font-noto-sans-sc);
+    --jiandu-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
+}

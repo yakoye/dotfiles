@@ -1,156 +1,166 @@
 /*
- * Jiandu Typora Theme — Font Presets / 简读 Typora 主题 — 字体预设
+ * Jiandu Typora Theme — Font Registry / 简读 Typora 主题 — 字体注册表
  *
- * Screen defaults prioritize crisp rendering first.  Publication-oriented
- * Song serif remains available for formal screen reading and is retained as
- * the stable default family for A4 print/PDF.
- * 屏幕默认优先考虑清晰度；正式出版宋体仍可用于屏幕阅读，并继续作为 A4
- * 打印 / PDF 的稳定正文默认字体。
+ * This file contains only reusable font stacks and safe fallback chains.
+ * Change your active screen preset and personal overrides in `user-fonts.css`.
+ * 本文件只放可复用的字体栈与兼容回退链。
+ * 当前屏幕套餐和个人覆盖请修改 `user-fonts.css`。
  *
- * Change user choices in `user-fonts.css`, not in this file.
- * 用户选择请修改 `user-fonts.css`，不要改本文件。
+ * Compatibility policy / 兼容策略：
+ * - Preferred local fonts are listed first.
+ * - Windows, macOS, and generic fallbacks follow.
+ * - Jiandu never bundles font files.
+ * - 优先使用本机已安装字体，其后依次为 Windows、macOS 与通用回退。
+ * - 简读不附带任何字体文件。
  */
 :root {
-    /*
-     * Core UI / 界面基础字体
-     * Used by Typora dialogs, table headers, image captions, and utility UI.
-     * 用于 Typora 界面、表头、图片说明和工具性 UI。
-     */
-    --jiandu-font-ui-sans:
+    /* ================================================================
+     * Sans-serif / 无衬线
+     * ================================================================ */
+
+    /* Noto Sans Simplified Chinese / Noto Sans SC / 思源黑体 */
+    --jiandu-font-noto-sans-sc:
         "Noto Sans SC", "Noto Sans Simplified Chinese", "NotoSansSC",
-        "Source Han Sans SC", "Microsoft YaHei UI", "Microsoft YaHei",
-        "PingFang SC", Arial, sans-serif;
+        "Source Han Sans SC", "Source Han Sans CN", "思源黑体",
+        "Microsoft YaHei UI", "Microsoft YaHei",
+        "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
 
-    /* Compatibility alias / 兼容别名 */
-    --jiandu-font-noto-sans-sc: var(--jiandu-font-ui-sans);
+    /* GitHub-style modern UI and body / GitHub 风格现代界面与正文 */
+    --jiandu-font-github-modern:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", "Segoe UI Variable",
+        "Inter", "Noto Sans SC", "Noto Sans Simplified Chinese",
+        "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC",
+        "Hiragino Sans GB", Arial, sans-serif;
 
-    /*
-     * Publication Song serif / 出版宋体
-     * Formal books, papers, newspapers, and stable A4 output.
-     * 正式书籍、论文、报刊与稳定 A4 输出。
-     */
+    /* 方正悠黑 / FangZheng YouHei — calm technical headings */
+    --jiandu-font-fz-youhei:
+        "方正悠黑", "FZYouHei", "FZYouHei-B02S",
+        "Noto Sans SC", "Noto Sans Simplified Chinese",
+        "Microsoft YaHei UI", "PingFang SC", sans-serif;
+
+    /* 汉仪旗黑 / Hanyi QiHei — clean modern headings */
+    --jiandu-font-hy-qihei:
+        "汉仪旗黑", "HYQiHei", "HYQiHeiW",
+        "Noto Sans SC", "Noto Sans Simplified Chinese",
+        "Microsoft YaHei UI", "PingFang SC", sans-serif;
+
+    /* 方正粗黑 / FangZheng CuHei — strong display headings */
+    --jiandu-font-fz-cuhe:
+        "方正粗黑", "FZCuHei-B03S", "FZCuHei",
+        "Noto Sans SC", "Noto Sans Simplified Chinese",
+        "Microsoft YaHei UI", "PingFang SC", sans-serif;
+
+    /* 汉仪粗黑 / Hanyi CuHei — strong display headings */
+    --jiandu-font-hy-cuhe:
+        "汉仪粗黑", "HYCuHei", "HYCuHeiW",
+        "Noto Sans SC", "Noto Sans Simplified Chinese",
+        "Microsoft YaHei UI", "PingFang SC", sans-serif;
+
+    --jiandu-font-heavy-black: var(--jiandu-font-fz-cuhe);
+
+    /* ================================================================
+     * Song serif / 宋体与衬线
+     * ================================================================ */
+
+    /* Formal publishing Song serif / 正式出版宋体 */
     --jiandu-font-publishing:
         "Source Han Serif SC", "Source Han Serif CN", "Source Han Serif",
         "Noto Serif CJK SC", "Noto Serif SC", "思源宋体",
         "Songti SC", "STSong", "SimSun", serif;
 
-    /* Compact system Song fallback / 紧凑系统宋体回退 */
+    /* Windows/macOS-safe system Song fallback / 系统宋体回退 */
     --jiandu-font-system-song:
         "Songti SC", "STSong", "SimSun",
         "Source Han Serif SC", "Noto Serif CJK SC", serif;
 
-    /*
-     * Screen sans / 屏幕无衬线
-     * Recommended for sharp, high-clarity desktop reading.
-     * 推荐用于电脑屏幕的清晰、高对比阅读。
-     */
-    --jiandu-font-screen-sans:
-        "Noto Sans SC", "Noto Sans Simplified Chinese", "NotoSansSC",
-        "Source Han Sans SC", "Microsoft YaHei UI", "Microsoft YaHei",
-        "PingFang SC", sans-serif;
-
-    /*
-     * Maple Mono NL NF CN / Maple Mono 中文等宽字体
-     * Recommended for code, PCIe registers, terminal commands, and tables.
-     * 推荐用于代码、PCIe 寄存器、终端命令与表格字段。
-     */
-    --jiandu-font-maple-mono-nl-nf-cn:
-        "Maple Mono NL NF CN", "Maple Mono NF CN", "Maple Mono NL",
-        "Maple Mono", "Iosevka Curly", "JetBrains Mono", "Cascadia Code",
-        "Fira Code", Consolas, "Liberation Mono", monospace;
-
-    /* Compatibility aliases / 兼容别名 */
-    --jiandu-font-maple-mono: var(--jiandu-font-maple-mono-nl-nf-cn);
-    --jiandu-font-maple: var(--jiandu-font-maple-mono-nl-nf-cn);
-
-    /*
-     * FangZheng / 方正字体预设
-     * These are local-name stacks only. Jiandu does not include font files.
-     * 这些仅为本机字体名称回退链；简读不附带任何字体文件。
-     */
-
     /* 方正书宋_GBK / FangZheng ShuSong GBK — formal book body */
     --jiandu-font-fz-shusong-gbk:
         "方正书宋_GBK", "方正书宋", "FZShuSong-Z01S", "FZShuSong",
-        "Source Han Serif SC", "Noto Serif CJK SC", serif;
+        "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
 
-    /* 方正博雅宋 / FangZheng BoYaSong — refined book / essay body */
+    /* 方正博雅宋 / FangZheng BoYaSong — refined book headings/body */
     --jiandu-font-fz-boyasong:
         "方正博雅宋", "FZBoYaSong", "FZBoYaSong-Z02S",
-        "Source Han Serif SC", "Noto Serif CJK SC", serif;
+        "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
 
-    /* 方正清刻本悦宋 / FangZheng QingKeBen YueSong — classic reading body */
+    /* 方正清刻本悦宋 / FangZheng QingKeBen YueSong — classic reading */
     --jiandu-font-fz-qingkeben-yuesong:
         "方正清刻本悦宋", "FZQingKeBenYueSong", "FZQingKeBenYueSongS",
-        "Source Han Serif SC", "Noto Serif CJK SC", serif;
+        "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
 
-    /* 方正报宋 / FangZheng BaoSong — newspaper-like body / headline */
+    /* 方正报宋 / FangZheng BaoSong — newspaper/editorial body */
     --jiandu-font-fz-baosong:
         "方正报宋", "FZBaoSong-Z04S", "FZBaoSong",
-        "Source Han Serif SC", "Noto Serif CJK SC", serif;
+        "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
 
-    /* 方正粗黑 / FangZheng CuHei — strong display headings */
-    --jiandu-font-fz-cuhe:
-        "方正粗黑", "FZCuHei-B03S", "FZCuHei",
-        "Noto Sans SC", "Source Han Sans SC", sans-serif;
-
-    /* 汉仪粗黑 / Hanyi CuHei — strong display headings */
-    --jiandu-font-hy-cuhe:
-        "汉仪粗黑", "HYCuHei", "HYCuHeiW",
-        "Noto Sans SC", "Source Han Sans SC", sans-serif;
-
-    /* Generic strong-display fallback / 通用强强调标题回退 */
-    --jiandu-font-heavy-black: var(--jiandu-font-fz-cuhe);
-
-    /* 汉仪旗黑 / Hanyi QiHei — clean modern headings */
-    --jiandu-font-hy-qihei:
-        "汉仪旗黑", "HYQiHei", "HYQiHeiW",
-        "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei UI", sans-serif;
-
-    /* 方正悠黑 / FangZheng YouHei — calm technical headings */
-    --jiandu-font-fz-youhei:
-        "方正悠黑", "FZYouHei", "FZYouHei-B02S",
-        "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei UI", sans-serif;
-
-    /*
-     * Optional earlier presets / 旧有可选预设
-     * They remain available only for users who explicitly choose them.
-     * 它们仍然可用，但仅在用户主动选择时使用。
-     */
-    --jiandu-font-wenkai:
-        "LXGW WenKai GB", "LXGW WenKai", "LXGW WenKai Screen",
-        "霞鹜文楷 GB", "霞鹜文楷", "霞鶩文楷 GB",
-        "Source Han Serif SC", "Noto Serif CJK SC", serif;
-    --jiandu-font-lxgw-wenkai: var(--jiandu-font-wenkai);
-
+    /* 京华老宋体 / KingHwa OldSong — optional retro reading */
     --jiandu-font-kinghwa-old-song:
         "KingHwaOldSong", "KingHwa OldSong",
         "京華老宋体", "京华老宋体",
-        "Source Han Serif SC", "Noto Serif CJK SC", serif;
+        "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
     --jiandu-font-kinghwa: var(--jiandu-font-kinghwa-old-song);
     --jiandu-font-old-song: var(--jiandu-font-kinghwa-old-song);
 
-    /* Dense engineering editing only / 仅适合密集工程编辑 */
-    --jiandu-font-technical-sans:
-        "Noto Sans SC", "Noto Sans Simplified Chinese", "NotoSansSC",
-        "Source Han Sans SC", "Microsoft YaHei UI", "Microsoft YaHei",
-        "PingFang SC", sans-serif;
+    /* 霞鹜文楷 / LXGW WenKai — optional notes and journals */
+    --jiandu-font-wenkai:
+        "LXGW WenKai GB", "LXGW WenKai", "LXGW WenKai Screen",
+        "霞鹜文楷 GB", "霞鹜文楷", "霞鶩文楷 GB",
+        "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "SimSun", serif;
+    --jiandu-font-lxgw-wenkai: var(--jiandu-font-wenkai);
 
-    /*
-     * Internal defaults / 内部默认值
-     * These can be overridden in user-fonts.css.
-     * 可在 user-fonts.css 中覆盖。
-     */
-    --jiandu-ui-font: var(--jiandu-font-ui-sans);
-    --jiandu-reading-font: var(--jiandu-font-screen-sans);
-    --jiandu-heading-font: var(--jiandu-font-screen-sans);
+    /* ================================================================
+     * Academic / LaTeX-like stacks / 学术与 LaTeX 风格
+     * ================================================================ */
+    --jiandu-font-latex-serif:
+        "Latin Modern Roman", "CMU Serif", "STIX Two Text", "Libertinus Serif",
+        "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", "SimSun", serif;
+
+    --jiandu-font-latex-mono:
+        "Latin Modern Mono", "CMU Typewriter Text", "JuliaMono",
+        "Maple Mono NL NF CN", "Maple Mono", "Cascadia Mono", "SF Mono",
+        Menlo, Consolas, "Liberation Mono", monospace;
+
+    /* ================================================================
+     * Monospace / 等宽字体
+     * ================================================================ */
+
+    /* Maple Mono NL NF CN / Maple Mono 中文等宽字体 */
+    --jiandu-font-maple-mono-nl-nf-cn:
+        "Maple Mono NL NF CN", "Maple Mono NF CN", "Maple Mono NL",
+        "Maple Mono", "Iosevka Curly", "JetBrains Mono", "Cascadia Code",
+        "Cascadia Mono", "Fira Code", "SF Mono", Menlo, Consolas,
+        "Liberation Mono", monospace;
+    --jiandu-font-maple-mono: var(--jiandu-font-maple-mono-nl-nf-cn);
+    --jiandu-font-maple: var(--jiandu-font-maple-mono-nl-nf-cn);
+
+    /* GitHub-like monospace / GitHub 风格等宽字体 */
+    --jiandu-font-github-mono:
+        "SFMono-Regular", "SF Mono", "Cascadia Code", "Cascadia Mono",
+        "Consolas", "Liberation Mono", "Maple Mono NL NF CN", Menlo, monospace;
+
+    /* ================================================================
+     * Role defaults / 角色默认值
+     * These are replaced by the active screen preset in `user-fonts.css`.
+     * 这些值会被 `user-fonts.css` 中启用的屏幕套餐覆盖。
+     * ================================================================ */
+    --jiandu-heading-font: var(--jiandu-font-noto-sans-sc);
+    --jiandu-reading-font: var(--jiandu-font-noto-sans-sc);
     --jiandu-table-font: var(--jiandu-reading-font);
+    --jiandu-quote-font: var(--jiandu-reading-font);
+    --jiandu-caption-font: var(--jiandu-ui-font);
+    --jiandu-ui-font: var(--jiandu-font-noto-sans-sc);
     --jiandu-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
 
-    /* Stable A4 publishing defaults / 稳定 A4 出版默认值 */
-    --jiandu-print-body-font: var(--jiandu-font-publishing);
+    /* Print-preview defaults / 印刷预览默认值
+     * Jiandu Print Preview remaps screen roles to these values explicitly.
+     * `jiandu-print-preview.css` 会显式将屏幕角色映射到这些值。
+     */
     --jiandu-print-heading-font: var(--jiandu-font-publishing);
+    --jiandu-print-body-font: var(--jiandu-font-publishing);
     --jiandu-print-table-font: var(--jiandu-print-body-font);
+    --jiandu-print-quote-font: var(--jiandu-print-body-font);
+    --jiandu-print-caption-font: var(--jiandu-font-noto-sans-sc);
+    --jiandu-print-ui-font: var(--jiandu-font-noto-sans-sc);
     --jiandu-print-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
 
     /* Reading metrics / 阅读排版参数 */

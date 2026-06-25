@@ -1,0 +1,13 @@
+/* Retro Jinghua / 复古京华
+ * Old-book atmosphere for journals, essays, and cultural reading.
+ * 旧书氛围，适合日记、随笔和文化类阅读；不建议作为密集 PCIe 表格默认。
+ */
+:root {
+    --jiandu-heading-font: var(--jiandu-font-kinghwa-old-song);
+    --jiandu-reading-font: var(--jiandu-font-kinghwa-old-song);
+    --jiandu-table-font: var(--jiandu-font-kinghwa-old-song);
+    --jiandu-quote-font: var(--jiandu-font-kinghwa-old-song);
+    --jiandu-caption-font: var(--jiandu-font-kinghwa-old-song);
+    --jiandu-ui-font: var(--jiandu-font-noto-sans-sc);
+    --jiandu-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
+}

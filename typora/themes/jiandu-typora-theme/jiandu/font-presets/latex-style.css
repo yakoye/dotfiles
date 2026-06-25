@@ -1,0 +1,13 @@
+/* LaTeX Style / LaTeX 学术风格
+ * Research notes, architecture documents, specifications, and math-heavy text.
+ * 研究笔记、架构文档、规范与公式较多的技术文本。
+ */
+:root {
+    --jiandu-heading-font: var(--jiandu-font-latex-serif);
+    --jiandu-reading-font: var(--jiandu-font-latex-serif);
+    --jiandu-table-font: var(--jiandu-font-latex-serif);
+    --jiandu-quote-font: var(--jiandu-font-latex-serif);
+    --jiandu-caption-font: var(--jiandu-font-latex-serif);
+    --jiandu-ui-font: var(--jiandu-font-github-modern);
+    --jiandu-code-font: var(--jiandu-font-latex-mono);
+}

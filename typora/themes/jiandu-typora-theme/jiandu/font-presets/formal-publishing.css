@@ -1,0 +1,13 @@
+/* Formal Publishing / 正式出版
+ * Formal books, papers, long reports. Good for screen and WYSIWYG PDF export.
+ * 正式书籍、论文与长报告；适用于屏幕及所见即所得 PDF 导出。
+ */
+:root {
+    --jiandu-heading-font: var(--jiandu-font-fz-boyasong);
+    --jiandu-reading-font: var(--jiandu-font-publishing);
+    --jiandu-table-font: var(--jiandu-font-publishing);
+    --jiandu-quote-font: var(--jiandu-font-publishing);
+    --jiandu-caption-font: var(--jiandu-font-publishing);
+    --jiandu-ui-font: var(--jiandu-font-noto-sans-sc);
+    --jiandu-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
+}

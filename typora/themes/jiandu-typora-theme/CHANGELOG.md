@@ -1,5 +1,27 @@
 # Changelog / 更新记录
 
+## v0.2.0 — Typography Presets and WYSIWYG PDF / 字体套餐与所见即所得 PDF
+
+- Added seven coordinated screen typography presets: Screen Clear, Formal Publishing, Newspaper, Retro Jinghua, GitHub Modern, LaTeX Style, and WenKai Notes.  
+  新增七套统一屏幕字体套餐：屏幕清晰、正式出版、报刊风格、复古京华、GitHub 现代、LaTeX 学术风格、霞鹜文楷。
+- Each preset now sets headings, body, tables, quotes, captions, UI, and code together.  
+  每套套餐都会统一设置标题、正文、表格、引用、图注、界面和代码字体。
+- `user-fonts.css` now uses a single active `@import` selector plus a Personal Overrides block.  
+  `user-fonts.css` 改为单个启用的 `@import` 选择器，并提供个人覆盖区。
+- Ordinary Jiandu themes now export PDF using their active screen preset and theme palette inside the document area; PDF typography is no longer forcibly replaced by one global print font.  
+  普通简读主题导出 PDF 时会沿用当前屏幕字体套餐与文档内部主题配色，不再被全局固定打印字体强制替换。
+- `Jiandu Print Preview` is intentionally independent: it maps all ordinary roles to a fixed formal publishing typography both on screen and in PDF export.  
+  `Jiandu Print Preview` 刻意独立：无论屏幕套餐如何，它在屏幕与 PDF 中都映射为固定的正式出版字体。
+- Preserved the white export canvas safeguard through `--jiandu-bg: #ffffff`, preventing Typora’s coloured page-header/footer bands.  
+  保留 `--jiandu-bg: #ffffff` 的白色导出画布保护，避免 Typora PDF 出现有色页眉 / 页脚带。
+- Added quote and caption role variables, so a preset can change these areas without affecting code or UI.  
+  新增引用与图注角色变量，使套餐可以单独协调这些区域而不影响代码或界面。
+
+## v0.1.15 — Compact Code Language Tab / 紧凑代码语言标签
+
+- Reworked the active code-language selector into a compact edge tab: no oversized outer panel, no floating shadow, and a restrained border similar to the built-in GitHub theme.
+- 将活动代码语言选择器改为贴边小标签：移除过大的外层面板和浮动阴影，使用接近 Typora 内置 GitHub 主题的克制边框与尺寸。
+
 ## v0.1.14 — Code Language Selector / 代码语言选择器
 
 - Added a visible background, border, and focus ring for Typora's fenced-code language selector.

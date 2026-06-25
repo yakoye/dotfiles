@@ -1,67 +1,59 @@
 /*
- * Jiandu user typography settings / 简读用户排版设置
+ * Jiandu User Typography Settings / 简读用户字体设置
  *
- * This is the ONLY file intended for personal typography choices.
- * 这是唯一建议你按个人习惯修改的字体配置文件。
+ * This is the only file intended for your personal typography choices.
+ * 这是唯一建议你按个人习惯修改的字体文件。
  *
- * Screen and print are separated on purpose:
- * - Screen: prioritize clarity and your preferred reading character.
- * - Print/PDF: keep a stable A4 book/paper layout unless you choose otherwise.
- *
- * 屏幕与打印刻意分开：
- * - 屏幕：优先清晰度和你的阅读偏好。
- * - 打印 / PDF：默认保持稳定的 A4 书刊排版；需要时也可以单独改。
+ * How it works / 工作方式：
+ * 1. Select ONE screen preset below / 在下方只启用一个屏幕字体套餐。
+ * 2. Optionally override one or more roles in the Personal Overrides block.
+ *    如有需要，再在“个人覆盖区”单独替换某个角色。
+ * 3. Ordinary Jiandu themes export PDF with the active screen preset.
+ *    普通简读主题导出 PDF 时，沿用当前启用的屏幕套餐，尽量所见即所得。
+ * 4. `Jiandu Print Preview` has its own fixed publishing typography and does
+ *    not follow this screen preset file.
+ *    `Jiandu Print Preview` 使用独立固定的出版字体，不受本文件影响。
  */
+
+/* ====================================================================
+ * Active screen preset / 当前屏幕字体套餐
+ * Enable exactly ONE import line. / 只启用其中一行。
+ *
+ * The default is Screen Clear: Noto Sans SC + Maple Mono.
+ * 默认是 Screen Clear：Noto Sans SC + Maple Mono。
+ * ==================================================================== */
+@import url("./font-presets/screen-clear.css");
+
+/* @import url("./font-presets/formal-publishing.css"); */
+/* @import url("./font-presets/newspaper.css"); */
+/* @import url("./font-presets/retro-jinghua.css"); */
+/* @import url("./font-presets/github-modern.css"); */
+/* @import url("./font-presets/latex-style.css"); */
+/* @import url("./font-presets/wenkai-notes.css"); */
 
 :root {
     /* ================================================================
-     * Screen typography / 屏幕字体
+     * Personal Overrides / 个人覆盖区
      * ================================================================
-     * Recommended screen default / 推荐屏幕默认：
-     * Noto Sans SC is usually crisp on Windows desktop displays.
-     * Noto Sans SC 通常在 Windows 电脑屏幕上显示更清晰。
+     * Presets set all roles as a coordinated package. Uncomment only the
+     * role(s) you want to change after selecting a preset.
+     * 字体套餐会统一设置全部角色。选好套餐后，只取消你要替换的角色注释。
+     *
+     * Order: headings → body → tables → quotes → captions → UI → code.
+     * 顺序：标题 → 正文 → 表格 → 引用 → 图注 → 界面 → 代码。
      */
-    --jiandu-reading-font: var(--jiandu-font-noto-sans-sc);
 
-    /*
-     * Headings / 标题
-     * Recommended: use the same Noto Sans SC stack for a clean hierarchy.
-     * 推荐：与正文同用 Noto Sans SC，层级干净清晰。
-     */
-    --jiandu-heading-font: var(--jiandu-font-noto-sans-sc);
+    /* --jiandu-heading-font: var(--jiandu-font-fz-youhei); */
+    /* --jiandu-reading-font: var(--jiandu-font-noto-sans-sc); */
+    /* --jiandu-table-font: var(--jiandu-font-noto-sans-sc); */
+    /* --jiandu-quote-font: var(--jiandu-font-noto-sans-sc); */
+    /* --jiandu-caption-font: var(--jiandu-font-noto-sans-sc); */
+    /* --jiandu-ui-font: var(--jiandu-font-noto-sans-sc); */
+    /* --jiandu-code-font: var(--jiandu-font-maple-mono-nl-nf-cn); */
 
-    /*
-     * Tables / 表格
-     * Normally follow body text. For dense PCIe tables, Noto Sans SC is clear.
-     * 默认跟随正文。对于密集 PCIe 表格，Noto Sans SC 通常更清晰。
+    /* Example / 示例：保持当前套餐，只替换代码字体。
+     * --jiandu-code-font: var(--jiandu-font-github-mono);
      */
-    --jiandu-table-font: var(--jiandu-reading-font);
-
-    /*
-     * Code, registers, commands / 代码、寄存器、命令行
-     * Maple Mono NL NF CN is the preferred code preset.
-     * Maple Mono NL NF CN 作为推荐的代码字体预设。
-     */
-    --jiandu-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
-
-    /*
-     * UI, table headers, captions / 界面、表头、图片说明
-     * Usually keep this as Noto Sans SC for clear labels.
-     * 通常保持 Noto Sans SC，使标签和表头更清楚。
-     */
-    --jiandu-ui-font: var(--jiandu-font-noto-sans-sc);
-
-    /* ================================================================
-     * Print and PDF typography / 打印与 PDF 字体
-     * ================================================================
-     * Default: formal publishing Song serif. These are intentionally separate
-     * from screen choices so PDF page breaks remain stable.
-     * 默认：正式出版宋体。它们与屏幕字体分开，避免 PDF 分页不稳定。
-     */
-    --jiandu-print-body-font: var(--jiandu-font-publishing);
-    --jiandu-print-heading-font: var(--jiandu-font-publishing);
-    --jiandu-print-table-font: var(--jiandu-print-body-font);
-    --jiandu-print-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
 
     /* ================================================================
      * Native checkbox alignment / 原生任务方框对齐
@@ -73,77 +65,76 @@
     --jiandu-task-checkbox-align: -0.04em;
 }
 
-/*
- * Font presets / 字体预设
- * ----------------------------------------------------------------
- * Copy one font variable from the list below to the corresponding setting
- * above. Do not copy every line at once.
- * 从下方复制一个字体变量到上方对应设置中；不要把全部行一起复制。
+/* ====================================================================
+ * Preset guide / 套餐说明
+ * ====================================================================
+ * 1. screen-clear.css / Screen Clear / 屏幕清晰
+ *    Noto Sans SC + Maple Mono. Windows/macOS technical reading.
+ *    Noto Sans SC + Maple Mono。适合 Windows/macOS 技术资料与日常阅读。
+ *
+ * 2. formal-publishing.css / Formal Publishing / 正式出版
+ *    Source Han Serif body + FangZheng BoYaSong headings when installed.
+ *    思源宋体正文 + 已安装时优先方正博雅宋标题。书籍、论文、长报告。
+ *
+ * 3. newspaper.css / Newspaper / 报刊风格
+ *    FangZheng BaoSong body + FangZheng CuHei headings when installed.
+ *    方正报宋正文 + 已安装时优先方正粗黑标题。评论、报刊、史料。
+ *
+ * 4. retro-jinghua.css / Retro Jinghua / 复古京华
+ *    KingHwa OldSong body and headings. Journals and cultural essays.
+ *    京华老宋体正文与标题。日记、随笔、文化类长文。
+ *
+ * 5. github-modern.css / GitHub Modern / GitHub 现代
+ *    Modern system sans + GitHub-style mono. README and engineering docs.
+ *    现代系统无衬线 + GitHub 风格等宽。README、开发文档。
+ *
+ * 6. latex-style.css / LaTeX Style / LaTeX 学术风格
+ *    Latin Modern/CMU priorities with CJK Song fallback. Papers and specs.
+ *    Latin Modern/CMU 优先，中文回退到出版宋体。论文、规范、公式文档。
+ *
+ * 7. wenkai-notes.css / WenKai Notes / 霞鹜文楷
+ *    LXGW WenKai body and headings. Journals, reading notes, prose.
+ *    霞鹜文楷正文与标题。日记、读书笔记、随笔。
+ *
+ * ====================================================================
+ * Individual font variables / 单项字体变量
+ * ====================================================================
+ * HEADINGS / 标题：
+ * --jiandu-font-noto-sans-sc              Noto Sans Simplified Chinese / NotoSansSC
+ * --jiandu-font-fz-youhei                 方正悠黑
+ * --jiandu-font-hy-qihei                  汉仪旗黑
+ * --jiandu-font-fz-cuhe                   方正粗黑
+ * --jiandu-font-hy-cuhe                   汉仪粗黑
+ * --jiandu-font-fz-boyasong               方正博雅宋
+ * --jiandu-font-fz-baosong                方正报宋
+ * --jiandu-font-kinghwa-old-song          京华老宋体
+ * --jiandu-font-wenkai                    霞鹜文楷
+ * --jiandu-font-github-modern             GitHub Modern
+ * --jiandu-font-latex-serif               LaTeX serif
  *
  * BODY / 正文：
  * --jiandu-font-noto-sans-sc              Noto Sans Simplified Chinese / NotoSansSC
- *                                         Clear Windows screen reading / 清晰的 Windows 屏幕阅读
- * --jiandu-font-publishing                Source Han Serif / 思源宋体
- *                                         Formal books, papers, newspapers / 正式书籍、论文、报刊
- * --jiandu-font-system-song               System Song / 系统宋体回退
- *                                         Compact system layout / 较紧凑的系统排版
+ * --jiandu-font-publishing                思源宋体 / Source Han Serif
+ * --jiandu-font-system-song               系统宋体回退 / System Song fallback
  * --jiandu-font-fz-shusong-gbk            方正书宋_GBK
- *                                         Formal book body / 正式书籍正文
  * --jiandu-font-fz-boyasong               方正博雅宋
- *                                         Refined prose / essay body / 雅致文章、随笔正文
  * --jiandu-font-fz-qingkeben-yuesong      方正清刻本悦宋
- *                                         Classic literary reading / 古典感阅读正文
  * --jiandu-font-fz-baosong                方正报宋
- *                                         Newspaper / editorial body / 报刊、评论类正文
- * --jiandu-font-wenkai                    霞鹜文楷（可选）
- * --jiandu-font-kinghwa-old-song          京华老宋体（可选）
- *
- * HEADINGS / 标题：
- * --jiandu-font-noto-sans-sc              Noto Sans SC / 清晰现代标题
- * --jiandu-font-fz-youhei                 方正悠黑 / 沉静技术标题
- * --jiandu-font-hy-qihei                  汉仪旗黑 / 清爽现代标题
- * --jiandu-font-fz-cuhe                   方正粗黑 / 强强调标题
- * --jiandu-font-hy-cuhe                   汉仪粗黑 / 强强调标题
- * --jiandu-font-heavy-black               通用强强调标题回退
- * --jiandu-font-fz-baosong                方正报宋 / 报刊式标题
- * --jiandu-font-fz-boyasong               方正博雅宋 / 书卷感标题
+ * --jiandu-font-kinghwa-old-song          京华老宋体
+ * --jiandu-font-wenkai                    霞鹜文楷
+ * --jiandu-font-github-modern             GitHub Modern
+ * --jiandu-font-latex-serif               LaTeX serif
  *
  * CODE / 代码：
  * --jiandu-font-maple-mono-nl-nf-cn        Maple Mono NL NF CN / 推荐
- * --jiandu-font-maple-mono                 Maple Mono alias / Maple Mono 别名
- * --jiandu-font-maple                      Maple short alias / Maple 简写别名
+ * --jiandu-font-github-mono               GitHub-style mono / GitHub 风格等宽
+ * --jiandu-font-latex-mono                LaTeX mono / LaTeX 等宽
  *
- * READY-MADE COMBINATIONS / 可直接套用的组合：
- *
- * A. Clear technical screen / 清晰技术屏幕：
- *    --jiandu-reading-font: var(--jiandu-font-noto-sans-sc);
- *    --jiandu-heading-font: var(--jiandu-font-fz-youhei);
- *    --jiandu-table-font: var(--jiandu-font-noto-sans-sc);
- *    --jiandu-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
- *
- * B. Formal publication screen / 正式出版屏幕：
- *    --jiandu-reading-font: var(--jiandu-font-publishing);
- *    --jiandu-heading-font: var(--jiandu-font-fz-baosong);
- *    --jiandu-table-font: var(--jiandu-font-publishing);
- *    --jiandu-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
- *
- * C. FZ ShuSong book style / 方正书宋书籍风格：
- *    --jiandu-reading-font: var(--jiandu-font-fz-shusong-gbk);
- *    --jiandu-heading-font: var(--jiandu-font-fz-boyasong);
- *    --jiandu-table-font: var(--jiandu-font-noto-sans-sc);
- *    --jiandu-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
- *
- * D. Newspaper style / 报刊风格：
- *    --jiandu-reading-font: var(--jiandu-font-fz-baosong);
- *    --jiandu-heading-font: var(--jiandu-font-fz-cuhe);
- *    --jiandu-table-font: var(--jiandu-font-noto-sans-sc);
- *    --jiandu-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
- *
- * Notes / 说明：
- * - Font names must match fonts installed on your computer.
- *   字体名称必须与电脑里实际安装的字体相匹配。
- * - Jiandu includes no font files. It only references local installed fonts.
- *   简读不附带字体文件，仅引用本机已安装字体。
- * - For PDF, font substitutions can change line breaks and page count.
- *   PDF 中字体替换会影响换行和页数；重要文档请先导出检查。
+ * Compatibility / 兼容性：
+ * - Preferred fonts are only used when installed locally.
+ *   优选字体仅在本机已安装时才会生效。
+ * - Each variable already includes Windows, macOS, and generic fallbacks.
+ *   每个变量已经内置 Windows、macOS 与通用回退链。
+ * - Jiandu does not include or distribute any font files.
+ *   简读不附带或分发字体文件。
  */

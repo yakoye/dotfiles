@@ -1,0 +1,13 @@
+/* Screen Clear / 屏幕清晰
+ * Clear Windows/macOS desktop reading; good for PCIe, docs, notes.
+ * Windows/macOS 屏幕清晰阅读；适合 PCIe、技术文档和日常笔记。
+ */
+:root {
+    --jiandu-heading-font: var(--jiandu-font-noto-sans-sc);
+    --jiandu-reading-font: var(--jiandu-font-noto-sans-sc);
+    --jiandu-table-font: var(--jiandu-font-noto-sans-sc);
+    --jiandu-quote-font: var(--jiandu-font-noto-sans-sc);
+    --jiandu-caption-font: var(--jiandu-font-noto-sans-sc);
+    --jiandu-ui-font: var(--jiandu-font-noto-sans-sc);
+    --jiandu-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
+}

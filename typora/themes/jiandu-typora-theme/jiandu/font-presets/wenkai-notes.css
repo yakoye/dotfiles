@@ -1,0 +1,13 @@
+/* WenKai Notes / 霞鹜文楷
+ * Journals, reading notes, essays, and relaxed Chinese long-form writing.
+ * 日记、读书笔记、随笔与较轻松的中文长文。
+ */
+:root {
+    --jiandu-heading-font: var(--jiandu-font-wenkai);
+    --jiandu-reading-font: var(--jiandu-font-wenkai);
+    --jiandu-table-font: var(--jiandu-font-wenkai);
+    --jiandu-quote-font: var(--jiandu-font-wenkai);
+    --jiandu-caption-font: var(--jiandu-font-wenkai);
+    --jiandu-ui-font: var(--jiandu-font-noto-sans-sc);
+    --jiandu-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
+}

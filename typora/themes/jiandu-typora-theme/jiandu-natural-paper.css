@@ -1,7 +1,7 @@
 /*
  * Jiandu Natural Paper / 简读·自然纸张
- * Default screen theme. Print/PDF automatically uses the shared A4 print engine.
- * 默认屏幕主题。打印 / 导出 PDF 时自动使用统一的 A4 打印引擎。
+ * Default screen theme. PDF keeps the active font preset; shared A4 safeguards apply.
+ * 默认屏幕主题。PDF 保留当前字体套餐，同时启用共用 A4 保护规则。
  */
 @import url("./jiandu/base.css");
 

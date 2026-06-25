@@ -1,4 +1,6 @@
-/* Jiandu Deep Navy / 简读·深墨蓝 */
+/* Jiandu Deep Navy / 简读·深墨蓝
+ * PDF keeps the active screen font preset / PDF 保留当前屏幕字体套餐。
+ */
 @import url("./jiandu/base.css");
 
 :root {

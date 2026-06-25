@@ -1,7 +1,7 @@
 /*
  * Jiandu Print Preview / 简读·印刷预览
- * This screen theme resembles the stable A4 export result.
- * 该屏幕主题用于提前查看接近 A4 导出效果的版式。
+ * Fixed formal-print typography for screen preview and PDF export.
+ * 固定正式印刷字体：屏幕预览与 PDF 导出保持同一套排版。
  */
 @import url("./jiandu/base.css");
 
@@ -22,6 +22,32 @@
     --rawblock-edit-panel-bd: #cfd8de;
 
     --jiandu-bg: #ffffff; /* Export-safe page canvas / 导出安全页面画布 */
+    /* ================================================================
+     * Fixed print-preview typography / 固定印刷预览字体
+     * ================================================================
+     * This theme deliberately does NOT follow the active screen preset in
+     * `jiandu/user-fonts.css`. It uses the same role mapping on screen and
+     * in PDF export, so it is the reliable formal-print option.
+     * 本主题刻意不跟随 `jiandu/user-fonts.css` 的屏幕套餐；它在屏幕与 PDF
+     * 导出中使用相同角色映射，因此是可靠的正式印刷选项。
+     */
+    --jiandu-print-heading-font: var(--jiandu-font-publishing);
+    --jiandu-print-body-font: var(--jiandu-font-publishing);
+    --jiandu-print-table-font: var(--jiandu-print-body-font);
+    --jiandu-print-quote-font: var(--jiandu-print-body-font);
+    --jiandu-print-caption-font: var(--jiandu-font-noto-sans-sc);
+    --jiandu-print-ui-font: var(--jiandu-font-noto-sans-sc);
+    --jiandu-print-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
+
+    /* Map fixed print roles into normal theme roles / 固定打印角色映射到普通主题角色 */
+    --jiandu-heading-font: var(--jiandu-print-heading-font);
+    --jiandu-reading-font: var(--jiandu-print-body-font);
+    --jiandu-table-font: var(--jiandu-print-table-font);
+    --jiandu-quote-font: var(--jiandu-print-quote-font);
+    --jiandu-caption-font: var(--jiandu-print-caption-font);
+    --jiandu-ui-font: var(--jiandu-print-ui-font);
+    --jiandu-code-font: var(--jiandu-print-code-font);
+
     --jiandu-paper: #ffffff;
     --jiandu-text: #1f2428;
     --jiandu-muted: #59616a;

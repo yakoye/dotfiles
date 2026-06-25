@@ -91,41 +91,56 @@ pre.md-fences code {
 /*
  * Code language selector / 代码语言选择器
  *
- * Typora places the "Code language / 代码语言" control in `.code-tooltip`
- * near the lower-right edge of an active fence.  It used to inherit a
- * transparent background, so the control was easy to miss against the code
- * card.  Give the outer tooltip and its editable label distinct, quiet
- * surfaces without changing the code block itself.
+ * Keep this control as a small edge tab rather than a floating dialog.
+ * The built-in GitHub theme uses a simple, low-profile language label near
+ * the fence edge.  The selector should be noticeable when needed, but it
+ * must not look like a second card attached to the code block.
  *
- * Typora 会把“代码语言”控件放在活动代码块右下方的 `.code-tooltip` 中。
- * 之前它继承透明背景，和代码块底色过于接近，难以察觉。这里分别为外层
- * 工具栏和内部输入框提供低调但清晰的底色，不改变代码块本身的样式。
+ * 将该控件做成贴在代码块边缘的小标签，而不是悬浮的大面板。
+ * 参考内置 GitHub 主题：语言标签低调、紧凑，编辑时可见，但不会看起来像
+ * 又叠加了一张卡片。
  */
 .md-fences .code-tooltip {
     box-sizing: border-box;
-    min-width: 10.5rem;
-    padding: 0.3rem 0.42rem !important;
-    color: var(--jiandu-ui-text) !important;
-    background: var(--jiandu-popup-bg) !important;
-    border: 1px solid var(--jiandu-popup-border) !important;
-    border-radius: 5px 5px 0 0 !important;
-    box-shadow: 0 -1px 7px rgba(28, 42, 33, 0.10) !important;
+    width: 8.25rem;
+    min-width: 8.25rem;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: var(--jiandu-muted) !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
 }
 
+/*
+ * The actual editable language surface / 实际可编辑的语言标签
+ * A light, square-cornered tab with a restrained border.  It intentionally
+ * has no large outer shell or elevated shadow.
+ * 浅色、小圆角（接近直角）的标签，仅保留克制边框；不再使用大外壳和阴影。
+ */
 .md-fences .code-tooltip input,
 .md-fences .code-tooltip select,
 .md-fences .code-tooltip .md-lang,
 .md-fences .md-lang {
+    display: block !important;
     box-sizing: border-box;
-    min-height: 1.45rem;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 1.55rem;
+    margin: 0 !important;
     padding: 0.12rem 0.42rem !important;
-    color: var(--jiandu-ui-text) !important;
-    background: var(--jiandu-input-bg) !important;
+    color: var(--jiandu-muted) !important;
+    background: var(--jiandu-popup-bg) !important;
     border: 1px solid var(--jiandu-input-border) !important;
-    border-radius: 4px !important;
+    border-radius: 2px 2px 0 0 !important;
+    box-shadow: none !important;
     font-family: var(--jiandu-ui-font) !important;
-    font-size: 0.79rem !important;
-    line-height: 1.25rem !important;
+    font-size: 0.72rem !important;
+    font-weight: 500;
+    line-height: 1.3rem !important;
+    letter-spacing: 0.02em;
+    text-align: center !important;
 }
 
 .md-fences .code-tooltip input::placeholder,
@@ -134,13 +149,16 @@ pre.md-fences code {
     opacity: 1;
 }
 
+/* Focus only adds a thin accent border, without a distracting glow. */
+/* 获得焦点时仅加细强调色边框，不增加突兀的光晕。 */
 .md-fences .code-tooltip input:focus,
 .md-fences .code-tooltip select:focus,
 .md-fences .code-tooltip .md-lang:focus,
 .md-fences .md-lang:focus {
     outline: none !important;
+    color: var(--jiandu-ui-text) !important;
     border-color: var(--jiandu-accent) !important;
-    box-shadow: 0 0 0 2px var(--jiandu-focus-ring) !important;
+    box-shadow: none !important;
 }
 
 .md-fences-adv-panel pre {
@@ -188,7 +206,7 @@ pre.md-fences.md-fences-advanced .CodeMirror-sizer {
 .cm-s-typora-default.CodeMirror {
     color: var(--jiandu-text);
     background: var(--jiandu-paper);
-    font-family: var(--jiandu-reading-font);
+    font-family: var(--jiandu-code-font);
 }
 
 .cm-s-inner .CodeMirror-gutters,

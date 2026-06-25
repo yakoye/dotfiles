@@ -157,8 +157,8 @@ em {
 
 mark {
     padding: 0.05em 0.24em;
-    color: var(--jiandu-highlight-text);
-    background: var(--jiandu-highlight-bg);
+    color: var(--jiandu-highlight-text, var(--jiandu-text));
+    background: var(--jiandu-highlight-bg, transparent);
     border-radius: 0.22em;
 }
 
@@ -215,6 +215,7 @@ blockquote {
     padding: 0.82rem 1.12rem 0.82rem 1.32rem;
     color: var(--jiandu-quote-text);
     background: var(--jiandu-quote-bg);
+    font-family: var(--jiandu-quote-font);
     border: 1px solid var(--jiandu-quote-border);
     border-left: 4px solid var(--jiandu-accent);
     border-radius: 8px;
@@ -245,7 +246,7 @@ blockquote strong { color: inherit; }
 .md-image > .md-meta {
     margin-top: 4px;
     color: var(--jiandu-muted);
-    font-family: var(--jiandu-ui-font);
+    font-family: var(--jiandu-caption-font);
     font-size: 0.82rem;
 }
 
@@ -319,7 +320,7 @@ blockquote strong { color: inherit; }
 
 #write th {
     color: var(--jiandu-table-heading);
-    font-family: var(--jiandu-ui-font);
+    font-family: var(--jiandu-table-font);
     font-weight: 700;
 }
 
@@ -457,6 +458,7 @@ kbd {
 
 .footnotes {
     margin-top: 2.4rem;
+    font-family: var(--jiandu-caption-font);
     padding-top: 0.8rem;
     color: var(--jiandu-muted);
     border-top: 1px solid var(--jiandu-border);

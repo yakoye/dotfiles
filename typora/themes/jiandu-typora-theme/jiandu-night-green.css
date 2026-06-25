@@ -1,4 +1,6 @@
-/* Jiandu Night Green / 简读·夜间绿 */
+/* Jiandu Night Green / 简读·夜间绿
+ * PDF keeps the active screen font preset / PDF 保留当前屏幕字体套餐。
+ */
 @import url("./jiandu/base.css");
 
 :root {
