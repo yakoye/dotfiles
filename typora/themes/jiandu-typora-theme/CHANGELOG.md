@@ -1,5 +1,12 @@
 # Changelog / 更新记录
 
+## v0.1.14 — Code Language Selector / 代码语言选择器
+
+- Added a visible background, border, and focus ring for Typora's fenced-code language selector.
+  为 Typora 围栏代码块的“代码语言”选择器增加可见背景、边框与聚焦描边。
+- Kept the code card itself unchanged; only the active selector toolbar is clarified.
+  保持代码卡片本体不变；仅增强活动状态下的选择器工具栏辨识度。
+
 ## v0.1.13
 
 - Changed the screen default from Source Han Serif to Noto Sans Simplified Chinese / NotoSansSC for clearer desktop reading. A4 print/PDF still uses the formal Source Han Serif publishing stack.  
