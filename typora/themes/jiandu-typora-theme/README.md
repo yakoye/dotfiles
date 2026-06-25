@@ -1,6 +1,6 @@
 # Jiandu Typora Theme
 
-> **v0.2.3 / v0.2.3**  
+> **v0.2.4 / v0.2.4**  
 > Reading-first Typora themes with coordinated screen font presets, WYSIWYG PDF export for ordinary themes, and one independent formal-print theme.  
 > 一套以阅读为先的 Typora 主题：提供统一的屏幕字体套餐、普通主题所见即所得 PDF 导出，以及一套独立固定的正式印刷主题。
 
@@ -59,8 +59,8 @@ Typora themes/
 4. Restart Typora, or switch away and back to reload the theme.  
    重启 Typora，或者先切换到其他主题再切回来。
 
-> `assets/`, `font-preview.md`, `table-layout-guide.md`, `print-test.md`, `typography-test.md`, and `word-export.md` are tests and documentation. They do not need to be copied into Typora’s theme folder.  
-> `assets/`、`font-preview.md`、`table-layout-guide.md`、`print-test.md`、`typography-test.md`、`word-export.md` 是测试与说明文件，不需要复制到 Typora 主题文件夹。
+> `assets/`, `font-preview.md`, `table-layout-guide.md`, `table-layout-test.md`, `print-test.md`, `typography-test.md`, and `word-export.md` are tests and documentation. They do not need to be copied into Typora’s theme folder.  
+> `assets/`、`font-preview.md`、`table-layout-guide.md`、`table-layout-test.md`、`print-test.md`、`typography-test.md`、`word-export.md` 是测试与说明文件，不需要复制到 Typora 主题文件夹。
 
 ## Choose a Screen Font Preset / 选择屏幕字体套餐
 
@@ -172,13 +172,45 @@ Available general-purpose layouts / 可用的通用布局：
 | `dense` | High-density automatic table / 高密度自然表格 |
 | `ratio-2-3-5` | Explicit 20% / 30% / 50% example / 明确 20% / 30% / 50% 示例 |
 
-For a full list of ratio classes and live Markdown examples, open `table-layout-guide.md`.
+For a full list of ratio classes, exact `jiandu-col-w-N` header markers, and live Markdown examples, open `table-layout-guide.md` and `table-layout-test.md`.
 
-完整比例类列表与可直接预览的 Markdown 示例见 `table-layout-guide.md`。
+完整比例类、精确 `jiandu-col-w-N` 表头标记与可直接预览的 Markdown 示例见 `table-layout-guide.md` 和 `table-layout-test.md`。
 
 > Markdown delimiter dash lengths such as `| --- | ----- | ----------- |` do not control rendered column width. Typora discards those counts when it converts Markdown to HTML, so a CSS theme cannot calculate them.  
 > Markdown 分隔行中的横杠长度，例如 `| --- | ----- | ----------- |`，不会控制渲染后的列宽。Typora 转换为 HTML 时会丢弃横杠数量，因此 CSS 主题无法据此计算列宽。
 
+
+
+### Exact widths for any column count / 任意列数的精确宽度
+
+For any four-, five-, six-, or higher-column variation, place `jiandu-col-w-N` inside each header cell. `N` is a whole-number percentage from `1` to `100`.
+
+对于任意四列、五列、六列或更多列的变化，可在每个表头单元格中使用 `jiandu-col-w-N`。`N` 是 `1` 到 `100` 的整数百分比。
+
+```markdown
+| <span class="jiandu-col-w-34">State</span> | <span class="jiandu-col-w-22">A</span> | <span class="jiandu-col-w-22">B</span> | <span class="jiandu-col-w-22">C</span> |
+| --- | --- | --- | --- |
+```
+
+Keep the header widths close to a total of 100. This is progressive enhancement: modern Typora renders the exact plan; old Chromium builds safely fall back to automatic sizing.
+
+请让表头宽度总和接近 100。这是渐进增强：新版 Typora 会按精确方案渲染；较旧 Chromium 会安全回退到自然分列。
+
+
+### Exact widths for any column count / 任意列数的精确宽度
+
+For a unique four-, five-, six-, or higher-column arrangement, place `jiandu-col-w-N` around the text in each header cell. `N` is an integer percentage from `1` to `100`.
+
+对于独特的四列、五列、六列或更多列布局，可在每个表头单元格文字外使用 `jiandu-col-w-N`。`N` 是 `1` 至 `100` 的整数百分比。
+
+```markdown
+| <span class="jiandu-col-w-34">State</span> | <span class="jiandu-col-w-22">A</span> | <span class="jiandu-col-w-22">B</span> | <span class="jiandu-col-w-22">C</span> |
+| --- | --- | --- | --- |
+```
+
+Keep all values close to 100. Modern Typora applies the exact plan on screen and in A4/PDF; older Chromium safely falls back to automatic sizing.
+
+请让所有数值总和接近 100。新版 Typora 会在屏幕和 A4/PDF 中应用精确方案；旧 Chromium 会安全回退到自然分列。
 
 ## PDF and Print / PDF 与打印
 
@@ -225,7 +257,8 @@ All themes keep `--jiandu-bg: #ffffff` as the export-safe outer canvas; this fix
 - `font-preview.md` — compare screen presets and personal overrides. / 对比字体套餐与个人覆盖效果。
 - `print-test.md` — test A4 images, tables, code, Mermaid, task lists, and page breaks. / 测试 A4 图片、表格、代码、Mermaid、任务列表与分页。
 - `typography-test.md` — general rendering tests. / 通用排版测试。
-- `table-layout-guide.md` — automatic sizing, manual hints, and ratio examples. / 自然分列、手动提示与比例示例。
+- `table-layout-guide.md` — automatic sizing, manual hints, exact header widths, and ratio examples. / 自然分列、手动提示、精确表头宽度与比例示例。
+- `table-layout-test.md` — live 2–6 column screen and PDF verification. / 二至六列表格的屏幕与 PDF 实测文档。
 - `word-export.md` — notes on SVG and Word export. / SVG 与 Word 导出说明。
 
 ## Updating / 更新

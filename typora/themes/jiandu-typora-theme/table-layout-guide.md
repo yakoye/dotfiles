@@ -1,10 +1,26 @@
 # Jiandu Table Layout Guide / 简读表格布局指南
 
-Jiandu v0.2.3 uses **automatic browser column sizing** for ordinary Markdown tables. This is the default because it adapts to different languages, writing systems, and content types without forcing every table into equal columns.
+Jiandu v0.2.4 provides a general table layout system for Markdown writers. It is not tied to a technical field, language, or a fixed number of columns.
 
-简读 v0.2.3 对普通 Markdown 表格默认使用**浏览器自然分列**。这是默认推荐方式，因为它可以适应不同语言、不同文字系统和不同内容，不会把所有表格强行分成等宽列。
+简读 v0.2.4 提供通用 Markdown 表格布局系统，不绑定特定技术领域、语言或固定列数。
 
-## Important: Markdown dash counts do not control width / 重要：Markdown 横杠数量不控制列宽
+## 1. Default: automatic sizing / 默认：自然分列
+
+Ordinary Markdown tables use the browser's automatic table layout. This is the recommended starting point for two, three, four, five, six, or more columns.
+
+普通 Markdown 表格默认使用浏览器自然分列。两列、三列、四列、五列、六列或更多列，都建议先从此模式开始。
+
+Short columns tend to remain compact. Descriptive columns naturally receive more room. Long identifiers, URLs, and inline code can wrap inside a cell instead of pushing the whole table wider.
+
+短列通常保持紧凑；说明列会自然获得更多空间。长标识符、URL 和行内代码可以在单元格内换行，不会撑宽整张表。
+
+| Message Code / 消息代码 | Name / 名称 | Description / 描述 |
+| --- | --- | --- |
+| 30h | ERR_COR | A recoverable condition was detected. Hardware corrects the condition automatically, while software can record and track the event. |
+| 31h | ERR_NONFATAL | A non-fatal condition was detected. The device may remain active, but the event should be retained for diagnosis and recovery policy. |
+| 33h | ERR_FATAL | A fatal condition was detected. Recovery can require reset, isolation, replacement, or another higher-level action. |
+
+## 2. Why delimiter dashes cannot control width / 为什么横杠数量不能控制列宽
 
 This Markdown delimiter row:
 
@@ -13,83 +29,38 @@ This Markdown delimiter row:
 | --- | ----- | ----------- |
 ```
 
-uses the dashes only to identify a Markdown table. Typora parses the row and does not retain the dash count in the rendered HTML. A CSS theme therefore cannot read or calculate widths from those dash lengths.
+uses dashes only to declare a Markdown table. After Typora converts Markdown to HTML, dash counts no longer exist. A CSS theme cannot inspect or calculate widths from them.
 
-下面这个 Markdown 分隔行：
+下面的 Markdown 分隔行：
 
 ```markdown
 | 代码 | 名称 | 描述 |
 | --- | ----- | ----------- |
 ```
 
-横杠只用于识别 Markdown 表格。Typora 解析后不会把横杠数量保留在最终 HTML 中，因此纯 CSS 主题无法读取或根据横杠长度计算列宽。
+横杠仅用于声明 Markdown 表格。Typora 转换为 HTML 后，横杠数量已不存在；纯 CSS 主题无法读取或据此计算列宽。
 
-Use one of the optional layout hints below when a particular table needs manual control.
+Use one of the optional controls below only when a specific table needs a stable visual plan.
 
-当某一张表需要手动控制时，请使用下面的可选布局提示。
+仅当某一张表需要稳定的视觉比例时，再使用以下可选控制方式。
 
----
+## 3. Quick layout hints / 快速布局提示
 
-## 1. Automatic layout / 自然布局（默认）
+Put an empty HTML marker immediately above the target table. It is hidden in Typora, exported HTML, and PDF. It controls only the next table.
 
-No marker is needed. Short columns tend to remain compact; narrative columns naturally receive more room.
+在目标表格正上方放一个空 HTML 标记。它在 Typora、导出 HTML 和 PDF 中均不显示，只影响紧随其后的下一张表。
 
-无需标记。短列通常会保持紧凑，说明性长列会自然获得更多空间。
-
-| Message Code / 消息代码 | Name / 名称 | Description / 描述 |
-| --- | --- | --- |
-| 30h | ERR_COR | A recoverable error was detected. The hardware corrects the condition automatically, while software can still record the trend. |
-| 31h | ERR_NONFATAL | A non-fatal error was detected. The device may remain operational, but software should record the evidence and recover when required. |
-| 33h | ERR_FATAL | A fatal error was detected. The affected function may need a reset or higher-level recovery action. |
-
----
-
-## 2. Directional layouts / 方向型布局
-
-Put an empty HTML marker immediately before the table. The marker is hidden in Typora, exported HTML, and PDF.
-
-在表格正前方放一个空 HTML 标记。该标记在 Typora、导出 HTML 和 PDF 中均不显示。
-
-### `narrow-first` / 第一列较窄
-
-Best for ID + description, number + details, date + event, or term + definition.
-
-适合“编号 + 说明”“日期 + 事件”“术语 + 定义”等。
-
-```html
-<div class="jiandu-table-layout narrow-first"></div>
-```
-
-<div class="jiandu-table-layout narrow-first"></div>
-
-| ID / 编号 | Details / 详情 |
+| Hint / 提示 | Use case / 适用场景 |
 | --- | --- |
-| 0 | Attention Button Present: indicates that the enclosure provides an attention button near this location. |
-| 14:7 | Slot Power Limit Value: specifies the maximum power that can be delivered at this location. |
-| 31:19 | Physical Slot Number: records the associated physical slot number. |
+| `narrow-first` | ID / date / term + long details / 编号、日期、术语 + 长说明 |
+| `wide-first` | Long row label + several short data columns / 长行标签 + 多个短数据列 |
+| `wide-last` | Name + source + narrative description / 名称 + 来源 + 长说明 |
+| `narrow-last` | Narrative columns + short final status/unit / 长说明列 + 短状态或单位 |
+| `balanced` | Equal visual columns / 均衡列宽 |
+| `compact` | Automatic sizing with reduced spacing / 自然分列 + 较紧凑留白 |
+| `dense` | High-density automatic tables / 高密度自然表格 |
 
-### `wide-first` / 第一列较宽
-
-Best for long item names followed by short data columns.
-
-适合“长项目名称 + 多个短数据列”。
-
-```html
-<div class="jiandu-table-layout wide-first"></div>
-```
-
-<div class="jiandu-table-layout wide-first"></div>
-
-| Project or Item / 项目或条目 | Status / 状态 | Owner / 负责人 |
-| --- | --- | --- |
-| Standardized Hot-Plug System Driver | Active | Platform Team |
-| Device Driver | Planned | Adapter Vendor |
-
-### `wide-last` / 最后一列较宽
-
-Best for name + provider + explanation, property + source + notes, or any table whose final column is long narrative text.
-
-适合“名称 + 提供方 + 说明”“属性 + 来源 + 备注”等最后一列为长说明的表格。
+Example / 示例：
 
 ```html
 <div class="jiandu-table-layout wide-last"></div>
@@ -99,87 +70,98 @@ Best for name + provider + explanation, property + source + notes, or any table 
 
 | Software Element / 软件要素 | Provider / 提供方 | Description / 描述 |
 | --- | --- | --- |
-| User Interface | Operating System Vendor | Provides user-facing tools that request a device action, such as power removal or activation. |
-| Hot-Plug Service | Operating System Vendor | Processes service requests, coordinates policy, and reports events to higher-level software. |
-| Device Driver | Adapter Vendor | Implements device-specific support and reacts to operating-system initiated actions. |
+| User Interface | Operating system vendor | Provides user-facing tools that request a device action, such as activation, shutdown, or a policy-controlled power-state change. |
+| Service Layer | Platform software | Coordinates requests, state reporting, and the transition between application intent and device-specific control logic. |
+| Driver | Device vendor | Implements device-specific behavior and reports observable evidence back to the operating system. |
 
-### `balanced` / 均衡列宽
+## 4. Common ratio shortcuts / 常用比例快捷方式
 
-Best for comparison tables in which every column should have equal visual weight.
+For a common stable ratio, use a ratio class above the table.
 
-适合每一列都应该具有相近视觉权重的对比表。
-
-```html
-<div class="jiandu-table-layout balanced"></div>
-```
-
----
-
-## 3. Explicit manual ratios / 明确手动比例
-
-For a precise common ratio, use a `ratio-*` class. The class numbers are the column weights in order.
-
-当需要明确比例时，使用 `ratio-*` 类。类名数字就是从左到右各列的权重。
+对于常用且稳定的比例，在表格前使用比例类。
 
 ```html
 <div class="jiandu-table-layout ratio-2-3-5"></div>
 ```
 
-This means:
+This means `20% / 30% / 50%`.
 
-```text
-20% / 30% / 50%
-```
+这表示 `20% / 30% / 50%`。
 
-Example / 示例：
-
-<div class="jiandu-table-layout ratio-2-3-5"></div>
-
-| Code / 代码 | Name / 名称 | Description / 描述 |
-| --- | --- | --- |
-| 30h | ERR_COR | A recoverable error detected by the device. The condition is corrected automatically, while software can log the event and track recurrence. |
-| 31h | ERR_NONFATAL | A non-fatal error that may allow continued operation, but needs software attention and potential recovery. |
-| 33h | ERR_FATAL | A fatal condition that can require reset, isolation, replacement, or another recovery action. |
-
-Available ratio classes / 已提供比例类：
-
-| Columns / 列数 | Available classes / 可用类 |
+| Columns / 列数 | Available ratio classes / 可用比例类 |
 | --- | --- |
 | 2 | `ratio-1-1`, `ratio-1-2`, `ratio-1-3`, `ratio-2-3`, `ratio-3-2` |
 | 3 | `ratio-1-1-2`, `ratio-1-2-2`, `ratio-1-2-3`, `ratio-2-2-3`, `ratio-2-3-5`, `ratio-3-2-5` |
-| 4 | `ratio-1-1-2-2`, `ratio-2-2-3-3` |
+| 4 | `ratio-1-1-2-2`, `ratio-2-2-3-3`, `ratio-3-2-2-2` |
+| 5 | `ratio-3-2-2-2-2` |
+| 6 | `ratio-3-2-2-2-2-2` |
 
-Use a ratio whose number of parts matches the number of table columns.
+## 5. Exact mode: any column count / 精确模式：任意列数
 
-请选择与表格列数相同的比例类。
+For exact control over any four-, five-, six-, or higher-column table, place a `jiandu-col-w-N` marker around the text in **every header cell**. `N` can be any whole number from `1` to `100`.
 
----
+对于任意四列、五列、六列或更多列的精确控制，请在**每个表头单元格**的文字外包一层 `jiandu-col-w-N` 标记。`N` 可以是 `1` 到 `100` 的任意整数。
 
-## 4. Density helpers / 紧凑布局
+### Rules / 规则
 
-These do not force column widths. They preserve automatic layout while reducing type size and cell padding.
+1. Use markers in the header row only. / 仅在表头行使用标记。  
+2. Keep all values close to a total of `100`. / 数字总和请尽量接近 `100`。  
+3. Use exact mode only when natural sizing or a quick hint is insufficient. / 仅当自然分列或快速提示不够时使用精确模式。  
+4. Modern Typora supports this through CSS `:has()`. Older Chromium engines safely fall back to automatic sizing. / 新版 Typora 通过 CSS `:has()` 支持此功能；旧 Chromium 会安全回退到自然分列。  
 
-这两种不强制列宽，而是在保留自然分列的同时减小字号和单元格留白。
+### Four columns / 四列
 
-```html
-<div class="jiandu-table-layout compact"></div>
+```markdown
+| <span class="jiandu-col-w-34">State / 状态</span> | <span class="jiandu-col-w-22">Tier A</span> | <span class="jiandu-col-w-22">Tier B</span> | <span class="jiandu-col-w-22">Tier C</span> |
+| --- | --- | --- | --- |
+| Active | ... | ... | ... |
 ```
 
-- `compact`: moderately smaller text and padding.  
-  `compact`：适度缩小字号和留白。
+This produces `34% / 22% / 22% / 22%`.
 
-```html
-<div class="jiandu-table-layout dense"></div>
+对应 `34% / 22% / 22% / 22%`。
+
+| <span class="jiandu-col-w-34">State / 状态</span> | <span class="jiandu-col-w-22">Tier A</span> | <span class="jiandu-col-w-22">Tier B</span> | <span class="jiandu-col-w-22">Tier C</span> |
+| --- | --- | --- | --- |
+| Active | The first parallel condition is described here. | The second parallel condition is described here. | The third parallel condition is described here. |
+| Recovery Mode | A longer row label stays readable without squeezing every comparison column. | Parallel condition. | Parallel condition. |
+
+### Five columns / 五列
+
+```markdown
+| <span class="jiandu-col-w-28">Item</span> | <span class="jiandu-col-w-18">Basic</span> | <span class="jiandu-col-w-18">Pro</span> | <span class="jiandu-col-w-18">Team</span> | <span class="jiandu-col-w-18">Enterprise</span> |
+| --- | --- | --- | --- | --- |
 ```
 
-- `dense`: tighter text and padding for high-density tables.  
-  `dense`：更紧凑，适用于高密度表格。
+This produces `28% / 18% / 18% / 18% / 18%`.
 
----
+对应 `28% / 18% / 18% / 18% / 18%`。
+
+| <span class="jiandu-col-w-28">Item</span> | <span class="jiandu-col-w-18">Basic</span> | <span class="jiandu-col-w-18">Pro</span> | <span class="jiandu-col-w-18">Team</span> | <span class="jiandu-col-w-18">Enterprise</span> |
+| --- | --- | --- | --- | --- |
+| Data retention | 7 days | 30 days | 180 days | Custom policy and archival controls |
+| Support channel | Community | Standard | Priority | Dedicated service arrangement |
+
+### Six columns / 六列
+
+```markdown
+| <span class="jiandu-col-w-25">Item</span> | <span class="jiandu-col-w-15">A</span> | <span class="jiandu-col-w-15">B</span> | <span class="jiandu-col-w-15">C</span> | <span class="jiandu-col-w-15">D</span> | <span class="jiandu-col-w-15">Notes</span> |
+| --- | --- | --- | --- | --- | --- |
+```
+
+This produces `25% / 15% / 15% / 15% / 15% / 15%`.
+
+对应 `25% / 15% / 15% / 15% / 15% / 15%`。
+
+| <span class="jiandu-col-w-25">Item</span> | <span class="jiandu-col-w-15">A</span> | <span class="jiandu-col-w-15">B</span> | <span class="jiandu-col-w-15">C</span> | <span class="jiandu-col-w-15">D</span> | <span class="jiandu-col-w-15">Notes</span> |
+| --- | --- | --- | --- | --- | --- |
+| Coverage | Included | Included | Optional | Optional | Regional availability may vary |
+| Response time | 48 hours | 24 hours | 8 hours | 4 hours | Service-level terms apply |
 
 ## Practical recommendation / 实际建议
 
-1. Start with no marker. / 先不加任何标记。  
-2. Use `narrow-first`, `wide-first`, or `wide-last` when one side is clearly special. / 某一侧明显需要更窄或更宽时，使用方向型布局。  
-3. Use a `ratio-*` class only when the visual ratio must be exact. / 必须精确控制比例时，再使用 `ratio-*`。  
-4. Use `compact` or `dense` for crowded tables before reducing the entire document font size. / 表格过密时优先使用 `compact` 或 `dense`，不要先缩小整篇文档字号。  
+1. Start with no marker. / 先不加标记。  
+2. Use a directional hint when only one edge needs special treatment. / 只有一侧需要变宽或变窄时，使用方向型提示。  
+3. Use a ratio shortcut for a common visual plan. / 常见视觉比例使用快捷比例类。  
+4. Use `jiandu-col-w-N` for any unique four-, five-, six-, or higher-column variation. / 任意独特的四列、五列、六列或更多列变化，使用 `jiandu-col-w-N`。  
+5. Try `compact` or `dense` before shrinking the entire document font. / 表格过密时先使用 `compact` 或 `dense`，不要先缩小整篇文档字号。  

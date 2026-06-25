@@ -54,6 +54,38 @@ PCIe 设备完成复位后，会先进行链路训练，再执行枚举与资源
 
 更多布局提示和比例示例请查看 `table-layout-guide.md`。
 
+
+## Exact Table Widths / 精确表格列宽
+
+This four-column example uses whole-number width markers directly inside header cells. It is intentionally language-neutral and works for any subject area.
+
+下面四列示例在表头单元格内直接使用整数宽度标记。它不绑定任何主题领域，适用于任意内容。
+
+| <span class="jiandu-col-w-34">State / 状态</span> | <span class="jiandu-col-w-22">A</span> | <span class="jiandu-col-w-22">B</span> | <span class="jiandu-col-w-22">C</span> |
+| --- | --- | --- | --- |
+| Active | First comparison value. | Second comparison value. | Third comparison value. |
+| Recovery Mode | A long label should wrap naturally. | Parallel value. | Parallel value. |
+
+For a full 2–6 column test matrix, open `table-layout-test.md`.
+
+二至六列完整测试矩阵请打开 `table-layout-test.md`。
+
+
+## Exact Table Widths / 精确表格列宽
+
+This four-column example uses integer width markers inside each header cell. It works for any subject area; the labels are only an example.
+
+下面四列示例在每个表头单元格中使用整数宽度标记。它适用于任意主题领域，表头名称仅为示例。
+
+| <span class="jiandu-col-w-34">State / 状态</span> | <span class="jiandu-col-w-22">A</span> | <span class="jiandu-col-w-22">B</span> | <span class="jiandu-col-w-22">C</span> |
+| --- | --- | --- | --- |
+| Active | First comparison value. | Second comparison value. | Third comparison value. |
+| Recovery Mode | A long label should wrap naturally. | Parallel value. | Parallel value. |
+
+For complete two- to six-column examples, open `table-layout-test.md`.
+
+完整的二至六列示例见 `table-layout-test.md`。
+
 ## Single-layer Code Fence Test / 单层代码围栏测试
 
 The following fence should render as one card only: one background, one border, and one padding layer.

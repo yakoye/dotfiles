@@ -1,5 +1,31 @@
 # Changelog / 更新记录
 
+## v0.2.4 — Exact Widths for Any Column Count / 任意列数的精确宽度
+
+- Added `jiandu-col-w-1` through `jiandu-col-w-100` header markers for exact whole-number percentage widths in any number of columns.
+  新增 `jiandu-col-w-1` 至 `jiandu-col-w-100` 表头标记，为任意列数提供整数百分比精确宽度。
+- Added common long-label comparison shortcuts: `ratio-3-2-2-2`, `ratio-3-2-2-2-2`, and `ratio-3-2-2-2-2-2`, plus `narrow-last`.
+  新增常见“长标签 + 多列对比”快捷比例：`ratio-3-2-2-2`、`ratio-3-2-2-2-2`、`ratio-3-2-2-2-2-2`，以及 `narrow-last`。
+- Preserved automatic sizing as the default; exact widths remain opt-in and safely fall back on older Chromium engines.
+  保留自然分列作为默认；精确宽度为可选能力，旧 Chromium 会安全回退。
+- Added `table-layout-test.md` and expanded the bilingual guide with four-, five-, and six-column examples.
+  新增 `table-layout-test.md`，并扩展中英双语指南，加入四列、五列与六列示例。
+- Matched exact-width behavior in A4/PDF output.
+  A4/PDF 导出同样匹配精确列宽行为。
+
+## v0.2.4 — Exact Widths for Any Column Count / 任意列数的精确宽度
+
+- Added progressive `jiandu-col-w-1` through `jiandu-col-w-100` header markers. They support precise whole-number percentages for any number of columns, including four, five, six, and higher-column tables.
+  新增渐进增强的 `jiandu-col-w-1` 至 `jiandu-col-w-100` 表头标记。它支持任意列数的整数百分比精确宽度，包括四列、五列、六列和更多列。
+- Added `narrow-last` and common long-label comparison shortcuts: `ratio-3-2-2-2`, `ratio-3-2-2-2-2`, and `ratio-3-2-2-2-2-2`.
+  新增 `narrow-last`，以及常见“长标签 + 多列对比”快捷比例：`ratio-3-2-2-2`、`ratio-3-2-2-2-2`、`ratio-3-2-2-2-2-2`。
+- Preserved automatic sizing as the default and added exact-width support as an opt-in, so ordinary tables retain natural behavior.
+  保留自然分列作为默认，并将精确宽度作为可选能力，普通表格仍保持自然行为。
+- Added `table-layout-test.md` and expanded the bilingual layout guide with four-, five-, and six-column examples.
+  新增 `table-layout-test.md`，并扩展中英双语布局指南，加入四列、五列、六列表格示例。
+- Matched exact widths in A4/PDF output, not only on screen.
+  A4/PDF 导出中同样匹配精确列宽，而不只在屏幕显示生效。
+
 ## v0.2.3 — Universal Table Layout System / 通用表格布局系统
 
 - Replaced the global fixed-column layout with browser-driven automatic sizing for ordinary Markdown tables. Short columns can remain compact while explanatory columns receive more space.
