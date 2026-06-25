@@ -1,5 +1,14 @@
 # Changelog / 更新记录
 
+## 0.1.6 — 2026-06-25
+
+- Changed all Markdown tables to a stable fixed-layout model so a long identifier cannot consume most of the table width. Added an explicit six-column PCIe allocation: Register 19%, Bits 8%, Access 8%, Reset 12%, Behavior 26%, and Firmware notes 27%.  
+  将所有 Markdown 表格改为稳定的固定布局，避免长字段占据大部分宽度；并增加六列 PCIe 表格的明确列宽：寄存器 19%、位域 8%、访问 8%、复位值 12%、行为说明 26%、固件备注 27%。
+- Reworked task lists using the positioned pseudo-element strategy used by Drake-style themes. Native inputs remain clickable but are removed from inline layout, preventing checkbox squares from drifting to the end of a line.  
+  参考 Drake 类主题的定位伪元素策略重做任务列表：原生 input 仍可点击，但不再参与行内排版，避免任务方框漂移到文本行尾。
+- Applied the same table and task-list rules to A4 print/PDF output.  
+  同步将表格和任务列表规则应用到 A4 打印 / PDF 输出。
+
 ## 0.1.5 — 2026-06-25
 
 - Fixed the screen-table header selector: only `<thead>` uses the header colour. The first data row now uses the normal table background, and zebra striping begins from the second data row.  
