@@ -4,13 +4,18 @@
  * Change ONLY the next line.
  * 只需修改下一行：
  *
- * - var(--jiandu-font-wenkai)   LXGW WenKai / 霞鹜文楷
- * - var(--jiandu-font-old-song) KingHwa OldSong / 京华老宋体
- * - var(--jiandu-font-system)   System Sans / 系统无衬线
- * - var(--jiandu-font-serif)    Modern Serif / 现代宋体风格
+ * - var(--jiandu-font-formal)  Formal book / thesis / newspaper (default)
+ *                                正式书籍 / 论文 / 报刊体（默认）
+ * - var(--jiandu-font-wenkai)  LXGW WenKai / 霞鹜文楷
+ * - var(--jiandu-font-system)  System Sans / 系统无衬线
+ * - var(--jiandu-font-serif)   Modern Serif / 现代宋体风格
+ *
+ * `--jiandu-font-old-song` is kept as a compatibility alias of `formal`.
+ * `--jiandu-font-old-song` 保留为 `formal` 的兼容别名。
  */
 :root {
-    --jiandu-reading-font: var(--jiandu-font-wenkai);
+    /* Default: formal book-like typography / 默认：正式书刊体 */
+    --jiandu-reading-font: var(--jiandu-font-formal);
 
     /* Headings follow the reading font by default / 标题默认跟随正文字体 */
     --jiandu-heading-font: var(--jiandu-reading-font);
