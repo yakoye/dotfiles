@@ -14,6 +14,7 @@
 
 @media print {
     :root {
+        color-scheme: light !important;
         /* Force a single print palette / 强制统一的打印色板 */
         --bg-color: #ffffff !important;
         --text-color: #1f2428 !important;
@@ -437,57 +438,42 @@
     }
 
     /*
-     * Drake-style positioned task box / 参考 Drake 的定位任务方框
-     * Keep the real input clickable but remove it from inline layout, so a
-     * renderer-specific native checkbox cannot drift to the end of a line.
-     * 保留真实 input 的点击能力，但把它移出行内排版，避免不同渲染器的原生
-     * 复选框漂移到文本行尾。
+     * Native GitHub-style task controls / 原生 GitHub 风格任务方框
+     *
+     * Use the real browser checkbox in the normal inline flow. This keeps the
+     * mark vertically aligned by Chromium itself and avoids a hand-positioned
+     * pseudo checkmark in the PDF renderer.
+     * 使用浏览器真实复选框并保留其正常行内布局。这样由 Chromium 自身处理
+     * 垂直基线对齐，PDF 渲染时也不再依赖手工定位的伪元素对号。
      */
     #write .ul-list li.md-task-list-item,
     #write li.md-task-list-item {
-        position: relative !important;
+        position: static !important;
         list-style: none !important;
-        padding-left: 14pt !important;
+        padding-left: 0 !important;
     }
 
     #write .ul-list li.md-task-list-item::before,
-    #write li.md-task-list-item::before {
-        position: absolute !important;
-        top: 2.4pt !important;
-        left: 0.8pt !important;
-        box-sizing: border-box !important;
-        width: 8pt !important;
-        height: 8pt !important;
-        content: "" !important;
-        background: #ffffff !important;
-        border: 0.6pt solid #335e78 !important;
-        border-radius: 0 !important;
-    }
-
-    #write .ul-list li.md-task-list-item.task-list-done::after,
-    #write li.md-task-list-item.task-list-done::after {
-        position: absolute !important;
-        top: 0.1pt !important;
-        left: 1.5pt !important;
-        content: "✓" !important;
-        color: #244e69 !important;
-        font-family: Arial, sans-serif !important;
-        font-size: 9pt !important;
-        font-weight: 700 !important;
-        line-height: 1 !important;
+    #write .ul-list li.md-task-list-item::after,
+    #write li.md-task-list-item::before,
+    #write li.md-task-list-item::after {
+        content: none !important;
+        display: none !important;
     }
 
     #write .ul-list li.md-task-list-item > input[type="checkbox"],
     #write li.md-task-list-item > input[type="checkbox"] {
-        position: absolute !important;
-        top: 1.7pt !important;
-        left: 0 !important;
-        z-index: 2 !important;
-        width: 10pt !important;
-        height: 10pt !important;
-        margin: 0 !important;
+        position: static !important;
+        display: inline-block !important;
+        box-sizing: border-box !important;
+        width: auto !important;
+        height: auto !important;
+        margin-left: -1.3em !important;
         padding: 0 !important;
-        opacity: 0 !important;
+        opacity: 1 !important;
+        -webkit-appearance: checkbox !important;
+        appearance: auto !important;
+        accent-color: #335e78 !important;
     }
 
     #write pre.md-meta-block {

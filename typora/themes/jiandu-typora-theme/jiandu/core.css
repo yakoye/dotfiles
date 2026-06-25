@@ -385,62 +385,43 @@ kbd {
 
 /* Task list / 任务列表 */
 /*
- * Drake-style task-list structure / 参考 Drake 的任务列表结构
+ * Native GitHub-style task controls / 原生 GitHub 风格任务方框
  *
- * Native checkbox metrics differ across Electron/Chromium releases and can
- * leave the square at the end of a line. Hide only the native control and use
- * a positioned pseudo-element for the visual box; the original input remains
- * clickable and keeps Typora task-state behavior.
- * 原生复选框在不同 Electron/Chromium 版本中的度量不同，可能把方框挤到行尾。
- * 这里只隐藏原生控件的视觉外观，再用定位伪元素绘制方框；原始 input 仍可点击，
- * 任务状态逻辑仍由 Typora 保持。
+ * Keep Typora/Chromium's real checkbox in normal inline flow. This follows the
+ * simple GitHub-theme rule instead of drawing a separate pseudo checkbox, so
+ * the checkmark uses the browser's own baseline and cannot float too high.
+ * 保留 Typora/Chromium 的真实复选框并让其正常参与行内排版。这里沿用
+ * GitHub 主题的简洁规则，不再用伪元素另画方框；对号由浏览器按基线对齐，
+ * 不会再出现人为绘制的对号偏上的问题。
  */
 #write .ul-list li.md-task-list-item,
 #write li.md-task-list-item {
-    position: relative;
+    position: static !important;
     list-style: none !important;
-    margin-left: 0;
-    padding-left: 1.68em;
+    padding-left: 0;
 }
 
 #write .ul-list li.md-task-list-item::before,
-#write li.md-task-list-item::before {
-    position: absolute;
-    top: 0.38em;
-    left: 0.16em;
-    box-sizing: border-box;
-    width: 1.02em;
-    height: 1.02em;
-    content: "";
-    background: var(--jiandu-paper);
-    border: 1px solid var(--jiandu-checkbox);
-    border-radius: 2px;
-}
-
-#write .ul-list li.md-task-list-item.task-list-done::after,
-#write li.md-task-list-item.task-list-done::after {
-    position: absolute;
-    top: 0.07em;
-    left: 0.30em;
-    content: "✓";
-    color: var(--jiandu-checkbox);
-    font-family: Arial, sans-serif;
-    font-size: 1.08em;
-    font-weight: 700;
-    line-height: 1;
+#write .ul-list li.md-task-list-item::after,
+#write li.md-task-list-item::before,
+#write li.md-task-list-item::after {
+    content: none !important;
+    display: none !important;
 }
 
 #write .ul-list li.md-task-list-item > input[type="checkbox"],
 #write li.md-task-list-item > input[type="checkbox"] {
-    position: absolute !important;
-    top: 0.30em;
-    left: 0.08em;
-    z-index: 2;
-    width: 1.16em !important;
-    height: 1.16em !important;
-    margin: 0 !important;
+    position: static !important;
+    display: inline-block !important;
+    box-sizing: border-box;
+    width: auto !important;
+    height: auto !important;
+    margin-left: -1.3em !important;
     padding: 0 !important;
-    opacity: 0;
+    opacity: 1 !important;
+    -webkit-appearance: checkbox;
+    appearance: auto;
+    accent-color: var(--jiandu-checkbox);
     cursor: pointer;
 }
 
