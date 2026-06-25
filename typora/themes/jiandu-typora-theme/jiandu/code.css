@@ -112,9 +112,20 @@ pre.md-fences code {
     font-family: var(--jiandu-code-font);
 }
 
+/*
+ * No current-line highlight / 不显示光标所在行高亮
+ * Keep the caret and selected-text highlight; only the full-line tint is removed.
+ * 保留光标与选中文本高亮；仅移除整行背景色。
+ */
+.CodeMirror-activeline-background,
+.CodeMirror-activeline,
 .cm-s-inner .CodeMirror-activeline-background,
-.cm-s-typora-default .CodeMirror-activeline-background {
-    background: var(--jiandu-active-bg);
+.cm-s-inner .CodeMirror-activeline,
+.cm-s-typora-default .CodeMirror-activeline-background,
+.cm-s-typora-default .CodeMirror-activeline,
+.md-fences .CodeMirror-activeline-background,
+.md-fences .CodeMirror-activeline {
+    background: transparent !important;
 }
 
 .cm-s-inner span.cm-comment { color: var(--jiandu-syntax-comment); }

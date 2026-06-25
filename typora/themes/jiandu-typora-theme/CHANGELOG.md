@@ -1,5 +1,14 @@
 # Changelog / 更新记录
 
+## 0.1.4 — 2026-06-25
+
+- Restored optional screen-reading presets for **LXGW WenKai / 霞鹜文楷** and **KingHwa OldSong / 京华老宋体**, including common English and Chinese family-name aliases. The default remains the Source Han Serif–first publication stack.  
+  恢复了 **霞鹜文楷** 与 **京华老宋体** 的可选屏幕阅读预设，并包含常见中英文家族名别名；默认仍为以思源宋体为优先的出版字体链。
+- Removed CodeMirror current-line background highlighting in both fenced code blocks and source mode. The caret and text-selection feedback remain available.  
+  移除了围栏代码块与源码模式中的 CodeMirror 光标行背景高亮；光标与文本选择反馈仍然保留。
+- Updated bilingual font-selection and code-block documentation.  
+  更新了中英双语字体选择与代码块说明。
+
 ## 0.1.3 — 2026-06-25
 
 - Fixed nested code-card rendering by removing the global `#write pre` code-block skin. Fenced blocks now style only Typora’s outer `.md-fences` shell; inner `pre` and CodeMirror layers are flattened.  

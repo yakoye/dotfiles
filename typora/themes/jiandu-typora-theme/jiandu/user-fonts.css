@@ -4,19 +4,25 @@
  * Change ONLY the next line.
  * 只需修改下一行：
  *
- * - var(--jiandu-font-publishing)      Source Han Serif / 思源宋体（默认）
- *                                      Professional books, papers, newspapers
- *                                      正式书籍、论文、报刊与技术资料
- * - var(--jiandu-font-system-song)     System Song fallback / 系统宋体回退
- *                                      Compact, system-native book layout
- *                                      较紧凑的系统原生书面排版
- * - var(--jiandu-font-technical-sans)  Technical sans / 技术无衬线
- *                                      Dense engineering editing only
- *                                      仅适合密集工程编辑
+ * - var(--jiandu-font-publishing)          Source Han Serif / 思源宋体（默认）
+ *                                          Professional books, papers, newspapers
+ *                                          正式书籍、论文、报刊与技术资料
+ * - var(--jiandu-font-system-song)         System Song fallback / 系统宋体回退
+ *                                          Compact, system-native book layout
+ *                                          较紧凑的系统原生书面排版
+ * - var(--jiandu-font-wenkai)              LXGW WenKai / 霞鹜文楷（可选）
+ *                                          Relaxed notes, journals, long screen reading
+ *                                          轻松笔记、日记与屏幕长文阅读
+ * - var(--jiandu-font-kinghwa-old-song)    KingHwa OldSong / 京华老宋体（可选）
+ *                                          Traditional old-book reading character
+ *                                          传统旧书阅读气质
+ * - var(--jiandu-font-technical-sans)      Technical sans / 技术无衬线
+ *                                          Dense engineering editing only
+ *                                          仅适合密集工程编辑
  *
- * This theme intentionally excludes handwriting, decorative, and legacy
- * display-font presets from the public selector.
- * 本主题刻意不在公开选择器中提供手写体、装饰体与旧式展示字体预设。
+ * The default remains publication-oriented Source Han Serif. Optional presets
+ * affect screen reading only; print/PDF keeps a stable publishing font stack.
+ * 默认仍为面向出版的思源宋体。可选预设只影响屏幕阅读；打印 / PDF 保持稳定的出版字体链。
  */
 :root {
     /* Default: publication-oriented Song serif / 默认：出版级现代宋体 */

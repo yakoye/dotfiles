@@ -172,8 +172,10 @@ A Completion Timeout range should match the platform requirement rather than bei
 ## Single-layer Code Fence Test / 单层代码围栏测试
 
 The following fence should render as one card only: one background, one border, and one padding layer.
+Move the caret inside the fence: no full-line current-caret tint should appear.
 
 下面这段围栏代码应只呈现为一张卡片：一层背景、一层边框、一层内边距。
+将光标移入代码块：不应出现整行的光标行背景色。
 
 ```css
 /* Outer fence only / 只美化外层围栏 */

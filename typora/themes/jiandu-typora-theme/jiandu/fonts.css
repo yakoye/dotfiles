@@ -42,6 +42,37 @@
         "Source Han Serif SC", "Noto Serif CJK SC", serif;
 
     /*
+     * LXGW WenKai / 霞鹜文楷 — optional screen-reading preset
+     * This is intentionally optional rather than the publishing default.
+     * The alias list supports common English and Chinese family names.
+     * 这是可选的屏幕阅读预设，不作为出版默认字体。
+     * 别名同时覆盖常见英文与中文字体家族名称。
+     */
+    --jiandu-font-wenkai:
+        "LXGW WenKai GB", "LXGW WenKai", "LXGW WenKai Screen",
+        "霞鹜文楷 GB", "霞鹜文楷", "霞鶩文楷 GB",
+        "Source Han Serif SC", "Noto Serif CJK SC", serif;
+
+    /* Alias / 别名：与上面的霞鹜文楷预设等价 */
+    --jiandu-font-lxgw-wenkai: var(--jiandu-font-wenkai);
+
+    /*
+     * KingHwa OldSong / 京华老宋体 — optional traditional-book preset
+     * This is for users who prefer an old-book reading character on screen.
+     * It remains optional; A4 print/PDF still uses the stable publishing stack.
+     * 供喜欢传统旧书阅读气质的用户在屏幕上选择。
+     * 它始终为可选项；A4 打印 / PDF 仍使用稳定的出版字体链。
+     */
+    --jiandu-font-kinghwa-old-song:
+        "KingHwaOldSong", "KingHwa OldSong",
+        "京華老宋体", "京华老宋体",
+        "Source Han Serif SC", "Noto Serif CJK SC", serif;
+
+    /* Compatibility aliases / 兼容别名 */
+    --jiandu-font-kinghwa: var(--jiandu-font-kinghwa-old-song);
+    --jiandu-font-old-song: var(--jiandu-font-kinghwa-old-song);
+
+    /*
      * Technical sans / 技术无衬线
      * Kept only for dense engineering editing; it is not a book-output default.
      * 仅保留给密集工程编辑，不作为书刊式输出默认。
