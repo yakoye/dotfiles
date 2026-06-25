@@ -1,6 +1,6 @@
 # Jiandu Typora Theme
 
-> **v0.2.0 / v0.2.0**  
+> **v0.2.1 / v0.2.1**  
 > Reading-first Typora themes with coordinated screen font presets, WYSIWYG PDF export for ordinary themes, and one independent formal-print theme.  
 > 一套以阅读为先的 Typora 主题：提供统一的屏幕字体套餐、普通主题所见即所得 PDF 导出，以及一套独立固定的正式印刷主题。
 
@@ -8,8 +8,8 @@
 
 - Seven colour themes: Natural Paper, Bright White, Warm Beige, Mist Blue, Night Green, Deep Navy, and Print Preview.  
   七套配色主题：自然纸张、明亮白、暖米色、雾蓝、夜间绿、深墨蓝、印刷预览。
-- Seven coordinated screen font presets: Screen Clear, Formal Publishing, Newspaper, Retro Jinghua, GitHub Modern, LaTeX Style, and WenKai Notes.  
-  七套统一字体套餐：屏幕清晰、正式出版、报刊风格、复古京华、GitHub 现代、LaTeX 学术风格、霞鹜文楷。
+- Eight coordinated screen font presets: Screen Clear, Formal Publishing, Source Han Serif, Newspaper, Retro Jinghua, GitHub Modern, LaTeX Style, and WenKai Notes.  
+  八套统一字体套餐：屏幕清晰、正式出版、思源宋体、报刊风格、复古京华、GitHub 现代、LaTeX 学术风格、霞鹜文楷。
 - A preset applies to headings, body, tables, quotes, captions, UI, and code together.  
   一套套餐会同时应用到标题、正文、表格、引用、图注、界面和代码。
 - Ordinary Jiandu themes export PDF using the current screen font preset and the document’s own theme style.  
@@ -43,6 +43,7 @@ Typora themes/
    ├─ font-presets/
    │  ├─ screen-clear.css
    │  ├─ formal-publishing.css
+   │  ├─ source-han-serif.css
    │  ├─ newspaper.css
    │  ├─ retro-jinghua.css
    │  ├─ github-modern.css
@@ -71,6 +72,7 @@ Open `jiandu/user-fonts.css`. At the top, keep **one** import line active:
 @import url("./font-presets/screen-clear.css");
 
 /* @import url("./font-presets/formal-publishing.css"); */
+/* @import url("./font-presets/source-han-serif.css"); */
 /* @import url("./font-presets/newspaper.css"); */
 /* @import url("./font-presets/retro-jinghua.css"); */
 /* @import url("./font-presets/github-modern.css"); */
@@ -81,7 +83,8 @@ Open `jiandu/user-fonts.css`. At the top, keep **one** import line active:
 | Preset / 套餐 | Best for / 适合 |
 | --- | --- |
 | Screen Clear / 屏幕清晰 | Noto Sans SC + Maple Mono；Windows/macOS 技术资料、PCIe、日常笔记 |
-| Formal Publishing / 正式出版 | 思源宋体正文；书籍、论文、长报告 |
+| Formal Publishing / 正式出版 | 思源宋体正文 + 方正博雅宋标题优先；书籍、论文、长报告 |
+| Source Han Serif / 思源宋体 | 标题与正文统一思源宋体；正式书刊、论文、长篇技术文档 |
 | Newspaper / 报刊风格 | 方正报宋 / 方正粗黑优先；评论、报刊、史料 |
 | Retro Jinghua / 复古京华 | 京华老宋体；日记、随笔、旧书感阅读 |
 | GitHub Modern / GitHub 现代 | README、项目说明、开发笔记 |
@@ -118,13 +121,16 @@ For example, retain the whole selected preset but use a different code font:
 --jiandu-code-font: var(--jiandu-font-latex-mono);
 ```
 
-The confirmed task checkbox setting remains:
+Task-checkbox baseline alignment is now fixed in `jiandu/core.css` and is no longer a user setting:
 
-已确认有效的任务方框设置保持不变：
+已确认有效的任务方框基线对齐已固定在 `jiandu/core.css`，不再作为用户字体设置暴露：
 
 ```css
 --jiandu-task-checkbox-align: -0.04em;
 ```
+
+Do not copy this rule into `user-fonts.css`; it intentionally stays unchanged across all font presets.  
+不要把这条规则复制到 `user-fonts.css`；它会在所有字体套餐中保持不变。
 
 ## PDF and Print / PDF 与打印
 

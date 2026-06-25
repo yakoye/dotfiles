@@ -1,5 +1,14 @@
 # Changelog / 更新记录
 
+## v0.2.1 — Fixed Task Baseline and Source Han Serif Preset / 固定任务方框基线与思源宋体套餐
+
+- Moved the user-confirmed native task-checkbox baseline alignment (`-0.04em`) from `jiandu/user-fonts.css` into `jiandu/core.css`. It is now a fixed core-layout rule and no longer changes with screen font presets.  
+  将用户确认的原生任务方框基线对齐值（`-0.04em`）从 `jiandu/user-fonts.css` 移至 `jiandu/core.css`。它现在是固定核心布局规则，不再随屏幕字体套餐改变。
+- Added `source-han-serif.css` / Source Han Serif / 思源宋体: a unified formal Song preset that uses Source Han Serif for both headings and body, with Maple Mono for code.  
+  新增 `source-han-serif.css` / 思源宋体：标题与正文统一使用思源宋体，代码使用 Maple Mono 的正式宋体套餐。
+- Updated the bilingual preset guide, README, installation tree, and font-preview document for the eighth preset.  
+  更新中英双语套餐说明、README、安装目录树和字体预览文档，纳入第八套字体套餐。
+
 ## v0.2.0 — Typography Presets and WYSIWYG PDF / 字体套餐与所见即所得 PDF
 
 - Added seven coordinated screen typography presets: Screen Clear, Formal Publishing, Newspaper, Retro Jinghua, GitHub Modern, LaTeX Style, and WenKai Notes.  

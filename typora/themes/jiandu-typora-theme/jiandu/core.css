@@ -6,6 +6,21 @@
  * 不依赖彩虹标题或装饰性标记。
  */
 
+:root {
+    /* ================================================================
+     * Fixed native checkbox baseline / 固定原生任务方框基线
+     * ================================================================
+     * This value is intentionally part of the core layout rather than
+     * `user-fonts.css`. It is the user-verified stable alignment for
+     * Typora / Chromium native task checkboxes and should not be changed
+     * per font preset.
+     * 此值属于核心布局，不再放在 `user-fonts.css` 中。它是用户确认的
+     * Typora / Chromium 原生任务方框稳定对齐值，不随字体套餐变化。
+     */
+    --jiandu-task-checkbox-align: -0.04em;
+}
+
+
 html {
     font-size: var(--jiandu-screen-font-size);
     background: var(--jiandu-bg);

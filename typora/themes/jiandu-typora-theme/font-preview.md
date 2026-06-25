@@ -26,11 +26,18 @@ English sample: When the Endpoint receives a Configuration Write Request, firmwa
 | --- | --- | --- |
 | Screen Clear / 屏幕清晰 | Windows/macOS 技术资料、日常笔记 | Noto Sans SC + Maple Mono |
 | Formal Publishing / 正式出版 | 书籍、论文、长报告 | 思源宋体 + 方正博雅宋（已安装时） |
+| Source Han Serif / 思源宋体 | 正式书刊、论文、长篇技术资料 | 标题与正文统一思源宋体 + Maple Mono |
 | Newspaper / 报刊风格 | 评论、史料、报刊式长文 | 方正报宋 + 方正粗黑（已安装时） |
 | Retro Jinghua / 复古京华 | 日记、随笔、旧书感阅读 | 京华老宋体 + Maple Mono |
 | GitHub Modern / GitHub 现代 | README、项目说明、开发笔记 | 系统现代无衬线 + GitHub Mono |
 | LaTeX Style / LaTeX 学术风格 | 论文、规范、公式文档 | Latin Modern / CMU + CJK 宋体回退 |
 | WenKai Notes / 霞鹜文楷 | 日记、读书笔记、随笔 | 霞鹜文楷 + Maple Mono |
+
+To enable the unified Source Han Serif preset / 启用统一思源宋体套餐：
+
+```css
+@import url("./font-presets/source-han-serif.css");
+```
 
 ## Body and Table / 正文与表格
 

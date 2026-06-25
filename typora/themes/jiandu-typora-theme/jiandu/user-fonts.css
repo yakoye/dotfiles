@@ -25,6 +25,7 @@
 @import url("./font-presets/screen-clear.css");
 
 /* @import url("./font-presets/formal-publishing.css"); */
+/* @import url("./font-presets/source-han-serif.css"); */
 /* @import url("./font-presets/newspaper.css"); */
 /* @import url("./font-presets/retro-jinghua.css"); */
 /* @import url("./font-presets/github-modern.css"); */
@@ -54,15 +55,6 @@
     /* Example / 示例：保持当前套餐，只替换代码字体。
      * --jiandu-code-font: var(--jiandu-font-github-mono);
      */
-
-    /* ================================================================
-     * Native checkbox alignment / 原生任务方框对齐
-     * ================================================================
-     * Confirmed working value / 已确认可用值：
-     * Negative = move square slightly down; positive = move it up.
-     * 负值 = 方框略向下；正值 = 方框略向上。
-     */
-    --jiandu-task-checkbox-align: -0.04em;
 }
 
 /* ====================================================================
@@ -76,23 +68,27 @@
  *    Source Han Serif body + FangZheng BoYaSong headings when installed.
  *    思源宋体正文 + 已安装时优先方正博雅宋标题。书籍、论文、长报告。
  *
- * 3. newspaper.css / Newspaper / 报刊风格
+ * 3. source-han-serif.css / Source Han Serif / 思源宋体
+ *    Source Han Serif for both headings and body; a unified formal Song style.
+ *    标题与正文都使用思源宋体；统一、正式的宋体书刊风格。
+ *
+ * 4. newspaper.css / Newspaper / 报刊风格
  *    FangZheng BaoSong body + FangZheng CuHei headings when installed.
  *    方正报宋正文 + 已安装时优先方正粗黑标题。评论、报刊、史料。
  *
- * 4. retro-jinghua.css / Retro Jinghua / 复古京华
+ * 5. retro-jinghua.css / Retro Jinghua / 复古京华
  *    KingHwa OldSong body and headings. Journals and cultural essays.
  *    京华老宋体正文与标题。日记、随笔、文化类长文。
  *
- * 5. github-modern.css / GitHub Modern / GitHub 现代
+ * 6. github-modern.css / GitHub Modern / GitHub 现代
  *    Modern system sans + GitHub-style mono. README and engineering docs.
  *    现代系统无衬线 + GitHub 风格等宽。README、开发文档。
  *
- * 6. latex-style.css / LaTeX Style / LaTeX 学术风格
+ * 7. latex-style.css / LaTeX Style / LaTeX 学术风格
  *    Latin Modern/CMU priorities with CJK Song fallback. Papers and specs.
  *    Latin Modern/CMU 优先，中文回退到出版宋体。论文、规范、公式文档。
  *
- * 7. wenkai-notes.css / WenKai Notes / 霞鹜文楷
+ * 8. wenkai-notes.css / WenKai Notes / 霞鹜文楷
  *    LXGW WenKai body and headings. Journals, reading notes, prose.
  *    霞鹜文楷正文与标题。日记、读书笔记、随笔。
  *

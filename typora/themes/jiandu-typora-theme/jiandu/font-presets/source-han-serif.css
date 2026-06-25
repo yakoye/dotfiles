@@ -1,0 +1,18 @@
+/* Source Han Serif / 思源宋体
+ * Unified Source Han Serif typography for formal Chinese reading, papers,
+ * books, and long technical documents. It keeps headings and body in the
+ * same family, unlike Formal Publishing which prioritizes FangZheng BoYaSong
+ * for headings when available.
+ * 统一使用思源宋体，适合正式中文阅读、论文、书籍与长篇技术文档。
+ * 标题和正文保持同一字体家族；与“正式出版”不同，本套餐不优先使用
+ * 方正博雅宋标题。
+ */
+:root {
+    --jiandu-heading-font: var(--jiandu-font-publishing);
+    --jiandu-reading-font: var(--jiandu-font-publishing);
+    --jiandu-table-font: var(--jiandu-font-publishing);
+    --jiandu-quote-font: var(--jiandu-font-publishing);
+    --jiandu-caption-font: var(--jiandu-font-publishing);
+    --jiandu-ui-font: var(--jiandu-font-noto-sans-sc);
+    --jiandu-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
+}
