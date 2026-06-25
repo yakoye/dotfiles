@@ -3,7 +3,7 @@
 > A reading-first Typora theme pack with an A4-oriented print / PDF engine.  
 > 一套以阅读体验为先、并重点面向 A4 打印 / 导出 PDF 的 Typora 主题包。
 
-**Version / 版本：** `0.1.5`  
+**Version / 版本：** `0.1.10`  
 **Default screen theme / 默认屏幕主题：** `Jiandu Natural Paper`
 
 ---
@@ -20,8 +20,8 @@
   针对 PCIe 技术资料优化表格和代码块：长字段优先换行，而不是撑破页面。
 - Tables use a stable fixed layout. For six-column PCIe tables, the register column is intentionally limited so behavior and firmware-note columns retain reading space.  
   表格采用稳定的固定列宽布局。六列 PCIe 表格会刻意限制寄存器名列，给行为说明和固件备注保留阅读空间。
-- Task lists use the real GitHub-style native checkbox in normal inline flow. The browser controls the tick baseline, preventing a hand-drawn checkmark from sitting too high.  
-  任务列表采用 GitHub 风格的真实原生复选框并保留正常行内布局；对号基线由浏览器处理，避免手工绘制的对号偏上。
+- Task lists use the real GitHub-style native checkbox in normal inline flow. A small `vertical-align` correction lowers the native square slightly so it visually aligns with Song-serif text; no replacement icon is drawn.  
+  任务列表采用 GitHub 风格的真实原生复选框并保留正常行内布局。仅通过很小的 `vertical-align` 将原生方框下调，使其视觉上与宋体正文对齐；不绘制替代图标。
 - Formal book / thesis / newspaper typography is the default; screen font remains a one-line setting and print fonts stay independent and stable.  
   默认采用正式书籍 / 论文 / 报刊式字体；屏幕字体仍只需改一行，打印字体独立固定，保证分页和技术排版稳定。
 

@@ -400,6 +400,13 @@ kbd {
 
 #write .md-task-list-item > input {
     margin-left: -1.3em;
+    margin-top: 0;
+    margin-bottom: 0;
+    /* Keep the native Chromium control in inline flow, then lower it slightly
+       to align its visual square with the Song-serif text x-height.
+       保持 Chromium 原生控件的行内布局，再仅向下微调，使方框视觉中心
+       与宋体正文的字面高度对齐。 */
+    vertical-align: -0.12em;
 }
 
 /* Keep Typora's own completed-state structure; only tune its text colour. */
