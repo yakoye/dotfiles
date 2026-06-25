@@ -1,5 +1,12 @@
 # Changelog / 更新记录
 
+## 0.1.7 — 2026-06-25
+
+- Replaced the hand-positioned pseudo-element task checkbox with the native GitHub-style checkbox rule. The real control now remains in inline flow with `margin-left: -1.3em`, so Chromium aligns the box and tick to the text baseline instead of relying on a manually positioned `✓`.  
+  将手工定位的伪元素任务方框改为 GitHub 风格的原生复选框规则。真实控件保留在行内布局中并使用 `margin-left: -1.3em`，由 Chromium 按文本基线对齐方框和对号，不再依赖手工定位的 `✓`。
+- Applied the same native-control rule to A4 print/PDF output and forced a light control scheme during printing so dark screen themes export stable, readable checkboxes.  
+  同步将原生控件规则应用到 A4 打印 / PDF 输出，并在打印时强制使用浅色控件方案，保证深色屏幕主题导出时复选框稳定、清晰。
+
 ## 0.1.6 — 2026-06-25
 
 - Changed all Markdown tables to a stable fixed-layout model so a long identifier cannot consume most of the table width. Added an explicit six-column PCIe allocation: Register 19%, Bits 8%, Access 8%, Reset 12%, Behavior 26%, and Firmware notes 27%.  
