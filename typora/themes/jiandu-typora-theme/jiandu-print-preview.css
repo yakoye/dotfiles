@@ -1,0 +1,102 @@
+/*
+ * Jiandu Print Preview / 简读·印刷预览
+ * This screen theme resembles the stable A4 export result.
+ * 该屏幕主题用于提前查看接近 A4 导出效果的版式。
+ */
+@import url("./jiandu/base.css");
+
+:root {
+    color-scheme: light;
+
+    --bg-color: #eef1f3;
+    --text-color: #1f2428;
+    --control-text-color: #283038;
+    --control-text-hover-color: #11161a;
+    --active-file-bg-color: #dde7ec;
+    --active-file-text-color: #1f3c4e;
+    --active-file-border-color: #335e78;
+    --item-hover-bg-color: #e4ebef;
+    --side-bar-bg-color: #e9edef;
+    --window-border: #ced7dd;
+    --meta-content-color: #6e7880;
+    --rawblock-edit-panel-bd: #cfd8de;
+
+    --jiandu-bg: #eef1f3;
+    --jiandu-paper: #ffffff;
+    --jiandu-text: #1f2428;
+    --jiandu-muted: #59616a;
+    --jiandu-faint: #8b939a;
+    --jiandu-heading: #161b20;
+    --jiandu-heading-muted: #303840;
+    --jiandu-accent: #335e78;
+    --jiandu-accent-strong: #24485f;
+    --jiandu-accent-contrast: #ffffff;
+    --jiandu-link: #244e69;
+    --jiandu-link-hover: #173a52;
+    --jiandu-link-underline: #a9bbc6;
+    --jiandu-strong: #11161a;
+    --jiandu-emphasis: #303840;
+    --jiandu-selection: #dbeaf0;
+    --jiandu-selection-text: #1f303b;
+    --jiandu-border: #cbd4da;
+    --jiandu-soft-border: #e0e5e8;
+    --jiandu-heading-rule: #8ea3b0;
+    --jiandu-block-bg: #f5f7f8;
+    --jiandu-quote-bg: #f8f9fa;
+    --jiandu-quote-text: #303840;
+    --jiandu-quote-border: #ccd4da;
+    --jiandu-code-bg: #f5f7f8;
+    --jiandu-code-text: #1c2830;
+    --jiandu-code-border: #c8d1d7;
+    --jiandu-inline-code-bg: #edf1f3;
+    --jiandu-inline-code-text: #1f4a61;
+    --jiandu-inline-code-border: #d2dade;
+    --jiandu-table-bg: #ffffff;
+    --jiandu-table-header: #edf1f3;
+    --jiandu-table-stripe: #f8f9fa;
+    --jiandu-table-border: #abb5bd;
+    --jiandu-table-heading: #1d2930;
+    --jiandu-meta-bg: #f5f7f8;
+    --jiandu-meta-text: #53606a;
+    --jiandu-image-border: #b9c2c9;
+    --jiandu-image-shadow: none;
+    --jiandu-page-shadow: 0 3px 20px rgba(31, 42, 49, 0.13);
+    --jiandu-kbd-bg: #f2f4f5;
+    --jiandu-kbd-border: #9faab2;
+    --jiandu-tag: #39546a;
+    --jiandu-checkbox: #335e78;
+    --jiandu-task-strike: #9aa3aa;
+    --jiandu-sidebar-bg: #e9edef;
+    --jiandu-sidebar-border: #d5dde1;
+    --jiandu-ui-text: #364149;
+    --jiandu-hover: #e0e8ec;
+    --jiandu-active-bg: #d6e4eb;
+    --jiandu-active-text: #26485d;
+    --jiandu-popup-bg: #ffffff;
+    --jiandu-popup-border: #d0d9de;
+    --jiandu-popup-shadow: 0 10px 26px rgba(34, 47, 56, 0.16);
+    --jiandu-input-bg: #fafbfb;
+    --jiandu-input-border: #cfd8dd;
+    --jiandu-focus-ring: rgba(51, 94, 120, 0.22);
+    --jiandu-notification-bg: #f2f7f9;
+    --jiandu-notification-text: #2c5369;
+    --jiandu-notification-border: #c4d9e3;
+    --jiandu-scrollbar-track: #e9edef;
+    --jiandu-scrollbar-thumb: #bac6cc;
+    --jiandu-scrollbar-thumb-hover: #9eafb8;
+    --jiandu-syntax-comment: #818c93;
+    --jiandu-syntax-number: #915d2c;
+    --jiandu-syntax-keyword: #914857;
+    --jiandu-syntax-string: #2c7355;
+    --jiandu-syntax-variable: #266a92;
+    --jiandu-syntax-type: #6c5491;
+    --jiandu-syntax-tag: #316f89;
+    --jiandu-syntax-error: #ba4747;
+    --jiandu-diagram-cluster: #f4f7f8;
+    --jiandu-diagram-node: #ffffff;
+    --jiandu-diagram-border: #87959f;
+    --jiandu-diagram-text: #1f2428;
+    --jiandu-diagram-line: #47535b;
+    --jiandu-diagram-label-bg: #ffffff;
+    --jiandu-diagram-activation: #e5ebee;
+}

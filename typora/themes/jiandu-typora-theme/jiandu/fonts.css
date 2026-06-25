@@ -1,0 +1,53 @@
+/*
+ * Jiandu Typora Theme — Font Settings / 字体设置
+ *
+ * Font definitions / 字体预设定义
+ *
+ * Change the one-line screen-font selection in `user-fonts.css`.
+ * 屏幕字体的一行选择请在 `user-fonts.css` 中修改。
+ */
+:root {
+    /* UI font / 界面字体 */
+    --jiandu-ui-font: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+
+    /* Reading-font presets / 阅读字体预设 */
+    --jiandu-font-wenkai:
+        "霞鹜文楷 GB", "LXGW WenKai GB", "LXGW WenKai",
+        "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+
+    --jiandu-font-old-song:
+        "KingHwaOldSong", "KingHwa OldSong", "京華老宋体",
+        "Songti SC", "SimSun", serif;
+
+    --jiandu-font-system:
+        "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC",
+        "Noto Sans CJK SC", Arial, sans-serif;
+
+    --jiandu-font-serif:
+        "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC",
+        "STSong", "SimSun", serif;
+
+    /* Code stays monospace / 代码始终使用等宽字体，不随正文预设切换 */
+    --jiandu-code-font:
+        "Iosevka Curly", "JetBrains Mono", "Cascadia Code",
+        "Fira Code", Consolas, "Liberation Mono", monospace;
+
+    /* Stable print fonts / 稳定的打印字体：不跟随上方屏幕字体开关 */
+    --jiandu-print-body-font:
+        "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC",
+        "STSong", "SimSun", serif;
+
+    --jiandu-print-heading-font:
+        "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC",
+        Arial, sans-serif;
+
+    --jiandu-print-code-font:
+        "Iosevka Curly", "JetBrains Mono", "Cascadia Code",
+        Consolas, monospace;
+
+    /* Reading metrics / 阅读排版参数 */
+    --jiandu-screen-font-size: 16px;
+    --jiandu-screen-line-height: 1.82;
+    --jiandu-screen-paragraph-spacing: 0.92rem;
+    --jiandu-screen-content-width: 960px;
+}

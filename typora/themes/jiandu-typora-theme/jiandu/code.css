@@ -1,0 +1,142 @@
+/* Code and source mode / 代码与源码模式 */
+
+#write code,
+#write tt {
+    padding: 0.11em 0.34em;
+    color: var(--jiandu-inline-code-text);
+    background: var(--jiandu-inline-code-bg);
+    border: 1px solid var(--jiandu-inline-code-border);
+    border-radius: 4px;
+    font-family: var(--jiandu-code-font);
+    font-size: 0.88em;
+    line-height: 1.4;
+}
+
+#write pre code,
+#write .md-fences code {
+    padding: 0;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    font-size: inherit;
+}
+
+.md-fences,
+#write pre {
+    box-sizing: border-box;
+    margin: 1.2rem 0;
+    padding: 0.92rem 1.08rem !important;
+    overflow: auto;
+    color: var(--jiandu-code-text);
+    background: var(--jiandu-code-bg);
+    border: 1px solid var(--jiandu-code-border);
+    border-radius: 8px;
+    font-family: var(--jiandu-code-font);
+    font-size: 0.88rem;
+    line-height: 1.68;
+    tab-size: 4;
+    -moz-tab-size: 4;
+}
+
+.md-fences .code-tooltip,
+.md-fences-adv-panel {
+    color: var(--jiandu-muted);
+    background: transparent;
+    border-color: var(--jiandu-code-border);
+}
+
+.md-fences-adv-panel pre {
+    margin: 0;
+    padding: 0 !important;
+    background: transparent;
+    border: 0;
+}
+
+/* CodeMirror syntax / CodeMirror 语法高亮 */
+.cm-s-inner.CodeMirror,
+.cm-s-typora-default.CodeMirror {
+    color: var(--jiandu-text);
+    background: var(--jiandu-paper);
+    font-family: var(--jiandu-reading-font);
+}
+
+.cm-s-inner .CodeMirror-gutters,
+.cm-s-typora-default .CodeMirror-gutters {
+    background: var(--jiandu-paper);
+    border-right: 1px solid var(--jiandu-soft-border);
+}
+
+.cm-s-inner .CodeMirror-linenumber,
+.cm-s-typora-default .CodeMirror-linenumber {
+    color: var(--jiandu-faint);
+    font-family: var(--jiandu-code-font);
+}
+
+.cm-s-inner .CodeMirror-activeline-background,
+.cm-s-typora-default .CodeMirror-activeline-background {
+    background: var(--jiandu-active-bg);
+}
+
+.cm-s-inner span.cm-comment { color: var(--jiandu-syntax-comment); }
+.cm-s-inner span.cm-atom,
+.cm-s-inner span.cm-number { color: var(--jiandu-syntax-number); }
+.cm-s-inner span.cm-keyword,
+.cm-s-inner span.cm-operator { color: var(--jiandu-syntax-keyword); }
+.cm-s-inner span.cm-string,
+.cm-s-inner span.cm-string-2 { color: var(--jiandu-syntax-string); }
+.cm-s-inner span.cm-variable,
+.cm-s-inner span.cm-variable-2,
+.cm-s-inner span.cm-variable-3,
+.cm-s-inner span.cm-property,
+.cm-s-inner span.cm-def { color: var(--jiandu-syntax-variable); }
+.cm-s-inner span.cm-type,
+.cm-s-inner span.cm-builtin { color: var(--jiandu-syntax-type); }
+.cm-s-inner span.cm-tag,
+.cm-s-inner span.cm-attribute { color: var(--jiandu-syntax-tag); }
+.cm-s-inner span.cm-link { color: var(--jiandu-link); }
+.cm-s-inner span.cm-error { color: var(--jiandu-syntax-error); }
+
+/* Source mode / 源码模式 */
+.typora-sourceview-on #write,
+.typora-sourceview-on #typora-source {
+    background: var(--jiandu-paper);
+}
+
+.typora-sourceview-on .CodeMirror-wrap .CodeMirror-scroll {
+    background: var(--jiandu-paper);
+}
+
+.CodeMirror-cursor {
+    border-left-color: var(--jiandu-accent-strong);
+}
+
+.CodeMirror-selected,
+.CodeMirror-focused .CodeMirror-selected {
+    background: var(--jiandu-selection) !important;
+}
+
+.CodeMirror-matchingbracket {
+    color: var(--jiandu-accent-strong) !important;
+    font-weight: 700;
+}
+
+/* Scrollbar / 滚动条 */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--jiandu-scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--jiandu-scrollbar-thumb);
+    border: 2px solid var(--jiandu-scrollbar-track);
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--jiandu-scrollbar-thumb-hover);
+}

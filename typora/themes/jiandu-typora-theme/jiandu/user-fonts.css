@@ -1,0 +1,17 @@
+/*
+ * Jiandu user font choice / 简读用户字体选择
+ *
+ * Change ONLY the next line.
+ * 只需修改下一行：
+ *
+ * - var(--jiandu-font-wenkai)   LXGW WenKai / 霞鹜文楷
+ * - var(--jiandu-font-old-song) KingHwa OldSong / 京华老宋体
+ * - var(--jiandu-font-system)   System Sans / 系统无衬线
+ * - var(--jiandu-font-serif)    Modern Serif / 现代宋体风格
+ */
+:root {
+    --jiandu-reading-font: var(--jiandu-font-wenkai);
+
+    /* Headings follow the reading font by default / 标题默认跟随正文字体 */
+    --jiandu-heading-font: var(--jiandu-reading-font);
+}

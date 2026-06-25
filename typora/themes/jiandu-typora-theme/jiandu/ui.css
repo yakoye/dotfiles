@@ -1,0 +1,169 @@
+/* Typora UI surfaces / Typora 界面元素 */
+
+#typora-sidebar,
+#typora-sidebar * {
+    font-family: var(--jiandu-ui-font);
+}
+
+#typora-sidebar {
+    color: var(--jiandu-ui-text);
+    background: var(--jiandu-sidebar-bg);
+    border-right: 1px solid var(--jiandu-sidebar-border);
+}
+
+.sidebar-tabs {
+    border-bottom: 1px solid var(--jiandu-sidebar-border);
+}
+
+.sidebar-tab {
+    color: var(--jiandu-muted);
+}
+
+.sidebar-tab.active,
+.sidebar-tab:hover {
+    color: var(--jiandu-ui-text);
+}
+
+.file-node-content,
+.file-list-item {
+    color: var(--jiandu-ui-text);
+    border-radius: 5px;
+}
+
+.file-node-content:hover,
+.file-list-item:hover,
+.outline-item:hover {
+    background: var(--jiandu-hover);
+}
+
+.file-node-content.active,
+.file-list-item.active {
+    color: var(--jiandu-active-text);
+    background: var(--jiandu-active-bg);
+    border-left: 3px solid var(--jiandu-accent);
+}
+
+.file-node-icon,
+.file-node-open-state,
+.file-list-item-summary,
+.file-list-item-parent-loc,
+.file-list-item-time,
+.outline-label {
+    color: var(--jiandu-muted);
+}
+
+.pin-outline #outline-content .outline-active,
+.pin-outline #outline-content .outline-active strong,
+.outline-item.active {
+    color: var(--jiandu-active-text);
+    background: var(--jiandu-active-bg);
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+#typora-quick-open,
+.modal-content,
+.context-menu,
+.ty-popover,
+#md-searchpanel {
+    color: var(--jiandu-ui-text);
+    background: var(--jiandu-popup-bg);
+    border: 1px solid var(--jiandu-popup-border);
+    border-radius: 10px;
+    box-shadow: var(--jiandu-popup-shadow);
+}
+
+#typora-quick-open-input,
+#typora-quick-open-input input,
+#md-searchpanel input,
+.form-control,
+#recent-file-panel-search-input,
+#table-insert-col,
+#table-insert-row {
+    color: var(--jiandu-ui-text);
+    background: var(--jiandu-input-bg);
+    border: 1px solid var(--jiandu-input-border);
+    border-radius: 6px;
+    box-shadow: none;
+}
+
+#typora-quick-open-input input:focus,
+#md-searchpanel input:focus,
+.form-control:focus,
+#recent-file-panel-search-input:focus {
+    border-color: var(--jiandu-accent);
+    box-shadow: 0 0 0 2px var(--jiandu-focus-ring);
+}
+
+.btn,
+.searchpanel-search-option-btn,
+#recent-file-panel-action-btn {
+    color: var(--jiandu-ui-text);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    box-shadow: none;
+}
+
+.btn:hover,
+.searchpanel-search-option-btn:hover,
+#top-titlebar .toolbar-icon.btn:hover,
+#top-titlebar .toolbar-icon.btn.hover,
+.megamenu-menu-panel .btn:hover {
+    color: var(--jiandu-ui-text);
+    background: var(--jiandu-hover) !important;
+}
+
+.btn-primary,
+.searchpanel-search-option-btn.active {
+    color: var(--jiandu-accent-contrast) !important;
+    background: var(--jiandu-accent) !important;
+    border-color: var(--jiandu-accent) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+    color: var(--jiandu-accent-contrast) !important;
+    background: var(--jiandu-accent-strong) !important;
+    border-color: var(--jiandu-accent-strong) !important;
+}
+
+#megamenu-content,
+#top-titlebar,
+#megamenu-menu-sidebar {
+    color: var(--jiandu-ui-text);
+    background: var(--jiandu-popup-bg);
+}
+
+#megamenu-menu-sidebar {
+    border-right: 1px solid var(--jiandu-popup-border);
+}
+
+.megamenu-menu-header,
+.modal-footer {
+    border-top: 0;
+    border-bottom: 1px solid var(--jiandu-popup-border);
+}
+
+#megamenu-back-btn,
+.long-btn {
+    color: var(--jiandu-ui-text);
+    border: 1px solid var(--jiandu-input-border);
+    border-radius: 6px;
+}
+
+#md-notification {
+    color: var(--jiandu-notification-text);
+    background: var(--jiandu-notification-bg);
+    border: 1px solid var(--jiandu-notification-border);
+    border-radius: 8px;
+    box-shadow: var(--jiandu-popup-shadow);
+}
+
+/* Export panel / 导出面板 */
+.export-detail,
+.export-item.active,
+.export-items-list-control {
+    color: var(--jiandu-ui-text) !important;
+    background: var(--jiandu-active-bg) !important;
+}

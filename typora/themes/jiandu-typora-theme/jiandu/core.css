@@ -1,0 +1,478 @@
+/*
+ * Jiandu Core / 简读核心排版
+ * Screen reading is intentionally restrained; hierarchy comes from spacing,
+ * weight and rules rather than rainbow heading colours.
+ * 屏幕阅读保持克制；主要用间距、字重与细线建立层级，不依赖彩虹标题。
+ */
+
+html {
+    font-size: var(--jiandu-screen-font-size);
+    background: var(--jiandu-bg);
+}
+
+body {
+    margin: 0;
+    color: var(--jiandu-text);
+    background: var(--jiandu-bg);
+    font-family: var(--jiandu-reading-font) !important;
+    font-size: 1rem;
+    line-height: var(--jiandu-screen-line-height);
+    font-kerning: normal;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+}
+
+::selection {
+    color: var(--jiandu-selection-text);
+    background: var(--jiandu-selection);
+}
+
+#write {
+    box-sizing: border-box;
+    max-width: var(--jiandu-screen-content-width);
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 38px 52px 112px;
+    color: var(--jiandu-text);
+    background: var(--jiandu-paper);
+    box-shadow: var(--jiandu-page-shadow);
+}
+
+#typora-source .CodeMirror-lines {
+    max-width: var(--jiandu-screen-content-width);
+    padding: 38px 52px 112px;
+}
+
+#write > *:first-child,
+#write > h1:first-child,
+#write > h2:first-child,
+#write > h3:first-child {
+    margin-top: 0 !important;
+}
+
+#write > *:last-child {
+    margin-bottom: 0 !important;
+}
+
+p {
+    margin: var(--jiandu-screen-paragraph-spacing) 0;
+    line-height: var(--jiandu-screen-line-height);
+}
+
+/* Headings / 标题 */
+h1, h2, h3, h4, h5, h6 {
+    position: relative;
+    margin: 2.2rem 0 0.9rem;
+    color: var(--jiandu-heading);
+    font-family: var(--jiandu-heading-font) !important;
+    font-weight: 700;
+    line-height: 1.42;
+    letter-spacing: 0.015em;
+    cursor: text;
+    page-break-after: avoid;
+    break-after: avoid-page;
+}
+
+h1 {
+    margin-top: 0;
+    padding: 0 0 1rem;
+    color: var(--jiandu-heading);
+    font-size: 2.05rem;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--jiandu-heading-rule);
+}
+
+h2 {
+    margin-top: 2.7rem;
+    padding: 0 0 0.52rem;
+    color: var(--jiandu-heading);
+    font-size: 1.56rem;
+    border-bottom: 1px solid var(--jiandu-heading-rule);
+}
+
+h2::before {
+    display: inline-block;
+    width: 4px;
+    height: 1.05em;
+    margin: 0 0.58rem -0.14em 0;
+    content: "";
+    background: var(--jiandu-accent);
+    border-radius: 999px;
+}
+
+h3 {
+    margin-top: 2.05rem;
+    color: var(--jiandu-heading);
+    font-size: 1.28rem;
+}
+
+h3::before {
+    display: inline-block;
+    width: 0.42em;
+    height: 0.42em;
+    margin: 0 0.5em 0.08em 0;
+    content: "";
+    vertical-align: middle;
+    background: var(--jiandu-accent);
+    border-radius: 50%;
+}
+
+h4 {
+    margin-top: 1.72rem;
+    color: var(--jiandu-heading);
+    font-size: 1.08rem;
+}
+
+h5, h6 {
+    margin-top: 1.45rem;
+    color: var(--jiandu-heading-muted);
+    font-size: 1rem;
+}
+
+h5 { font-weight: 700; }
+h6 { font-weight: 600; font-style: italic; }
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code,
+h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+    font-size: 0.86em !important;
+}
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor,
+h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+    text-decoration: none;
+}
+
+/* Links and emphasis / 链接与强调 */
+#write a,
+a:any-link {
+    color: var(--jiandu-link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--jiandu-link-underline);
+    transition: color 140ms ease, border-color 140ms ease;
+}
+
+#write a:hover,
+a:any-link:hover {
+    color: var(--jiandu-link-hover);
+    border-bottom-color: currentColor;
+}
+
+strong {
+    color: var(--jiandu-strong);
+    font-weight: 700;
+}
+
+em {
+    color: var(--jiandu-emphasis);
+}
+
+mark {
+    padding: 0.05em 0.24em;
+    color: var(--jiandu-highlight-text);
+    background: var(--jiandu-highlight-bg);
+    border-radius: 0.22em;
+}
+
+#write del {
+    color: var(--jiandu-muted);
+    text-decoration-color: var(--jiandu-muted);
+}
+
+/* Lists / 列表 */
+ul, ol {
+    padding-inline-start: 1.75em;
+    margin: 0.86rem 0;
+}
+
+li {
+    margin: 0.36em 0;
+    padding-left: 0.08em;
+}
+
+li > p {
+    margin: 0.25em 0;
+}
+
+li > ul,
+li > ol {
+    margin: 0.28em 0 0.12em;
+}
+
+ul li::marker {
+    color: var(--jiandu-accent);
+}
+
+ol li::marker {
+    color: var(--jiandu-accent-strong);
+    font-weight: 600;
+}
+
+/* Horizontal divider / 分隔线 */
+hr {
+    height: 1px;
+    margin: 2.1rem 0;
+    background: var(--jiandu-border);
+    border: 0;
+}
+
+/* Quote / 引用 */
+blockquote {
+    position: relative;
+    box-sizing: border-box;
+    margin: 1.25rem 0;
+    padding: 0.82rem 1.12rem 0.82rem 1.32rem;
+    color: var(--jiandu-quote-text);
+    background: var(--jiandu-quote-bg);
+    border: 1px solid var(--jiandu-quote-border);
+    border-left: 4px solid var(--jiandu-accent);
+    border-radius: 8px;
+}
+
+blockquote p:first-child { margin-top: 0; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote strong { color: inherit; }
+
+/* Images / 图片 */
+#write img,
+.md-image img {
+    display: block;
+    box-sizing: border-box;
+    max-width: 100%;
+    height: auto;
+    margin: 1.35rem auto;
+    border: 1px solid var(--jiandu-image-border);
+    border-radius: 8px;
+    box-shadow: var(--jiandu-image-shadow);
+}
+
+.md-image {
+    display: block;
+    max-width: 100%;
+}
+
+.md-image > .md-meta {
+    margin-top: 4px;
+    color: var(--jiandu-muted);
+    font-family: var(--jiandu-ui-font);
+    font-size: 0.82rem;
+}
+
+/* Tables / 表格 */
+#write table {
+    display: table;
+    width: 100%;
+    max-width: 100%;
+    margin: 1.28rem 0;
+    overflow: visible;
+    color: var(--jiandu-text);
+    border-spacing: 0;
+    border-collapse: separate;
+    border: 1px solid var(--jiandu-table-border);
+    border-radius: 8px;
+    background: var(--jiandu-table-bg);
+    font-size: 0.93rem;
+    line-height: 1.62;
+}
+
+#write thead,
+#write table tr:first-child {
+    background: var(--jiandu-table-header);
+}
+
+#write th,
+#write td {
+    min-width: 2.7em;
+    padding: 0.58rem 0.72rem;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    border-right: 1px solid var(--jiandu-table-border);
+    border-bottom: 1px solid var(--jiandu-table-border);
+}
+
+#write th {
+    color: var(--jiandu-table-heading);
+    font-family: var(--jiandu-ui-font);
+    font-weight: 700;
+}
+
+#write tr:nth-child(2n) {
+    background: var(--jiandu-table-stripe);
+}
+
+#write tr:last-child td { border-bottom: 0; }
+#write th:last-child,
+#write td:last-child { border-right: 0; }
+
+.ty-table-edit {
+    margin-top: -1rem !important;
+}
+
+/* Keyboard and tags / 键盘按键与标签 */
+kbd {
+    display: inline-block;
+    min-width: 1.2em;
+    padding: 0.08em 0.38em;
+    color: var(--jiandu-text);
+    background: var(--jiandu-kbd-bg);
+    border: 1px solid var(--jiandu-kbd-border);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    box-shadow: none;
+    font-family: var(--jiandu-code-font);
+    font-size: 0.83em;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.md-tag {
+    color: var(--jiandu-tag);
+}
+
+/* Task list / 任务列表 */
+#write input[type="checkbox"] {
+    width: 1.04em;
+    height: 1.04em;
+    margin: 0 0.44em 0 0;
+    vertical-align: -0.13em;
+    accent-color: var(--jiandu-checkbox);
+}
+
+.md-task-list-item.task-list-done {
+    color: var(--jiandu-muted);
+}
+
+.md-task-list-item.task-list-done > p {
+    text-decoration: line-through;
+    text-decoration-color: var(--jiandu-task-strike);
+}
+
+/* YAML, footnotes and TOC / YAML、脚注与目录 */
+#write pre.md-meta-block {
+    margin: 0 0 1.35rem;
+    padding: 0.82rem 1rem;
+    color: var(--jiandu-meta-text);
+    background: var(--jiandu-meta-bg);
+    border: 1px solid var(--jiandu-soft-border);
+    border-radius: 8px;
+    font-family: var(--jiandu-code-font);
+    font-size: 0.86rem;
+    line-height: 1.55;
+}
+
+.md-toc {
+    margin: 1.5rem 0;
+    padding: 1rem 1.2rem;
+    background: var(--jiandu-block-bg);
+    border: 1px solid var(--jiandu-soft-border);
+    border-radius: 8px;
+}
+
+.md-toc-h1,
+.md-toc-h2,
+.md-toc-h3,
+.md-toc-h4,
+.md-toc-h5,
+.md-toc-h6 {
+    margin: 0.22em 0;
+    font-family: var(--jiandu-reading-font);
+}
+
+#write .md-footnote {
+    color: var(--jiandu-link);
+    font-family: var(--jiandu-ui-font);
+    font-size: 0.8em;
+    font-weight: 700;
+}
+
+.footnotes {
+    margin-top: 2.4rem;
+    padding-top: 0.8rem;
+    color: var(--jiandu-muted);
+    border-top: 1px solid var(--jiandu-border);
+    font-size: 0.88rem;
+}
+
+.footnotes p { line-height: 1.65; }
+
+/* Focus mode / 专注模式 */
+.on-focus-mode #write {
+    background: var(--jiandu-paper);
+}
+
+.on-focus-mode blockquote {
+    border-left-color: var(--jiandu-accent);
+}
+
+/* Typora editing hints / Typora 编辑辅助 */
+#write h1.md-heading.md-focus::before,
+#write h2.md-heading.md-focus::before,
+#write h3.md-heading.md-focus::before,
+#write h4.md-heading.md-focus::before,
+#write h5.md-heading.md-focus::before,
+#write h6.md-heading.md-focus::before {
+    position: absolute !important;
+    left: -1.62rem !important;
+    display: inline-block !important;
+    padding: 0.05rem 0.25rem !important;
+    color: var(--jiandu-muted) !important;
+    background: var(--jiandu-paper) !important;
+    border: 1px solid var(--jiandu-soft-border) !important;
+    border-radius: 4px !important;
+    font-family: var(--jiandu-ui-font) !important;
+    font-size: 0.68rem !important;
+    font-weight: 500 !important;
+    line-height: 1.25 !important;
+}
+
+#write h1.md-heading.md-focus::before { content: "H1" !important; top: 0.72rem !important; }
+#write h2.md-heading.md-focus::before { content: "H2" !important; top: 0.55rem !important; }
+#write h3.md-heading.md-focus::before { content: "H3" !important; top: 0.4rem !important; }
+#write h4.md-heading.md-focus::before { content: "H4" !important; top: 0.3rem !important; }
+#write h5.md-heading.md-focus::before { content: "H5" !important; top: 0.22rem !important; }
+#write h6.md-heading.md-focus::before { content: "H6" !important; top: 0.22rem !important; }
+
+/* Responsive reading / 窄窗口阅读 */
+@media screen and (max-width: 820px) {
+    #write {
+        padding: 28px 28px 78px;
+    }
+
+    #typora-source .CodeMirror-lines {
+        padding: 28px 28px 78px;
+    }
+
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.4rem; }
+    h3 { font-size: 1.18rem; }
+
+    #write table {
+        font-size: 0.88rem;
+    }
+
+    #write th,
+    #write td {
+        padding: 0.46rem 0.52rem;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    #write {
+        padding: 20px 18px 64px;
+    }
+
+    #typora-source .CodeMirror-lines {
+        padding: 20px 18px 64px;
+    }
+
+    h1 { font-size: 1.62rem; }
+    h2 { font-size: 1.3rem; }
+
+    #write table {
+        font-size: 0.82rem;
+    }
+}

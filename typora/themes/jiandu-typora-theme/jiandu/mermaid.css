@@ -1,0 +1,79 @@
+/* Mermaid and diagrams / Mermaid 与图表 */
+
+[id^="mermaidChart"] {
+    max-width: 100%;
+    color: var(--jiandu-text) !important;
+    background: transparent !important;
+}
+
+[id^="mermaidChart"] svg,
+.md-diagram-panel-preview svg {
+    display: block;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 1.25rem auto;
+}
+
+[id^="mermaidChart"] .cluster rect,
+.md-diagram-panel-preview .cluster rect {
+    fill: var(--jiandu-diagram-cluster) !important;
+    stroke: var(--jiandu-diagram-border) !important;
+}
+
+[id^="mermaidChart"] .node rect,
+[id^="mermaidChart"] .node circle,
+[id^="mermaidChart"] .node ellipse,
+[id^="mermaidChart"] .node polygon,
+[id^="mermaidChart"] .node path,
+.md-diagram-panel-preview .node rect,
+.md-diagram-panel-preview .node circle,
+.md-diagram-panel-preview .node ellipse,
+.md-diagram-panel-preview .node polygon,
+.md-diagram-panel-preview .node path,
+.md-diagram-panel-preview .actor,
+.md-diagram-panel-preview .entityBox {
+    fill: var(--jiandu-diagram-node) !important;
+    stroke: var(--jiandu-diagram-border) !important;
+}
+
+[id^="mermaidChart"] text,
+[id^="mermaidChart"] tspan,
+[id^="mermaidChart"] .nodeLabel,
+[id^="mermaidChart"] .label,
+[id^="mermaidChart"] .titleText,
+[id^="mermaidChart"] .entityLabel,
+.md-diagram-panel-preview text,
+.md-diagram-panel-preview tspan,
+.md-diagram-panel-preview .messageText,
+.md-diagram-panel-preview .labelText,
+.md-diagram-panel-preview .loopText {
+    fill: var(--jiandu-diagram-text) !important;
+    color: var(--jiandu-diagram-text) !important;
+    font-family: var(--jiandu-reading-font) !important;
+}
+
+[id^="mermaidChart"] .edgePath .path,
+[id^="mermaidChart"] .flowchart-link,
+[id^="mermaidChart"] .relationshipLine,
+[id^="mermaidChart"] .actor-line,
+.md-diagram-panel-preview .edgePath .path,
+.md-diagram-panel-preview .messageLine0,
+.md-diagram-panel-preview .messageLine1,
+.md-diagram-panel-preview .actor-line,
+.md-diagram-panel-preview .loopLine {
+    stroke: var(--jiandu-diagram-line) !important;
+}
+
+[id^="mermaidChart"] .edgeLabel rect,
+[id^="mermaidChart"] .labelBkg,
+[id^="mermaidChart"] .relationshipLabelBox,
+.md-diagram-panel-preview .edgeLabel rect,
+.md-diagram-panel-preview .labelBox {
+    fill: var(--jiandu-diagram-label-bg) !important;
+    stroke: var(--jiandu-diagram-border) !important;
+}
+
+.md-diagram-panel-preview .activation0 {
+    fill: var(--jiandu-diagram-activation) !important;
+    stroke: var(--jiandu-diagram-border) !important;
+}

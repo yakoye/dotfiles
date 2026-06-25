@@ -1,0 +1,404 @@
+/*
+ * Jiandu A4 Print Engine / 简读 A4 打印引擎
+ *
+ * Every Jiandu theme enters this stable, white-paper layout automatically
+ * when printing or exporting PDF. No manual theme switch is required.
+ * 所有简读主题在打印或导出 PDF 时都会自动进入这套稳定的白纸排版，
+ * 无需手动切换主题。
+ */
+
+@page {
+    size: A4;
+    margin: 18mm 16mm 18mm 16mm;
+}
+
+@media print {
+    :root {
+        /* Force a single print palette / 强制统一的打印色板 */
+        --bg-color: #ffffff !important;
+        --text-color: #1f2428 !important;
+        --control-text-color: #1f2428 !important;
+        --active-file-bg-color: #ffffff !important;
+        --active-file-border-color: #ffffff !important;
+
+        --jiandu-bg: #ffffff !important;
+        --jiandu-paper: #ffffff !important;
+        --jiandu-text: #1f2428 !important;
+        --jiandu-muted: #59616a !important;
+        --jiandu-faint: #7b838b !important;
+        --jiandu-heading: #161b20 !important;
+        --jiandu-heading-muted: #303840 !important;
+        --jiandu-accent: #335e78 !important;
+        --jiandu-accent-strong: #24485f !important;
+        --jiandu-accent-contrast: #ffffff !important;
+        --jiandu-link: #244e69 !important;
+        --jiandu-link-hover: #173a52 !important;
+        --jiandu-strong: #11161a !important;
+        --jiandu-emphasis: #303840 !important;
+        --jiandu-selection: #ffffff !important;
+        --jiandu-selection-text: #1f2428 !important;
+        --jiandu-border: #aeb7bf !important;
+        --jiandu-soft-border: #d3d9de !important;
+        --jiandu-heading-rule: #8ea3b0 !important;
+        --jiandu-block-bg: #f5f7f8 !important;
+        --jiandu-quote-bg: #f8f9fa !important;
+        --jiandu-quote-text: #303840 !important;
+        --jiandu-quote-border: #ccd4da !important;
+        --jiandu-code-bg: #f5f7f8 !important;
+        --jiandu-code-text: #1c2830 !important;
+        --jiandu-code-border: #c8d1d7 !important;
+        --jiandu-inline-code-bg: #edf1f3 !important;
+        --jiandu-inline-code-text: #1f4a61 !important;
+        --jiandu-inline-code-border: #d2dade !important;
+        --jiandu-table-bg: #ffffff !important;
+        --jiandu-table-header: #edf1f3 !important;
+        --jiandu-table-stripe: #f8f9fa !important;
+        --jiandu-table-border: #abb5bd !important;
+        --jiandu-table-heading: #1d2930 !important;
+        --jiandu-meta-bg: #f5f7f8 !important;
+        --jiandu-meta-text: #53606a !important;
+        --jiandu-image-border: #b9c2c9 !important;
+        --jiandu-image-shadow: none !important;
+        --jiandu-page-shadow: none !important;
+        --jiandu-kbd-bg: #f2f4f5 !important;
+        --jiandu-kbd-border: #9faab2 !important;
+        --jiandu-tag: #39546a !important;
+        --jiandu-checkbox: #335e78 !important;
+        --jiandu-diagram-cluster: #f4f7f8 !important;
+        --jiandu-diagram-node: #ffffff !important;
+        --jiandu-diagram-border: #87959f !important;
+        --jiandu-diagram-text: #1f2428 !important;
+        --jiandu-diagram-line: #47535b !important;
+        --jiandu-diagram-label-bg: #ffffff !important;
+        --jiandu-diagram-activation: #e5ebee !important;
+    }
+
+    html,
+    body {
+        width: auto !important;
+        min-width: 0 !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        color: var(--jiandu-text) !important;
+        background: #ffffff !important;
+        font-family: var(--jiandu-print-body-font) !important;
+        font-size: 10.7pt !important;
+        line-height: 1.62 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    #write {
+        width: auto !important;
+        max-width: none !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        color: var(--jiandu-text) !important;
+        background: #ffffff !important;
+        box-shadow: none !important;
+    }
+
+    #typora-sidebar,
+    #top-titlebar,
+    #footer-word-count,
+    .md-notification,
+    .typora-quick-open-item,
+    .md-searchpanel,
+    .md-tooltip,
+    .md-popover,
+    .CodeMirror-cursors,
+    .md-focus,
+    .md-image .md-meta {
+        display: none !important;
+    }
+
+    p,
+    li,
+    blockquote,
+    table,
+    th,
+    td {
+        color: var(--jiandu-text) !important;
+    }
+
+    p {
+        margin: 0 0 0.74em !important;
+        orphans: 3;
+        widows: 3;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--jiandu-heading) !important;
+        font-family: var(--jiandu-print-heading-font) !important;
+        page-break-after: avoid !important;
+        break-after: avoid-page !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid-page !important;
+    }
+
+    h1 {
+        margin: 0 0 14pt !important;
+        padding: 0 0 8pt !important;
+        font-size: 20pt !important;
+        letter-spacing: 0.05em !important;
+        border-bottom: 0.8pt solid var(--jiandu-heading-rule) !important;
+    }
+
+    h2 {
+        margin: 18pt 0 9pt !important;
+        padding: 0 0 4pt !important;
+        font-size: 15pt !important;
+        border-bottom: 0.6pt solid var(--jiandu-heading-rule) !important;
+    }
+
+    h2::before {
+        width: 3pt !important;
+        height: 14pt !important;
+        margin-right: 7pt !important;
+        background: var(--jiandu-accent) !important;
+    }
+
+    h3 {
+        margin: 14pt 0 6pt !important;
+        font-size: 12.5pt !important;
+    }
+
+    h3::before {
+        width: 4pt !important;
+        height: 4pt !important;
+        margin-right: 6pt !important;
+        background: var(--jiandu-accent) !important;
+    }
+
+    h4 { margin: 11pt 0 5pt !important; font-size: 11.4pt !important; }
+    h5, h6 { margin: 9pt 0 4pt !important; font-size: 10.7pt !important; }
+
+    /* Keep a heading with following body / 防止标题孤零零落在页尾 */
+    h1 + p, h1 + ul, h1 + ol, h1 + blockquote,
+    h2 + p, h2 + ul, h2 + ol, h2 + blockquote,
+    h3 + p, h3 + ul, h3 + ol, h3 + blockquote {
+        page-break-before: avoid !important;
+        break-before: avoid-page !important;
+    }
+
+    a,
+    a:any-link {
+        color: var(--jiandu-link) !important;
+        text-decoration: none !important;
+        border-bottom: 0.45pt solid currentColor !important;
+    }
+
+    strong {
+        color: #11161a !important;
+    }
+
+    mark {
+        padding: 0 !important;
+        color: #1f2428 !important;
+        background: transparent !important;
+        border-bottom: 0.75pt solid #7e6c2e !important;
+        border-radius: 0 !important;
+    }
+
+    hr {
+        height: 0 !important;
+        margin: 14pt 0 !important;
+        border: 0 !important;
+        border-top: 0.6pt solid var(--jiandu-border) !important;
+        background: transparent !important;
+    }
+
+    blockquote {
+        margin: 9pt 0 !important;
+        padding: 6pt 9pt 6pt 10pt !important;
+        background: var(--jiandu-quote-bg) !important;
+        border: 0.6pt solid var(--jiandu-quote-border) !important;
+        border-left: 2.2pt solid var(--jiandu-accent) !important;
+        border-radius: 0 !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid-page !important;
+    }
+
+    /* Images: complete image first, never horizontal clipping / 图片：完整优先，绝不横向裁切 */
+    #write img,
+    .md-image img,
+    img {
+        display: block !important;
+        box-sizing: border-box !important;
+        width: auto !important;
+        max-width: 100% !important;
+        max-height: 228mm !important;
+        height: auto !important;
+        margin: 9pt auto !important;
+        object-fit: contain !important;
+        border: 0.5pt solid var(--jiandu-image-border) !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid-page !important;
+    }
+
+    .md-image {
+        display: block !important;
+        max-width: 100% !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid-page !important;
+    }
+
+    /* Tables: no overflow, wrap long PCIe fields / 表格：不溢出，长 PCIe 字段允许换行 */
+    #write table,
+    table {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 9pt 0 !important;
+        color: var(--jiandu-text) !important;
+        border-collapse: collapse !important;
+        background: #ffffff !important;
+        font-family: var(--jiandu-print-body-font) !important;
+        font-size: 8.9pt !important;
+        line-height: 1.42 !important;
+        table-layout: auto !important;
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+    }
+
+    thead {
+        display: table-header-group !important;
+        background: var(--jiandu-table-header) !important;
+    }
+
+    tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid-page !important;
+    }
+
+    th,
+    td {
+        padding: 3.5pt 4.5pt !important;
+        overflow-wrap: anywhere !important;
+        word-break: break-word !important;
+        hyphens: auto !important;
+        border: 0.45pt solid var(--jiandu-table-border) !important;
+        background: transparent !important;
+    }
+
+    th {
+        color: var(--jiandu-table-heading) !important;
+        background: var(--jiandu-table-header) !important;
+        font-family: var(--jiandu-print-heading-font) !important;
+        font-weight: 700 !important;
+    }
+
+    tbody tr:nth-child(2n) td {
+        background: var(--jiandu-table-stripe) !important;
+    }
+
+    /* Code blocks: wrap rather than cut off / 代码块：优先换行，避免右侧被裁切 */
+    .md-fences,
+    #write pre,
+    pre {
+        margin: 8pt 0 !important;
+        padding: 6pt 7pt !important;
+        overflow: visible !important;
+        color: var(--jiandu-code-text) !important;
+        background: var(--jiandu-code-bg) !important;
+        border: 0.45pt solid var(--jiandu-code-border) !important;
+        border-radius: 0 !important;
+        font-family: var(--jiandu-print-code-font) !important;
+        font-size: 7.8pt !important;
+        line-height: 1.38 !important;
+        white-space: pre-wrap !important;
+        overflow-wrap: anywhere !important;
+        word-break: break-word !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid-page !important;
+    }
+
+    #write code,
+    #write tt {
+        padding: 0 !important;
+        color: var(--jiandu-inline-code-text) !important;
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        font-family: var(--jiandu-print-code-font) !important;
+        font-size: 0.91em !important;
+    }
+
+    /* Mermaid / Mermaid 图 */
+    [id^="mermaidChart"],
+    .md-diagram-panel-preview,
+    [id^="mermaidChart"] svg,
+    .md-diagram-panel-preview svg {
+        max-width: 100% !important;
+        height: auto !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid-page !important;
+    }
+
+    /* Math / 公式 */
+    .MathJax,
+    .md-math-block {
+        max-width: 100% !important;
+        overflow: visible !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid-page !important;
+    }
+
+    /* Lists, task lists and notes / 列表、任务列表与脚注 */
+    ul, ol {
+        margin: 5pt 0 7pt !important;
+        padding-inline-start: 18pt !important;
+    }
+
+    li {
+        margin: 1.8pt 0 !important;
+    }
+
+    #write input[type="checkbox"] {
+        width: 8pt !important;
+        height: 8pt !important;
+        margin-right: 4pt !important;
+        vertical-align: -1pt !important;
+        accent-color: var(--jiandu-accent) !important;
+    }
+
+    #write pre.md-meta-block {
+        margin: 0 0 8pt !important;
+        padding: 6pt 8pt !important;
+        color: var(--jiandu-meta-text) !important;
+        background: var(--jiandu-meta-bg) !important;
+        border: 0.45pt solid var(--jiandu-soft-border) !important;
+        border-radius: 0 !important;
+        font-family: var(--jiandu-print-code-font) !important;
+        font-size: 8pt !important;
+        line-height: 1.38 !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid-page !important;
+    }
+
+    .md-toc {
+        margin: 9pt 0 !important;
+        padding: 7pt 9pt !important;
+        background: var(--jiandu-block-bg) !important;
+        border: 0.45pt solid var(--jiandu-soft-border) !important;
+        border-radius: 0 !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid-page !important;
+    }
+
+    .footnotes {
+        margin-top: 14pt !important;
+        padding-top: 5pt !important;
+        border-top: 0.45pt solid var(--jiandu-border) !important;
+        font-size: 8.8pt !important;
+    }
+
+    /* Avoid blank print pages from fixed-height UI / 避免固定高度界面导致空白页 */
+    .md-pair-skip,
+    .md-end-block {
+        min-height: 0 !important;
+    }
+}
