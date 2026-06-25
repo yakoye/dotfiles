@@ -1,5 +1,8 @@
 # Jiandu Typora Theme
 
+> **v0.1.14 note / v0.1.14 说明**  \n> The active fenced-code language selector now has its own readable background and border.  \n> 活动围栏代码块右下方的“代码语言”选择器现具有独立、清晰的背景与边框。
+
+
 > A reading-first Typora theme pack with an A4-oriented print / PDF engine.  
 > 一套以阅读体验为先、并重点面向 A4 打印 / 导出 PDF 的 Typora 主题包。
 

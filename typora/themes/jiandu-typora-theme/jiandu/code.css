@@ -88,6 +88,61 @@ pre.md-fences code {
     border-color: var(--jiandu-code-border);
 }
 
+/*
+ * Code language selector / 代码语言选择器
+ *
+ * Typora places the "Code language / 代码语言" control in `.code-tooltip`
+ * near the lower-right edge of an active fence.  It used to inherit a
+ * transparent background, so the control was easy to miss against the code
+ * card.  Give the outer tooltip and its editable label distinct, quiet
+ * surfaces without changing the code block itself.
+ *
+ * Typora 会把“代码语言”控件放在活动代码块右下方的 `.code-tooltip` 中。
+ * 之前它继承透明背景，和代码块底色过于接近，难以察觉。这里分别为外层
+ * 工具栏和内部输入框提供低调但清晰的底色，不改变代码块本身的样式。
+ */
+.md-fences .code-tooltip {
+    box-sizing: border-box;
+    min-width: 10.5rem;
+    padding: 0.3rem 0.42rem !important;
+    color: var(--jiandu-ui-text) !important;
+    background: var(--jiandu-popup-bg) !important;
+    border: 1px solid var(--jiandu-popup-border) !important;
+    border-radius: 5px 5px 0 0 !important;
+    box-shadow: 0 -1px 7px rgba(28, 42, 33, 0.10) !important;
+}
+
+.md-fences .code-tooltip input,
+.md-fences .code-tooltip select,
+.md-fences .code-tooltip .md-lang,
+.md-fences .md-lang {
+    box-sizing: border-box;
+    min-height: 1.45rem;
+    padding: 0.12rem 0.42rem !important;
+    color: var(--jiandu-ui-text) !important;
+    background: var(--jiandu-input-bg) !important;
+    border: 1px solid var(--jiandu-input-border) !important;
+    border-radius: 4px !important;
+    font-family: var(--jiandu-ui-font) !important;
+    font-size: 0.79rem !important;
+    line-height: 1.25rem !important;
+}
+
+.md-fences .code-tooltip input::placeholder,
+.md-fences .code-tooltip .md-lang::placeholder {
+    color: var(--jiandu-muted) !important;
+    opacity: 1;
+}
+
+.md-fences .code-tooltip input:focus,
+.md-fences .code-tooltip select:focus,
+.md-fences .code-tooltip .md-lang:focus,
+.md-fences .md-lang:focus {
+    outline: none !important;
+    border-color: var(--jiandu-accent) !important;
+    box-shadow: 0 0 0 2px var(--jiandu-focus-ring) !important;
+}
+
 .md-fences-adv-panel pre {
     margin: 0;
     padding: 0 !important;
