@@ -1,5 +1,12 @@
 # Changelog / 更新记录
 
+## v0.2.2
+
+- The active fenced-code language selector now uses the same background and border variables as the fenced code block: `--jiandu-code-bg` and `--jiandu-code-border`.
+- 代码块激活后的“代码语言”选择器现在与围栏代码块共用 `--jiandu-code-bg` 和 `--jiandu-code-border`，不再出现突兀的白色浮层。
+- Added compatibility selectors for Typora’s `.ty-cm-lang-input` and `.ty-input` structures.
+- 增加 Typora `.ty-cm-lang-input` 与 `.ty-input` 结构兼容选择器。
+
 ## v0.2.1 — Fixed Task Baseline and Source Han Serif Preset / 固定任务方框基线与思源宋体套餐
 
 - Moved the user-confirmed native task-checkbox baseline alignment (`-0.04em`) from `jiandu/user-fonts.css` into `jiandu/core.css`. It is now a fixed core-layout rule and no longer changes with screen font presets.  

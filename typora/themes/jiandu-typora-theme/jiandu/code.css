@@ -115,14 +115,19 @@ pre.md-fences code {
 
 /*
  * The actual editable language surface / 实际可编辑的语言标签
- * A light, square-cornered tab with a restrained border.  It intentionally
- * has no large outer shell or elevated shadow.
- * 浅色、小圆角（接近直角）的标签，仅保留克制边框；不再使用大外壳和阴影。
+ * Match the fenced code background so the control reads as an attached edge
+ * label, not an unrelated white popup. Typora may use `.ty-cm-lang-input`
+ * instead of `.md-lang`, so both internal structures are covered.
+ * 与围栏代码块使用同一背景色，使其看起来是贴边标签，而不是突兀的白色弹窗。
+ * Typora 可能使用 `.ty-cm-lang-input` 而不是 `.md-lang`，因此两种内部结构都覆盖。
  */
 .md-fences .code-tooltip input,
 .md-fences .code-tooltip select,
 .md-fences .code-tooltip .md-lang,
-.md-fences .md-lang {
+.md-fences .code-tooltip .ty-cm-lang-input,
+.md-fences .code-tooltip .ty-input,
+.md-fences .md-lang,
+.md-fences .ty-cm-lang-input {
     display: block !important;
     box-sizing: border-box;
     width: 100% !important;
@@ -130,9 +135,9 @@ pre.md-fences code {
     min-height: 1.55rem;
     margin: 0 !important;
     padding: 0.12rem 0.42rem !important;
-    color: var(--jiandu-muted) !important;
-    background: var(--jiandu-popup-bg) !important;
-    border: 1px solid var(--jiandu-input-border) !important;
+    color: var(--jiandu-code-text) !important;
+    background: var(--jiandu-code-bg) !important;
+    border: 1px solid var(--jiandu-code-border) !important;
     border-radius: 2px 2px 0 0 !important;
     box-shadow: none !important;
     font-family: var(--jiandu-ui-font) !important;
@@ -144,7 +149,9 @@ pre.md-fences code {
 }
 
 .md-fences .code-tooltip input::placeholder,
-.md-fences .code-tooltip .md-lang::placeholder {
+.md-fences .code-tooltip .md-lang::placeholder,
+.md-fences .code-tooltip .ty-cm-lang-input::placeholder,
+.md-fences .code-tooltip .ty-input::placeholder {
     color: var(--jiandu-muted) !important;
     opacity: 1;
 }
@@ -154,7 +161,10 @@ pre.md-fences code {
 .md-fences .code-tooltip input:focus,
 .md-fences .code-tooltip select:focus,
 .md-fences .code-tooltip .md-lang:focus,
-.md-fences .md-lang:focus {
+.md-fences .code-tooltip .ty-cm-lang-input:focus,
+.md-fences .code-tooltip .ty-input:focus,
+.md-fences .md-lang:focus,
+.md-fences .ty-cm-lang-input:focus {
     outline: none !important;
     color: var(--jiandu-ui-text) !important;
     border-color: var(--jiandu-accent) !important;
