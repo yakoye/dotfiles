@@ -1,3 +1,13 @@
+
+## v0.1.8 — Mermaid interactive preview repair / Mermaid 交互预览修复
+
+- **Fixed:** Clicking a Mermaid diagram now retains Typora’s native source editor and rendered-preview sizing. The chart no longer collapses into an empty bordered panel in affected Typora builds.
+  **修复：** 点击 Mermaid 图后，保留 Typora 原生的源码编辑区与预览尺寸计算；在受影响的 Typora 版本中，不再出现只有边框、图形空白的预览面板。
+- Mermaid styles now change colours only; they no longer override interactive preview SVG `display`, `width`, or `height`.
+  Mermaid 样式现在只调整配色，不再覆盖交互预览 SVG 的 `display`、`width` 或 `height`。
+- Added Mermaid v10 `foreignObject` label colour support and preserved responsive width limiting for the final rendered diagram.
+  新增 Mermaid v10 `foreignObject` 标签配色支持，并保留最终渲染图的响应式宽度限制。
+
 # Changelog / 更新记录
 
 ## 0.1.7 — 2026-06-25
