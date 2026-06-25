@@ -1,5 +1,23 @@
 
-## v0.1.8 — Mermaid interactive preview repair / Mermaid 交互预览修复
+## v0.1.9 — GitHub-layout compatibility pass / GitHub 布局兼容修订
+
+### Fixed / 修复
+
+- **Task list baseline / 任务列表基线**
+  - Removed the custom task-item layout reset.
+  - Restored the simple Typora GitHub-theme behavior: `li p.first { display: inline-block; }` and `.md-task-list-item > input { margin-left: -1.3em; }`.
+  - The checkbox and first task line now share one natural line instead of placing the box alone above the text.
+
+- **Mermaid raw-block flow / Mermaid 源码块布局**
+  - Advanced Mermaid fences no longer use a fixed-height scrolling shell.
+  - The Mermaid source editor and rendered preview remain consecutive blocks in normal document flow.
+  - The interactive preview SVG is still left to Typora for runtime sizing; the theme does not override its width or height.
+
+- **A4 pagination spacer / A4 分页辅助空白块**
+  - Removed the empty `.md-pair-skip` helper from print output, preventing pale header/footer bands between pages.
+
+
+## v0.1.9 — Mermaid interactive preview repair / Mermaid 交互预览修复
 
 - **Fixed:** Clicking a Mermaid diagram now retains Typora’s native source editor and rendered-preview sizing. The chart no longer collapses into an empty bordered panel in affected Typora builds.
   **修复：** 点击 Mermaid 图后，保留 Typora 原生的源码编辑区与预览尺寸计算；在受影响的 Typora 版本中，不再出现只有边框、图形空白的预览面板。
