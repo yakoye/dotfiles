@@ -267,21 +267,21 @@ blockquote strong { color: inherit; }
 
 /* Tables / 表格 */
 /*
- * Stable width allocation / 稳定列宽分配
+ * Default: content-aware browser layout / 默认：浏览器按实际内容分配列宽
  *
- * Markdown tables do not carry semantic column widths.  `table-layout: auto`
- * lets one long register identifier claim a disproportionate share of the
- * table, squeezing the explanatory columns.  Fixed layout gives every column
- * a predictable budget, then the six-column PCIe pattern below reserves more
- * room for behavior and firmware notes.
- * Markdown 表格不携带语义列宽。`table-layout: auto` 会让一个很长的寄存器名
- * 占据过多宽度，从而挤压说明列。固定布局先为每列分配稳定空间；下面再针对
- * 六列表 PCIe 表格，为行为说明和固件备注保留更多宽度。
+ * A Typora theme is CSS only. CSS can see the rendered <table>, but it cannot
+ * inspect the Markdown delimiter row or count its dashes after parsing.
+ * Therefore, ordinary tables use the browser's automatic table algorithm:
+ * short columns stay compact and descriptive columns naturally obtain space.
+ *
+ * Typora 主题只有 CSS。Markdown 被解析后，分隔行里的横杠数量不会保留到
+ * HTML，因此 CSS 无法读取或统计横杠。普通表格默认交给浏览器按实际渲染宽度
+ * 自然分配：短列保持紧凑，长说明列自然获得更多空间。
  */
 #write table {
     display: table;
     box-sizing: border-box;
-    table-layout: fixed;
+    table-layout: auto;
     text-align: left;
     width: 100%;
     max-width: 100%;
@@ -301,12 +301,6 @@ blockquote strong { color: inherit; }
 /*
  * Header colour belongs to the header only.
  * 表头颜色只用于表头，不再误作用到第一条数据行。
- *
- * Typora emits a normal <thead> + <tbody> table. Do not use `tr:first-child`:
- * in <tbody>, it is the first data row and would make the visual second row
- * look like a second header.
- * Typora 会输出标准的 <thead> + <tbody> 表格。这里不能使用 `tr:first-child`：
- * 它在 <tbody> 内代表第一条数据行，会让视觉上的第二行误用表头颜色。
  */
 #write table > thead {
     background: var(--jiandu-table-header);
@@ -327,6 +321,7 @@ blockquote strong { color: inherit; }
     min-width: 0;
     padding: 0.58rem 0.72rem;
     vertical-align: top;
+    white-space: normal;
     overflow-wrap: anywhere;
     word-break: normal;
     border-right: 1px solid var(--jiandu-table-border);
@@ -340,29 +335,191 @@ blockquote strong { color: inherit; }
 }
 
 /*
- * Common six-column PCIe table / 常见六列 PCIe 表格
- * Register | Bits | Access | Reset | Behavior | Firmware notes
- * 寄存器名不再吞掉前半张表，说明列获得主要阅读空间。
+ * Table layout hints / 表格布局提示
+ *
+ * Put an empty HTML marker immediately before a Markdown table:
+ *
+ *   <div class="jiandu-table-layout wide-last"></div>
+ *
+ * The marker is hidden in Typora, HTML, and PDF. It controls only the next
+ * table, so ordinary tables are never affected.
+ *
+ * 在 Markdown 表格正前方放一个空 HTML 标记。标记在 Typora、HTML、PDF 中
+ * 都不会显示，只影响紧随其后的那一张表，因此不会污染普通表格。
  */
-#write table > thead > tr > th:nth-child(1):nth-last-child(6),
-#write table > tbody > tr > td:nth-child(1):nth-last-child(6) { width: 19%; }
+#write .jiandu-table-layout {
+    display: none !important;
+}
 
-#write table > thead > tr > th:nth-child(2):nth-last-child(5),
-#write table > tbody > tr > td:nth-child(2):nth-last-child(5) { width: 8%; }
+/* Any named layout uses a stable fixed budget / 使用布局提示时采用稳定固定列宽 */
+#write .jiandu-table-layout.balanced + table,
+#write .jiandu-table-layout.narrow-first + table,
+#write .jiandu-table-layout.wide-first + table,
+#write .jiandu-table-layout.wide-last + table,
+#write .jiandu-table-layout.ratio-1-1 + table,
+#write .jiandu-table-layout.ratio-1-2 + table,
+#write .jiandu-table-layout.ratio-1-3 + table,
+#write .jiandu-table-layout.ratio-2-3 + table,
+#write .jiandu-table-layout.ratio-3-2 + table,
+#write .jiandu-table-layout.ratio-1-1-2 + table,
+#write .jiandu-table-layout.ratio-1-2-2 + table,
+#write .jiandu-table-layout.ratio-1-2-3 + table,
+#write .jiandu-table-layout.ratio-2-2-3 + table,
+#write .jiandu-table-layout.ratio-2-3-5 + table,
+#write .jiandu-table-layout.ratio-3-2-5 + table,
+#write .jiandu-table-layout.ratio-1-1-2-2 + table,
+#write .jiandu-table-layout.ratio-2-2-3-3 + table {
+    table-layout: fixed;
+}
 
-#write table > thead > tr > th:nth-child(3):nth-last-child(4),
-#write table > tbody > tr > td:nth-child(3):nth-last-child(4) { width: 8%; }
+/* Reset to automatic layout explicitly / 显式恢复自然分列 */
+#write .jiandu-table-layout.auto + table,
+#write .jiandu-table-layout.compact + table,
+#write .jiandu-table-layout.dense + table {
+    table-layout: auto;
+}
 
-#write table > thead > tr > th:nth-child(4):nth-last-child(3),
-#write table > tbody > tr > td:nth-child(4):nth-last-child(3) { width: 12%; }
+/*
+ * Directional layouts / 方向型布局
+ *
+ * These work with any column count. The remaining columns share the unassigned
+ * width. Use them when the visual role is clear but the exact ratio is not.
+ * 这些布局适用于任意列数。未指定的列共享剩余宽度，适合明确知道哪一侧需要
+ * 更宽或更窄、但不想逐列填写比例的场景。
+ */
+#write .jiandu-table-layout.narrow-first + table > thead > tr > :first-child,
+#write .jiandu-table-layout.narrow-first + table > tbody > tr > :first-child {
+    width: 18%;
+}
 
-#write table > thead > tr > th:nth-child(5):nth-last-child(2),
-#write table > tbody > tr > td:nth-child(5):nth-last-child(2) { width: 26%; }
+#write .jiandu-table-layout.wide-first + table > thead > tr > :first-child,
+#write .jiandu-table-layout.wide-first + table > tbody > tr > :first-child {
+    width: 42%;
+}
 
-#write table > thead > tr > th:nth-child(6):last-child,
-#write table > tbody > tr > td:nth-child(6):last-child { width: 27%; }
+#write .jiandu-table-layout.wide-last + table > thead > tr > :last-child,
+#write .jiandu-table-layout.wide-last + table > tbody > tr > :last-child {
+    width: 48%;
+}
 
-/* Allow long register identifiers to wrap inside table cells / 表格内的长寄存器名允许换行 */
+/*
+ * Explicit common ratios / 常用手动比例
+ *
+ * Ratio names correspond to the column order. For example:
+ *   ratio-2-3-5 = 20% / 30% / 50%
+ * 比例名称就是列顺序。例如 ratio-2-3-5 = 20% / 30% / 50%。
+ */
+
+/* Two columns / 两列 */
+#write .jiandu-table-layout.ratio-1-1 + table > thead > tr > :nth-child(1),
+#write .jiandu-table-layout.ratio-1-1 + table > tbody > tr > :nth-child(1) { width: 50%; }
+#write .jiandu-table-layout.ratio-1-1 + table > thead > tr > :nth-child(2),
+#write .jiandu-table-layout.ratio-1-1 + table > tbody > tr > :nth-child(2) { width: 50%; }
+
+#write .jiandu-table-layout.ratio-1-2 + table > thead > tr > :nth-child(1),
+#write .jiandu-table-layout.ratio-1-2 + table > tbody > tr > :nth-child(1) { width: 33.333%; }
+#write .jiandu-table-layout.ratio-1-2 + table > thead > tr > :nth-child(2),
+#write .jiandu-table-layout.ratio-1-2 + table > tbody > tr > :nth-child(2) { width: 66.667%; }
+
+#write .jiandu-table-layout.ratio-1-3 + table > thead > tr > :nth-child(1),
+#write .jiandu-table-layout.ratio-1-3 + table > tbody > tr > :nth-child(1) { width: 25%; }
+#write .jiandu-table-layout.ratio-1-3 + table > thead > tr > :nth-child(2),
+#write .jiandu-table-layout.ratio-1-3 + table > tbody > tr > :nth-child(2) { width: 75%; }
+
+#write .jiandu-table-layout.ratio-2-3 + table > thead > tr > :nth-child(1),
+#write .jiandu-table-layout.ratio-2-3 + table > tbody > tr > :nth-child(1) { width: 40%; }
+#write .jiandu-table-layout.ratio-2-3 + table > thead > tr > :nth-child(2),
+#write .jiandu-table-layout.ratio-2-3 + table > tbody > tr > :nth-child(2) { width: 60%; }
+
+#write .jiandu-table-layout.ratio-3-2 + table > thead > tr > :nth-child(1),
+#write .jiandu-table-layout.ratio-3-2 + table > tbody > tr > :nth-child(1) { width: 60%; }
+#write .jiandu-table-layout.ratio-3-2 + table > thead > tr > :nth-child(2),
+#write .jiandu-table-layout.ratio-3-2 + table > tbody > tr > :nth-child(2) { width: 40%; }
+
+/* Three columns / 三列 */
+#write .jiandu-table-layout.ratio-1-1-2 + table > thead > tr > :nth-child(1),
+#write .jiandu-table-layout.ratio-1-1-2 + table > tbody > tr > :nth-child(1) { width: 25%; }
+#write .jiandu-table-layout.ratio-1-1-2 + table > thead > tr > :nth-child(2),
+#write .jiandu-table-layout.ratio-1-1-2 + table > tbody > tr > :nth-child(2) { width: 25%; }
+#write .jiandu-table-layout.ratio-1-1-2 + table > thead > tr > :nth-child(3),
+#write .jiandu-table-layout.ratio-1-1-2 + table > tbody > tr > :nth-child(3) { width: 50%; }
+
+#write .jiandu-table-layout.ratio-1-2-2 + table > thead > tr > :nth-child(1),
+#write .jiandu-table-layout.ratio-1-2-2 + table > tbody > tr > :nth-child(1) { width: 20%; }
+#write .jiandu-table-layout.ratio-1-2-2 + table > thead > tr > :nth-child(2),
+#write .jiandu-table-layout.ratio-1-2-2 + table > tbody > tr > :nth-child(2) { width: 40%; }
+#write .jiandu-table-layout.ratio-1-2-2 + table > thead > tr > :nth-child(3),
+#write .jiandu-table-layout.ratio-1-2-2 + table > tbody > tr > :nth-child(3) { width: 40%; }
+
+#write .jiandu-table-layout.ratio-1-2-3 + table > thead > tr > :nth-child(1),
+#write .jiandu-table-layout.ratio-1-2-3 + table > tbody > tr > :nth-child(1) { width: 16.667%; }
+#write .jiandu-table-layout.ratio-1-2-3 + table > thead > tr > :nth-child(2),
+#write .jiandu-table-layout.ratio-1-2-3 + table > tbody > tr > :nth-child(2) { width: 33.333%; }
+#write .jiandu-table-layout.ratio-1-2-3 + table > thead > tr > :nth-child(3),
+#write .jiandu-table-layout.ratio-1-2-3 + table > tbody > tr > :nth-child(3) { width: 50%; }
+
+#write .jiandu-table-layout.ratio-2-2-3 + table > thead > tr > :nth-child(1),
+#write .jiandu-table-layout.ratio-2-2-3 + table > tbody > tr > :nth-child(1) { width: 28.571%; }
+#write .jiandu-table-layout.ratio-2-2-3 + table > thead > tr > :nth-child(2),
+#write .jiandu-table-layout.ratio-2-2-3 + table > tbody > tr > :nth-child(2) { width: 28.571%; }
+#write .jiandu-table-layout.ratio-2-2-3 + table > thead > tr > :nth-child(3),
+#write .jiandu-table-layout.ratio-2-2-3 + table > tbody > tr > :nth-child(3) { width: 42.858%; }
+
+#write .jiandu-table-layout.ratio-2-3-5 + table > thead > tr > :nth-child(1),
+#write .jiandu-table-layout.ratio-2-3-5 + table > tbody > tr > :nth-child(1) { width: 20%; }
+#write .jiandu-table-layout.ratio-2-3-5 + table > thead > tr > :nth-child(2),
+#write .jiandu-table-layout.ratio-2-3-5 + table > tbody > tr > :nth-child(2) { width: 30%; }
+#write .jiandu-table-layout.ratio-2-3-5 + table > thead > tr > :nth-child(3),
+#write .jiandu-table-layout.ratio-2-3-5 + table > tbody > tr > :nth-child(3) { width: 50%; }
+
+#write .jiandu-table-layout.ratio-3-2-5 + table > thead > tr > :nth-child(1),
+#write .jiandu-table-layout.ratio-3-2-5 + table > tbody > tr > :nth-child(1) { width: 30%; }
+#write .jiandu-table-layout.ratio-3-2-5 + table > thead > tr > :nth-child(2),
+#write .jiandu-table-layout.ratio-3-2-5 + table > tbody > tr > :nth-child(2) { width: 20%; }
+#write .jiandu-table-layout.ratio-3-2-5 + table > thead > tr > :nth-child(3),
+#write .jiandu-table-layout.ratio-3-2-5 + table > tbody > tr > :nth-child(3) { width: 50%; }
+
+/* Four columns / 四列 */
+#write .jiandu-table-layout.ratio-1-1-2-2 + table > thead > tr > :nth-child(1),
+#write .jiandu-table-layout.ratio-1-1-2-2 + table > tbody > tr > :nth-child(1) { width: 16.667%; }
+#write .jiandu-table-layout.ratio-1-1-2-2 + table > thead > tr > :nth-child(2),
+#write .jiandu-table-layout.ratio-1-1-2-2 + table > tbody > tr > :nth-child(2) { width: 16.667%; }
+#write .jiandu-table-layout.ratio-1-1-2-2 + table > thead > tr > :nth-child(3),
+#write .jiandu-table-layout.ratio-1-1-2-2 + table > tbody > tr > :nth-child(3) { width: 33.333%; }
+#write .jiandu-table-layout.ratio-1-1-2-2 + table > thead > tr > :nth-child(4),
+#write .jiandu-table-layout.ratio-1-1-2-2 + table > tbody > tr > :nth-child(4) { width: 33.333%; }
+
+#write .jiandu-table-layout.ratio-2-2-3-3 + table > thead > tr > :nth-child(1),
+#write .jiandu-table-layout.ratio-2-2-3-3 + table > tbody > tr > :nth-child(1) { width: 20%; }
+#write .jiandu-table-layout.ratio-2-2-3-3 + table > thead > tr > :nth-child(2),
+#write .jiandu-table-layout.ratio-2-2-3-3 + table > tbody > tr > :nth-child(2) { width: 20%; }
+#write .jiandu-table-layout.ratio-2-2-3-3 + table > thead > tr > :nth-child(3),
+#write .jiandu-table-layout.ratio-2-2-3-3 + table > tbody > tr > :nth-child(3) { width: 30%; }
+#write .jiandu-table-layout.ratio-2-2-3-3 + table > thead > tr > :nth-child(4),
+#write .jiandu-table-layout.ratio-2-2-3-3 + table > tbody > tr > :nth-child(4) { width: 30%; }
+
+/* Density helpers / 密度辅助 */
+#write .jiandu-table-layout.compact + table {
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+#write .jiandu-table-layout.compact + table th,
+#write .jiandu-table-layout.compact + table td {
+    padding: 0.42rem 0.56rem;
+}
+
+#write .jiandu-table-layout.dense + table {
+    font-size: 0.83rem;
+    line-height: 1.44;
+}
+
+#write .jiandu-table-layout.dense + table th,
+#write .jiandu-table-layout.dense + table td {
+    padding: 0.34rem 0.46rem;
+}
+
+/* Long identifiers, URLs, and inline code stay inside cells / 长字段、URL 与行内代码不撑破表格 */
 #write table code,
 #write table tt {
     white-space: normal;

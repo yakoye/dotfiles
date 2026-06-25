@@ -1,5 +1,16 @@
 # Changelog / 更新记录
 
+## v0.2.3 — Universal Table Layout System / 通用表格布局系统
+
+- Replaced the global fixed-column layout with browser-driven automatic sizing for ordinary Markdown tables. Short columns can remain compact while explanatory columns receive more space.
+  将普通 Markdown 表格从全局固定列宽改为浏览器自然分列：短列保持紧凑，说明列获得更多空间。
+- Removed the domain-specific six-column width rule so two-column, three-column, and multilingual tables are no longer forced into a technical-document template.
+  移除了领域专用的六列宽度规则，不再把两列、三列和多语言表格强制套进技术文档模板。
+- Added optional, per-table generic layout hints: `balanced`, `narrow-first`, `wide-first`, `wide-last`, `compact`, `dense`, and common `ratio-*` classes.
+  新增可选的单表通用布局提示：`balanced`、`narrow-first`、`wide-first`、`wide-last`、`compact`、`dense` 与常用 `ratio-*` 比例类。
+- Added `table-layout-guide.md` with bilingual examples and clarification that Markdown delimiter dash counts cannot be read by a CSS theme after Typora parsing.
+  新增 `table-layout-guide.md`，提供中英双语示例，并说明 Typora 解析后 CSS 无法读取 Markdown 分隔行横杠数量。
+
 ## v0.2.2
 
 - The active fenced-code language selector now uses the same background and border variables as the fenced code block: `--jiandu-code-bg` and `--jiandu-code-border`.

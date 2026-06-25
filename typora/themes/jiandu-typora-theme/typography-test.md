@@ -32,6 +32,28 @@ PCIe 设备完成复位后，会先进行链路训练，再执行枚举与资源
 
 ---
 
+
+## Table Layout System / 表格布局系统
+
+普通表格默认按实际内容自然分列；短代码列不会因为主题的全局固定规则被放大，长说明列会获得更多阅读空间。
+
+| Message Code / 消息代码 | Name / 名称 | Description / 描述 |
+| --- | --- | --- |
+| 30h | ERR_COR | 设备检测到可纠正错误。硬件自动修正条件，软件可以记录事件并观察趋势。 |
+| 31h | ERR_NONFATAL | 设备检测到不可纠正但非致命的错误。功能可能继续工作，但软件应保留证据并按策略恢复。 |
+| 33h | ERR_FATAL | 设备检测到致命条件，可能需要复位、隔离、替换或其他恢复操作。 |
+
+当一张表需要精确列宽时，使用隐藏标记。下面示例为 `20% / 30% / 50%`：
+
+<div class="jiandu-table-layout ratio-2-3-5"></div>
+
+| Code / 代码 | Name / 名称 | Description / 描述 |
+| --- | --- | --- |
+| A1 | Short Name | The final explanatory column deliberately receives half of the available width. |
+| B2 | Another Name | This remains readable in screen view and A4/PDF output without changing all other tables. |
+
+更多布局提示和比例示例请查看 `table-layout-guide.md`。
+
 ## Single-layer Code Fence Test / 单层代码围栏测试
 
 The following fence should render as one card only: one background, one border, and one padding layer.

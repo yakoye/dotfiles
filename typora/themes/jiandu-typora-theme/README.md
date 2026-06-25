@@ -1,6 +1,6 @@
 # Jiandu Typora Theme
 
-> **v0.2.1 / v0.2.1**  
+> **v0.2.3 / v0.2.3**  
 > Reading-first Typora themes with coordinated screen font presets, WYSIWYG PDF export for ordinary themes, and one independent formal-print theme.  
 > 一套以阅读为先的 Typora 主题：提供统一的屏幕字体套餐、普通主题所见即所得 PDF 导出，以及一套独立固定的正式印刷主题。
 
@@ -59,8 +59,8 @@ Typora themes/
 4. Restart Typora, or switch away and back to reload the theme.  
    重启 Typora，或者先切换到其他主题再切回来。
 
-> `assets/`, `font-preview.md`, `print-test.md`, `typography-test.md`, and `word-export.md` are tests and documentation. They do not need to be copied into Typora’s theme folder.  
-> `assets/`、`font-preview.md`、`print-test.md`、`typography-test.md`、`word-export.md` 是测试与说明文件，不需要复制到 Typora 主题文件夹。
+> `assets/`, `font-preview.md`, `table-layout-guide.md`, `print-test.md`, `typography-test.md`, and `word-export.md` are tests and documentation. They do not need to be copied into Typora’s theme folder.  
+> `assets/`、`font-preview.md`、`table-layout-guide.md`、`print-test.md`、`typography-test.md`、`word-export.md` 是测试与说明文件，不需要复制到 Typora 主题文件夹。
 
 ## Choose a Screen Font Preset / 选择屏幕字体套餐
 
@@ -132,6 +132,54 @@ Task-checkbox baseline alignment is now fixed in `jiandu/core.css` and is no lon
 Do not copy this rule into `user-fonts.css`; it intentionally stays unchanged across all font presets.  
 不要把这条规则复制到 `user-fonts.css`；它会在所有字体套餐中保持不变。
 
+
+## Tables / 表格
+
+### Default behavior / 默认行为
+
+Ordinary Markdown tables use browser-driven automatic column sizing. This lets short columns remain compact and gives descriptive columns more room, instead of forcing every two-column or three-column table into equal widths.
+
+普通 Markdown 表格使用浏览器自然分列。短列会保持紧凑，长说明列会得到更多空间；不再把所有两列、三列表格强制分成等宽。
+
+Long words, URLs, identifiers, and inline code can wrap inside cells, so a single unbroken string does not push the table beyond the document width.
+
+长英文、URL、标识符和行内代码可以在单元格内换行，避免一条长字符串把表格撑出文档宽度。
+
+### Optional per-table hints / 可选的单表布局提示
+
+When one particular table needs manual control, put an empty marker directly above it:
+
+当某一张表需要手动控制时，在它正上方加入一个空标记：
+
+```html
+<div class="jiandu-table-layout wide-last"></div>
+```
+
+The marker is hidden in Typora and in exports. It only controls the next table.
+
+该标记在 Typora 和导出结果中不显示，只影响紧随其后的下一张表。
+
+Available general-purpose layouts / 可用的通用布局：
+
+| Hint / 提示 | Purpose / 用途 |
+| --- | --- |
+| none or `auto` | Natural browser sizing / 浏览器自然分列 |
+| `balanced` | Equal visual columns / 均衡列宽 |
+| `narrow-first` | ID, date, number, term + details / 编号、日期、术语 + 详情 |
+| `wide-first` | Long item name + short data / 长名称 + 短数据 |
+| `wide-last` | Name + source + long description / 名称 + 来源 + 长说明 |
+| `compact` | Automatic columns with smaller spacing / 自然分列 + 较紧凑留白 |
+| `dense` | High-density automatic table / 高密度自然表格 |
+| `ratio-2-3-5` | Explicit 20% / 30% / 50% example / 明确 20% / 30% / 50% 示例 |
+
+For a full list of ratio classes and live Markdown examples, open `table-layout-guide.md`.
+
+完整比例类列表与可直接预览的 Markdown 示例见 `table-layout-guide.md`。
+
+> Markdown delimiter dash lengths such as `| --- | ----- | ----------- |` do not control rendered column width. Typora discards those counts when it converts Markdown to HTML, so a CSS theme cannot calculate them.  
+> Markdown 分隔行中的横杠长度，例如 `| --- | ----- | ----------- |`，不会控制渲染后的列宽。Typora 转换为 HTML 时会丢弃横杠数量，因此 CSS 主题无法据此计算列宽。
+
+
 ## PDF and Print / PDF 与打印
 
 ### Ordinary themes / 普通主题
@@ -177,6 +225,7 @@ All themes keep `--jiandu-bg: #ffffff` as the export-safe outer canvas; this fix
 - `font-preview.md` — compare screen presets and personal overrides. / 对比字体套餐与个人覆盖效果。
 - `print-test.md` — test A4 images, tables, code, Mermaid, task lists, and page breaks. / 测试 A4 图片、表格、代码、Mermaid、任务列表与分页。
 - `typography-test.md` — general rendering tests. / 通用排版测试。
+- `table-layout-guide.md` — automatic sizing, manual hints, and ratio examples. / 自然分列、手动提示与比例示例。
 - `word-export.md` — notes on SVG and Word export. / SVG 与 Word 导出说明。
 
 ## Updating / 更新

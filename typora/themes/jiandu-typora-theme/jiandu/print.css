@@ -238,7 +238,17 @@
         break-inside: avoid-page !important;
     }
 
-    /* Tables: no overflow, wrap long PCIe fields / 表格：不溢出，长 PCIe 字段允许换行 */
+    /*
+     * Tables: universal default + optional layout hints
+     * 表格：通用自然布局 + 可选布局提示
+     *
+     * Default tables use the browser's automatic algorithm. This works across
+     * languages and content types better than a global fixed column template.
+     * Markdown delimiter dash counts are not available after Typora parsing.
+     *
+     * 默认表格使用浏览器自然分列。相比全局固定列模板，它更适合多语言和各类
+     * 内容。Typora 解析后，Markdown 分隔行的横杠数量不可再读取。
+     */
     #write table,
     table {
         width: 100% !important;
@@ -255,14 +265,56 @@
         break-inside: auto !important;
     }
 
-    /*
-     * Fixed print layout prevents a long register name from squeezing the
-     * explanation columns. Six-column PCIe tables get a deliberate budget.
-     * 固定打印列宽避免长寄存器名挤压说明列；六列 PCIe 表格使用明确的列宽配额。
-     */
-    #write table,
-    table {
+    /* Hidden marker; only the following table is affected / 隐藏标记，只影响紧随其后的表格 */
+    #write .jiandu-table-layout {
+        display: none !important;
+    }
+
+    /* Named layouts preserve their screen width plan in A4 output / 命名布局在 A4 中保留屏幕列宽方案 */
+    #write .jiandu-table-layout.balanced + table,
+    #write .jiandu-table-layout.narrow-first + table,
+    #write .jiandu-table-layout.wide-first + table,
+    #write .jiandu-table-layout.wide-last + table,
+    #write .jiandu-table-layout.ratio-1-1 + table,
+    #write .jiandu-table-layout.ratio-1-2 + table,
+    #write .jiandu-table-layout.ratio-1-3 + table,
+    #write .jiandu-table-layout.ratio-2-3 + table,
+    #write .jiandu-table-layout.ratio-3-2 + table,
+    #write .jiandu-table-layout.ratio-1-1-2 + table,
+    #write .jiandu-table-layout.ratio-1-2-2 + table,
+    #write .jiandu-table-layout.ratio-1-2-3 + table,
+    #write .jiandu-table-layout.ratio-2-2-3 + table,
+    #write .jiandu-table-layout.ratio-2-3-5 + table,
+    #write .jiandu-table-layout.ratio-3-2-5 + table,
+    #write .jiandu-table-layout.ratio-1-1-2-2 + table,
+    #write .jiandu-table-layout.ratio-2-2-3-3 + table {
         table-layout: fixed !important;
+    }
+
+    #write .jiandu-table-layout.auto + table,
+    #write .jiandu-table-layout.compact + table,
+    #write .jiandu-table-layout.dense + table {
+        table-layout: auto !important;
+    }
+
+    #write .jiandu-table-layout.compact + table {
+        font-size: 8.45pt !important;
+        line-height: 1.36 !important;
+    }
+
+    #write .jiandu-table-layout.compact + table th,
+    #write .jiandu-table-layout.compact + table td {
+        padding: 3pt 3.9pt !important;
+    }
+
+    #write .jiandu-table-layout.dense + table {
+        font-size: 7.9pt !important;
+        line-height: 1.3 !important;
+    }
+
+    #write .jiandu-table-layout.dense + table th,
+    #write .jiandu-table-layout.dense + table td {
+        padding: 2.5pt 3.3pt !important;
     }
 
     #write th,
@@ -272,24 +324,6 @@
         box-sizing: border-box !important;
         min-width: 0 !important;
     }
-
-    #write table > thead > tr > th:nth-child(1):nth-last-child(6),
-    #write table > tbody > tr > td:nth-child(1):nth-last-child(6) { width: 19% !important; }
-
-    #write table > thead > tr > th:nth-child(2):nth-last-child(5),
-    #write table > tbody > tr > td:nth-child(2):nth-last-child(5) { width: 8% !important; }
-
-    #write table > thead > tr > th:nth-child(3):nth-last-child(4),
-    #write table > tbody > tr > td:nth-child(3):nth-last-child(4) { width: 8% !important; }
-
-    #write table > thead > tr > th:nth-child(4):nth-last-child(3),
-    #write table > tbody > tr > td:nth-child(4):nth-last-child(3) { width: 12% !important; }
-
-    #write table > thead > tr > th:nth-child(5):nth-last-child(2),
-    #write table > tbody > tr > td:nth-child(5):nth-last-child(2) { width: 26% !important; }
-
-    #write table > thead > tr > th:nth-child(6):last-child,
-    #write table > tbody > tr > td:nth-child(6):last-child { width: 27% !important; }
 
     #write table code,
     #write table tt {
