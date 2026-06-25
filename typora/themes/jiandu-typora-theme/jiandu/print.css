@@ -460,6 +460,11 @@
 
     #write .md-task-list-item > input {
         margin-left: -1.3em !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        /* Match the screen baseline correction in A4/PDF output.
+           A4 / PDF 输出同步使用与屏幕一致的基线微调。 */
+        vertical-align: -0.12em !important;
     }
 
     #write pre.md-meta-block {
