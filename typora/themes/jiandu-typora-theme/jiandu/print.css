@@ -408,12 +408,23 @@
     }
 
     /* Mermaid / Mermaid 图 */
+    /*
+     * Mermaid / Mermaid 图
+     * Keep the interactive preview SVG out of forced sizing. Typora measures
+     * it after opening the raw-block editor; forcing height can create an
+     * empty preview panel. The rendered chart remains constrained to A4 width.
+     * 交互预览 SVG 不强制高度：Typora 在打开源码编辑后会自行测量；强制高度
+     * 可能留下空白预览框。已渲染图仍限制在 A4 可用宽度内。
+     */
     [id^="mermaidChart"],
-    .md-diagram-panel-preview,
-    [id^="mermaidChart"] svg,
-    .md-diagram-panel-preview svg {
+    .md-diagram-panel-preview {
         max-width: 100% !important;
-        height: auto !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid-page !important;
+    }
+
+    [id^="mermaidChart"] svg {
+        max-width: 100% !important;
         page-break-inside: avoid !important;
         break-inside: avoid-page !important;
     }
