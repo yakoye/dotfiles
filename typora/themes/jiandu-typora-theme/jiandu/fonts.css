@@ -1,7 +1,8 @@
 /*
- * Jiandu Typora Theme — Font Settings / 字体设置
+ * Jiandu Typora Theme — Font Settings / 简读 Typora 主题 — 字体设置
  *
- * Font definitions / 字体预设定义
+ * Default direction: formal book, thesis and newspaper-style typography.
+ * 默认方向：正式的书籍、论文、报刊式排版。
  *
  * Change the one-line screen-font selection in `user-fonts.css`.
  * 屏幕字体的一行选择请在 `user-fonts.css` 中修改。
@@ -10,14 +11,24 @@
     /* UI font / 界面字体 */
     --jiandu-ui-font: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
 
-    /* Reading-font presets / 阅读字体预设 */
+    /*
+     * Reading-font presets / 阅读字体预设
+     *
+     * Formal is the default. It prefers KingHwa OldSong to create the
+     * formal Chinese-book effect requested for books, papers and newspapers.
+     * 正式书刊体为默认预设，优先使用京华老宋体，适合书籍、论文和报刊式阅读。
+     */
+    --jiandu-font-formal:
+        "KingHwaOldSong", "KingHwa OldSong", "京華老宋体",
+        "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC",
+        "STSong", "SimSun", serif;
+
+    /* Compatibility alias / 兼容别名：与正式书刊体相同 */
+    --jiandu-font-old-song: var(--jiandu-font-formal);
+
     --jiandu-font-wenkai:
         "霞鹜文楷 GB", "LXGW WenKai GB", "LXGW WenKai",
         "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
-
-    --jiandu-font-old-song:
-        "KingHwaOldSong", "KingHwa OldSong", "京華老宋体",
-        "Songti SC", "SimSun", serif;
 
     --jiandu-font-system:
         "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC",
@@ -32,14 +43,14 @@
         "Iosevka Curly", "JetBrains Mono", "Cascadia Code",
         "Fira Code", Consolas, "Liberation Mono", monospace;
 
-    /* Stable print fonts / 稳定的打印字体：不跟随上方屏幕字体开关 */
-    --jiandu-print-body-font:
-        "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC",
-        "STSong", "SimSun", serif;
-
-    --jiandu-print-heading-font:
-        "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC",
-        Arial, sans-serif;
+    /*
+     * Stable print fonts / 稳定的打印字体
+     * Print uses the formal book-style family by default and does not follow
+     * the one-line screen font switch. This keeps A4 layout and pagination stable.
+     * 打印默认使用正式书刊体，不跟随屏幕字体的一行切换，保证 A4 排版和分页稳定。
+     */
+    --jiandu-print-body-font: var(--jiandu-font-formal);
+    --jiandu-print-heading-font: var(--jiandu-font-formal);
 
     --jiandu-print-code-font:
         "Iosevka Curly", "JetBrains Mono", "Cascadia Code",

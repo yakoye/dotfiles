@@ -18,8 +18,18 @@
   图片自动居中、限制在可打印宽度内，并优先避免横向裁切。
 - PCIe-oriented table and code-block rules: long identifiers wrap instead of overflowing.  
   针对 PCIe 技术资料优化表格和代码块：长字段优先换行，而不是撑破页面。
-- One-line screen-font selection with independent, stable print fonts.  
-  屏幕字体只需改一行；打印字体独立固定，保证分页和技术排版稳定。
+- Formal book / thesis / newspaper typography is the default; screen font remains a one-line setting and print fonts stay independent and stable.  
+  默认采用正式书籍 / 论文 / 报刊式字体；屏幕字体仍只需改一行，打印字体独立固定，保证分页和技术排版稳定。
+
+---
+
+## Default Typography / 默认排版方向
+
+Jiandu now defaults to `--jiandu-font-formal`, which prefers **KingHwa OldSong / 京华老宋体** and then falls back to modern Song-style families. The aim is the restrained, formal tone of books, theses, newspapers, and technical reference material rather than a handwritten-note style.  
+简读现在默认使用 `--jiandu-font-formal`，优先调用 **KingHwa OldSong / 京华老宋体**，再回退到现代宋体类字体。目标是书籍、论文、报刊和技术参考资料的克制正式感，而不是手写笔记风格。
+
+Screen headings use the same formal family and rely on size, weight, spacing, and thin rules for hierarchy. Coloured bars and dot markers are intentionally removed.  
+屏幕标题默认与正文使用同一正式字体，通过字号、字重、留白和细分隔线建立层级；已刻意去除彩色竖条和圆点装饰。
 
 ---
 
@@ -83,16 +93,19 @@ Open `jiandu/user-fonts.css`, then change **only** this line:
 打开 `jiandu/user-fonts.css`，只修改下面这一行：
 
 ```css
---jiandu-reading-font: var(--jiandu-font-wenkai);
+--jiandu-reading-font: var(--jiandu-font-formal);
 ```
 
 Available choices / 可选字体预设：
 
 ```css
-/* LXGW WenKai / 霞鹜文楷 — default / 默认 */
+/* Formal Book / Thesis / Newspaper — default / 正式书籍、论文、报刊体（默认） */
+--jiandu-reading-font: var(--jiandu-font-formal);
+
+/* LXGW WenKai / 霞鹜文楷 — relaxed notes and journals / 轻松笔记与日记 */
 --jiandu-reading-font: var(--jiandu-font-wenkai);
 
-/* KingHwa OldSong / 京华老宋体 — book-like reading / 书页感 */
+/* KingHwa OldSong / 京华老宋体 — compatibility alias of `formal` / `formal` 的兼容别名 */
 --jiandu-reading-font: var(--jiandu-font-old-song);
 
 /* System Sans / 系统无衬线 — denser technical editing / 紧凑技术编辑 */
@@ -108,8 +121,8 @@ Available choices / 可选字体预设：
   这一行会影响屏幕正文、标题、引用和表格。
 - Code, register fields, commands, and ASCII diagrams remain in a monospace font.  
   代码、寄存器字段、命令行和 ASCII 图始终使用等宽字体。
-- Print / PDF uses a dedicated stable body font, heading font, and code font. It deliberately does **not** follow the screen-font switch.  
-  打印 / PDF 使用独立的稳定正文、标题和代码字体，不会跟随屏幕字体开关；这样可减少分页和表格宽度变化。
+- Print / PDF uses a dedicated, stable formal book-style body font, heading font, and code font. It deliberately does **not** follow the screen-font switch.  
+  打印 / PDF 使用独立、稳定的正式书刊体正文与标题字体，以及独立代码字体；不会跟随屏幕字体开关，从而减少分页和表格宽度变化。
 - A font must already be installed on your system. If it is not installed, the next font in the fallback list is used.  
   对应字体需要已安装在系统中；未安装时会自动使用后面的回退字体。
 
