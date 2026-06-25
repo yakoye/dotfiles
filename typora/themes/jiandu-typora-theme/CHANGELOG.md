@@ -1,5 +1,15 @@
 # Changelog / 更新记录
 
+## v0.1.12
+
+- Fix the A4 export canvas: all page-level Typora containers are now explicitly white, preventing coloured top/bottom bands in PDF pages. / 修复 A4 导出画布：所有 Typora 页面级容器统一显式白色，避免 PDF 顶部和底部出现主题色带。
+- Fix task-list layout: the first task paragraph is inline rather than inline-block, so native checkboxes and text stay on the same line in PDF and Word export. / 修复任务列表布局：任务首段改为 inline，不再使用 inline-block，使原生方框与文字在 PDF 和 Word 导出中保持同一行。
+- Remove relative `top` positioning from native checkboxes; use only a small baseline-alignment variable. / 移除原生复选框的 relative/top 偏移，仅保留轻微基线对齐变量。
+- Replace all linked SVG assets in `print-test.md` with PNG files, so Word export no longer needs `rsvg-convert`. / 将 `print-test.md` 中全部引用的 SVG 图片替换为 PNG，Word 导出不再依赖 `rsvg-convert`。
+- Add `word-export.md` with bilingual troubleshooting for user documents that still contain SVG files. / 新增 `word-export.md`，中英双语说明用户文档仍含 SVG 时的处理方式。
+
+# Changelog / 更新记录
+
 ## v0.1.11
 
 - Fixed PDF page-break colour bands. Printing now keeps page-level containers transparent instead of layering a white `#write` panel over a coloured screen canvas.

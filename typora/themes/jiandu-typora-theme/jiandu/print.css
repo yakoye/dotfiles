@@ -10,8 +10,6 @@
 @page {
     size: A4;
     margin: 18mm 16mm 18mm 16mm;
-    /* Native white PDF paper canvas / 使用 PDF 原生白色纸张画布 */
-    background: #ffffff;
 }
 
 @media print {
@@ -78,14 +76,15 @@
 
     /*
      * Page canvas / 页面画布
-     * Do not paint a screen-theme background then cover only #write with white.
-     * In Typora/Chromium that leaves coloured bands in empty page margins at
-     * page breaks. Keep page-level containers transparent; the PDF paper itself
-     * is naturally white.
+     * Give every page-level layer the SAME solid white paper colour.  The
+     * previous transparent-layer approach let Typora's screen canvas leak into
+     * blank top/bottom pagination areas, producing coloured bands in the PDF.
+     * This is not “a coloured page covered by a white card”: the page root,
+     * export wrapper and document root are all white.
      *
-     * 不再先绘制屏幕主题背景、再只给 #write 盖白色。Typora/Chromium 会让
-     * 这种做法在分页空白页边露出有色横条。打印时页面级容器保持透明，
-     * 由 PDF 原生白纸画布承载内容。
+     * 页面级容器统一使用同一种纯白纸张色。此前透明层方案会让 Typora 的屏幕
+     * 画布渗入分页顶部和底部空白区，形成 PDF 色带。这里不是“彩色背景上盖
+     * 白色内容卡片”，而是页面根、导出容器和正文根本身都统一为白色。
      */
     html,
     body,
@@ -99,8 +98,9 @@
         margin: 0 !important;
         padding: 0 !important;
         color: var(--jiandu-text) !important;
-        background: transparent !important;
-        background-color: transparent !important;
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        background-image: none !important;
         box-shadow: none !important;
     }
 
@@ -485,19 +485,19 @@
      * 参考 Typora GitHub 主题的任务列表规则：不自绘替代方框，也不强制重排
      * 任务项，仅使用原生复选框与负左边距。
      */
-    #write li p.first {
-        display: inline-block !important;
+    #write .md-task-list-item > p.first,
+    #write .md-task-list-item > p:first-of-type {
+        display: inline !important;
+        margin: 0 !important;
     }
 
     #write .md-task-list-item > input {
-        margin-left: -1.3em !important;
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
-        /* Same native-control optical correction as the screen theme.
-           与屏幕主题相同的原生控件视觉微调。 */
-        position: relative !important;
-        top: var(--jiandu-task-checkbox-y) !important;
-        vertical-align: baseline !important;
+        margin: 0 0.38em 0 -1.3em !important;
+        /* Keep the native control in normal inline flow. Do not apply `top`.
+           让原生控件保留在正常行内流中；不再使用 `top` 偏移。 */
+        position: static !important;
+        top: auto !important;
+        vertical-align: var(--jiandu-task-checkbox-align) !important;
     }
 
     #write pre.md-meta-block {
@@ -540,15 +540,13 @@
      * 页眉/页脚色带；这里只移除空的辅助块，不影响真实文档内容。
      */
     .md-pair-skip {
-        display: none !important;
-        width: 0 !important;
-        height: 0 !important;
-        min-height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow: hidden !important;
-        background: transparent !important;
+        /* Keep Typora's pagination helper structurally intact, but make it white.
+           保留 Typora 分页辅助节点的结构，仅统一为白色，避免色带。 */
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        background-image: none !important;
         border: 0 !important;
+        box-shadow: none !important;
     }
 
     .md-end-block {

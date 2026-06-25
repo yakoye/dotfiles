@@ -385,32 +385,29 @@ kbd {
 
 /* Task list / 任务列表 */
 /*
- * Follow Typora's GitHub theme instead of rebuilding task controls.
- * 参考 Typora 内置 GitHub 主题：不自绘方框，不重置任务项布局，只让原生
- * checkbox 通过负左边距回到列表标记位置。
+ * Follow Typora's GitHub theme: keep Chromium's native checkbox and avoid
+ * rebuilding the control. The first task paragraph must be inline; Typora's
+ * default task paragraph can carry a width rule, and `inline-block` therefore
+ * pushes it onto the next line in some export layouts.
  *
- * Important: Typora places the first task paragraph in `p.first`.  Keeping it
- * inline is what puts the checkbox and first text line on one baseline.
- * 关键：Typora 会把任务第一段放在 `p.first` 中。将其保持为行内块，才能让
- * 方框和第一行文本处在同一基线，而不是方框单独占一行。
+ * 参考 Typora 内置 GitHub 主题：保留 Chromium 原生复选框，不重画控件。
+ * 任务首段必须改为 inline。Typora 的默认段落有时带宽度规则，若使用
+ * inline-block，会在部分导出布局中被挤到复选框下一行。
  */
-#write li p.first {
-    display: inline-block;
+#write .md-task-list-item > p.first,
+#write .md-task-list-item > p:first-of-type {
+    display: inline !important;
+    margin: 0 !important;
 }
 
 #write .md-task-list-item > input {
-    /* Same base rule as Typora's GitHub theme / 与 Typora GitHub 主题相同的基础规则 */
-    margin-left: -1.3em;
-    margin-top: 0;
-    margin-bottom: 0;
-
-    /* Keep Chromium's real control. `top` only makes a small optical correction
-       for Song-serif x-height; it does not change list layout or redraw the box.
-       保留 Chromium 原生控件。`top` 只为宋体字面高度作轻微视觉修正，
-       不改变列表布局，也不重画方框。 */
-    position: relative;
-    top: var(--jiandu-task-checkbox-y);
-    vertical-align: baseline;
+    /* Same anchor rule as Typora's GitHub theme / 与 GitHub 主题同样回到列表标记位置 */
+    margin: 0 0.38em 0 -1.3em;
+    /* Native control only: no custom drawing and no relative-position offset.
+       只使用原生控件：不自绘，也不使用 relative/top 造成布局偏移。 */
+    position: static !important;
+    top: auto !important;
+    vertical-align: var(--jiandu-task-checkbox-align);
 }
 
 /* Keep Typora's own completed-state structure; only tune its text colour. */

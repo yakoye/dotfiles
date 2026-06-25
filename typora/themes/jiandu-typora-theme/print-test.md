@@ -42,19 +42,19 @@ Use **strong emphasis / 加粗强调**, *italic emphasis / 斜体强调*, `Compl
 
 ### 2.1 Wide technical diagram / 超宽技术示意图
 
-![Wide PCIe diagram](assets/wide-pcie-diagram.svg)
+![Wide PCIe diagram](assets/wide-pcie-diagram.png)
 
 *Expected / 预期：图片居中、保持比例、左右边框完整可见，不得出现右侧裁切。*
 
 ### 2.2 Tall image / 竖向长图
 
-![Tall image test](assets/tall-image-test.svg)
+![Tall image test](assets/tall-image-test.png)
 
 *Expected / 预期：长图优先完整缩放；不得拉伸变形；尽量不在图片中间断页。*
 
 ### 2.3 Square image / 方图
 
-![Square image test](assets/square-image-test.svg)
+![Square image test](assets/square-image-test.png)
 
 *Expected / 预期：方图居中，与上下正文保持稳定留白。*
 

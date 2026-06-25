@@ -189,7 +189,7 @@ Open `print-test.md` from this package. It contains:
 
 打开本包中的 `print-test.md`。它包含：
 
-- Wide, tall, and square local SVG images / 宽图、长图、方图；
+- Wide, tall, and square local PNG images / 宽图、长图、方图；
 - A PCIe-style long-field table / PCIe 风格长字段表格；
 - Long code lines / 超长代码行；
 - Mermaid flow diagram / Mermaid 流程图；
@@ -256,4 +256,22 @@ Edit the following line at the end of `jiandu/user-fonts.css` to tune it locally
 When exporting PDF, page-level layers are transparent and the PDF engine's white paper canvas becomes the actual page background. This avoids screen-theme colours leaking into the blank area at page breaks.
 
 导出 PDF 时，页面级容器均为透明，由 PDF 引擎的白色纸张画布作为实际页面背景，从而避免屏幕主题颜色渗入分页空白区域。
+
+
+
+---
+
+## Word export / Word 导出
+
+`print-test.md` now references PNG test images only. It can be exported to Word without requiring an SVG renderer.
+
+`print-test.md` 现只引用 PNG 测试图片，导出 Word 时不再依赖 SVG 渲染器。
+
+For your own Markdown files, SVG images may still require `rsvg-convert` when Pandoc/Typora creates a DOCX file. On Windows, install the renderer or convert those SVG files to PNG before export.
+
+对于你自己的 Markdown 文件，如仍包含 SVG，Pandoc/Typora 在导出 DOCX 时仍可能需要 `rsvg-convert`。Windows 下可安装该渲染器，或在导出前将 SVG 转为 PNG。
+
+```powershell
+choco install rsvg-convert
+```
 
