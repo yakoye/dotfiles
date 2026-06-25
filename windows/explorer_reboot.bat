@@ -1,0 +1,9 @@
+@echo off
+echo 正在结束资源管理器进程...
+taskkill /f /im explorer.exe
+echo 等待1秒...
+timeout /t 1 /nobreak >nul
+echo 重新启动资源管理器...
+start explorer.exe
+echo 操作完成！
+REM pause
