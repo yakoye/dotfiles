@@ -1,5 +1,15 @@
-/* Code and source mode / 代码与源码模式 */
+/*
+ * Code and source mode / 代码与源码模式
+ *
+ * Typora renders a fenced code block with `.md-fences` as its outer shell.
+ * Do not style `#write pre` globally: Typora may place a nested `pre` or
+ * CodeMirror surface inside `.md-fences`, which creates repeated cards.
+ * Typora 使用 `.md-fences` 作为围栏代码块的外层容器。
+ * 不要全局美化 `#write pre`：Typora 可能会在 `.md-fences` 内嵌套 `pre`
+ * 或 CodeMirror 层，导致一个代码块出现多层边框和背景。
+ */
 
+/* Inline code / 行内代码 */
 #write code,
 #write tt {
     padding: 0.11em 0.34em;
@@ -12,18 +22,9 @@
     line-height: 1.4;
 }
 
-#write pre code,
-#write .md-fences code {
-    padding: 0;
-    color: inherit;
-    background: transparent;
-    border: 0;
-    border-radius: 0;
-    font-size: inherit;
-}
-
+/* Fenced code outer shell only / 只美化围栏代码的外层 */
 .md-fences,
-#write pre {
+pre.md-fences {
     box-sizing: border-box;
     margin: 1.2rem 0;
     padding: 0.92rem 1.08rem !important;
@@ -39,6 +40,44 @@
     -moz-tab-size: 4;
 }
 
+/*
+ * Flatten Typora's inner fence layers / 压平 Typora 围栏代码内部层
+ * This is the key rule that prevents nested code cards.
+ * 这是防止代码块出现多层卡片的关键规则。
+ */
+.md-fences pre,
+.md-fences .CodeMirror,
+.md-fences .CodeMirror-scroll,
+.md-fences .CodeMirror-sizer,
+.md-fences .CodeMirror-lines,
+pre.md-fences pre {
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    color: inherit !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+}
+
+/* Keep in-fence code plain; inline-code skin must not leak into fences. */
+/* 围栏内的 code 保持无装饰，避免行内代码样式渗入。 */
+.md-fences code,
+pre.md-fences code {
+    padding: 0 !important;
+    color: inherit !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    font: inherit !important;
+}
+
+/* Advanced fence toolbar / 高级代码块工具栏 */
 .md-fences .code-tooltip,
 .md-fences-adv-panel {
     color: var(--jiandu-muted);
