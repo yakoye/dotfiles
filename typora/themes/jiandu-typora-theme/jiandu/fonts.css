@@ -1,42 +1,54 @@
 /*
  * Jiandu Typora Theme — Font Settings / 简读 Typora 主题 — 字体设置
  *
- * Default direction: formal book, thesis and newspaper-style typography.
- * 默认方向：正式的书籍、论文、报刊式排版。
+ * Default direction: professional Chinese publishing typography for books,
+ * academic papers, newspapers, and technical reference material.
+ * 默认方向：面向书籍、论文、报刊与技术参考资料的正式中文出版排版。
+ *
+ * The default family is Source Han Serif / Noto Serif CJK SC: a modern,
+ * neutral Song-serif stack for long-form reading and stable A4 output.
+ * 默认字体为思源宋体 / Noto Serif CJK SC：现代、克制，适合长文阅读与稳定的 A4 输出。
  *
  * Change the one-line screen-font selection in `user-fonts.css`.
  * 屏幕字体的一行选择请在 `user-fonts.css` 中修改。
  */
 :root {
     /* UI font / 界面字体 */
-    --jiandu-ui-font: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+    --jiandu-ui-font:
+        "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC",
+        "Noto Sans CJK SC", Arial, sans-serif;
 
     /*
      * Reading-font presets / 阅读字体预设
      *
-     * Formal is the default. It prefers KingHwa OldSong to create the
-     * formal Chinese-book effect requested for books, papers and newspapers.
-     * 正式书刊体为默认预设，优先使用京华老宋体，适合书籍、论文和报刊式阅读。
+     * Publishing is the default. This stack deliberately uses neutral,
+     * publication-oriented Song serif families instead of handwriting,
+     * decorative display faces, or legacy display Song fonts.
+     * 默认使用“出版宋体”。该列表刻意采用中性、面向出版的宋体家族，
+     * 不使用手写体、装饰展示体或旧式展示宋体。
      */
-    --jiandu-font-formal:
-        "KingHwaOldSong", "KingHwa OldSong", "京華老宋体",
-        "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC",
-        "STSong", "SimSun", serif;
+    --jiandu-font-publishing:
+        "Source Han Serif SC", "Source Han Serif CN", "Source Han Serif",
+        "Noto Serif CJK SC", "Noto Serif SC", "思源宋体",
+        "Songti SC", "STSong", "SimSun", serif;
 
-    /* Compatibility alias / 兼容别名：与正式书刊体相同 */
-    --jiandu-font-old-song: var(--jiandu-font-formal);
+    /*
+     * System Song fallback / 系统宋体回退
+     * Useful only when a compact, operating-system-native layout is preferred.
+     * 仅当你希望使用更紧凑、操作系统原生的书面宋体布局时选择。
+     */
+    --jiandu-font-system-song:
+        "Songti SC", "STSong", "SimSun",
+        "Source Han Serif SC", "Noto Serif CJK SC", serif;
 
-    --jiandu-font-wenkai:
-        "霞鹜文楷 GB", "LXGW WenKai GB", "LXGW WenKai",
-        "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
-
-    --jiandu-font-system:
-        "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC",
-        "Noto Sans CJK SC", Arial, sans-serif;
-
-    --jiandu-font-serif:
-        "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC",
-        "STSong", "SimSun", serif;
+    /*
+     * Technical sans / 技术无衬线
+     * Kept only for dense engineering editing; it is not a book-output default.
+     * 仅保留给密集工程编辑，不作为书刊式输出默认。
+     */
+    --jiandu-font-technical-sans:
+        "Source Han Sans SC", "Noto Sans CJK SC",
+        "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", sans-serif;
 
     /* Code stays monospace / 代码始终使用等宽字体，不随正文预设切换 */
     --jiandu-code-font:
@@ -45,12 +57,12 @@
 
     /*
      * Stable print fonts / 稳定的打印字体
-     * Print uses the formal book-style family by default and does not follow
-     * the one-line screen font switch. This keeps A4 layout and pagination stable.
-     * 打印默认使用正式书刊体，不跟随屏幕字体的一行切换，保证 A4 排版和分页稳定。
+     * Print does not follow the screen one-line switch. This keeps A4 page
+     * breaks, image placement, and PCIe tables stable across documents.
+     * 打印不跟随屏幕的一行切换，以保证 A4 分页、图片位置和 PCIe 表格稳定。
      */
-    --jiandu-print-body-font: var(--jiandu-font-formal);
-    --jiandu-print-heading-font: var(--jiandu-font-formal);
+    --jiandu-print-body-font: var(--jiandu-font-publishing);
+    --jiandu-print-heading-font: var(--jiandu-font-publishing);
 
     --jiandu-print-code-font:
         "Iosevka Curly", "JetBrains Mono", "Cascadia Code",

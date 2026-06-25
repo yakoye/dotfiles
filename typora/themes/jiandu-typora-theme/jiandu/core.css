@@ -1,8 +1,8 @@
 /*
  * Jiandu Core / 简读核心排版
- * Formal book-style screen reading: hierarchy comes from spacing,
+ * Professional publishing-style screen reading: hierarchy comes from spacing,
  * weight and rules rather than rainbow heading colours or decorative markers.
- * 正式书刊式屏幕阅读：主要用间距、字重与细线建立层级，
+ * 正式出版式屏幕阅读：主要用间距、字重与细线建立层级，
  * 不依赖彩虹标题或装饰性标记。
  */
 
@@ -21,6 +21,9 @@ body {
     font-kerning: normal;
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
     font-variant-east-asian: proportional-width;
+    text-align: justify;
+    text-justify: inter-ideograph;
+    line-break: strict;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
@@ -69,8 +72,9 @@ h1, h2, h3, h4, h5, h6 {
     margin: 2.2rem 0 0.9rem;
     color: var(--jiandu-heading);
     font-family: var(--jiandu-heading-font) !important;
-    font-weight: 700;
+    font-weight: 650;
     line-height: 1.42;
+    text-align: left;
     letter-spacing: 0.015em;
     cursor: text;
     page-break-after: avoid;
@@ -176,6 +180,7 @@ li {
 
 li > p {
     margin: 0.25em 0;
+    text-align: left;
 }
 
 li > ul,
@@ -203,6 +208,8 @@ hr {
 /* Quote / 引用 */
 blockquote {
     position: relative;
+    text-align: justify;
+    text-justify: inter-ideograph;
     box-sizing: border-box;
     margin: 1.25rem 0;
     padding: 0.82rem 1.12rem 0.82rem 1.32rem;
@@ -245,6 +252,7 @@ blockquote strong { color: inherit; }
 /* Tables / 表格 */
 #write table {
     display: table;
+    text-align: left;
     width: 100%;
     max-width: 100%;
     margin: 1.28rem 0;
