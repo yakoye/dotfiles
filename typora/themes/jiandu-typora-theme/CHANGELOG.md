@@ -1,5 +1,10 @@
 # Changelog / 更新记录
 
+## 0.1.5 — 2026-06-25
+
+- Fixed the screen-table header selector: only `<thead>` uses the header colour. The first data row now uses the normal table background, and zebra striping begins from the second data row.  
+  修复了屏幕表格表头选择器：只有 `<thead>` 使用表头颜色。第一条数据行恢复普通表格底色，斑马纹从第二条数据行开始。
+
 ## 0.1.4 — 2026-06-25
 
 - Restored optional screen-reading presets for **LXGW WenKai / 霞鹜文楷** and **KingHwa OldSong / 京华老宋体**, including common English and Chinese family-name aliases. The default remains the Source Han Serif–first publication stack.  
