@@ -272,6 +272,7 @@ blockquote strong { color: inherit; }
     margin: 1.28rem 0;
     overflow: visible;
     color: var(--jiandu-text);
+    font-family: var(--jiandu-table-font);
     border-spacing: 0;
     border-collapse: separate;
     border: 1px solid var(--jiandu-table-border);

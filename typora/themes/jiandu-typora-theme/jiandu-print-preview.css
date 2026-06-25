@@ -21,7 +21,7 @@
     --meta-content-color: #6e7880;
     --rawblock-edit-panel-bd: #cfd8de;
 
-    --jiandu-bg: #eef1f3;
+    --jiandu-bg: #ffffff; /* Export-safe page canvas / 导出安全页面画布 */
     --jiandu-paper: #ffffff;
     --jiandu-text: #1f2428;
     --jiandu-muted: #59616a;
