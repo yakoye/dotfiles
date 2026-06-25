@@ -232,3 +232,28 @@ The uploaded Drake theme was used as a compatibility reference for Typora elemen
 ## v0.1.9
 
 - Task-list and Mermaid layout compatibility refinements.
+
+## Task checkbox alignment / 任务方框对齐
+
+The theme keeps Typora/Chromium's native checkbox and follows the GitHub theme's list-layout pattern. It only adds a minimal optical adjustment for Song-serif text.
+
+主题保留 Typora/Chromium 原生 checkbox，并遵循 GitHub 主题的列表布局逻辑；仅针对宋体正文做极小的视觉微调。
+
+Edit the following line at the end of `jiandu/user-fonts.css` to tune it locally:
+
+需要自行微调时，修改 `jiandu/user-fonts.css` 文件末尾这一行：
+
+```css
+--jiandu-task-checkbox-y: 0.13em;
+```
+
+- Larger value = lower square / 数值更大 = 方框更靠下
+- Smaller value = higher square / 数值更小 = 方框更靠上
+- Recommended range: `0.08em`–`0.20em` / 建议范围：`0.08em`–`0.20em`
+
+## A4 page background / A4 页面背景
+
+When exporting PDF, page-level layers are transparent and the PDF engine's white paper canvas becomes the actual page background. This avoids screen-theme colours leaking into the blank area at page breaks.
+
+导出 PDF 时，页面级容器均为透明，由 PDF 引擎的白色纸张画布作为实际页面背景，从而避免屏幕主题颜色渗入分页空白区域。
+

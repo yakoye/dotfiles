@@ -1,5 +1,12 @@
 # Changelog / 更新记录
 
+## v0.1.11
+
+- Fixed PDF page-break colour bands. Printing now keeps page-level containers transparent instead of layering a white `#write` panel over a coloured screen canvas.
+  修复 PDF 分页色带。打印时页面级容器保持透明，不再在有色屏幕背景上叠加白色 `#write` 面板。
+- Native task checkbox alignment now uses a user-editable `--jiandu-task-checkbox-y` optical offset.
+  原生任务方框对齐改为可编辑的 `--jiandu-task-checkbox-y` 视觉偏移量。
+
 ## v0.1.10 — Native checkbox visual alignment / 原生复选框视觉对齐
 
 - **Task-list checkbox position / 任务列表方框位置**
