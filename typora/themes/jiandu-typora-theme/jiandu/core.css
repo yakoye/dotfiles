@@ -250,8 +250,22 @@ blockquote strong { color: inherit; }
 }
 
 /* Tables / 表格 */
+/*
+ * Stable width allocation / 稳定列宽分配
+ *
+ * Markdown tables do not carry semantic column widths.  `table-layout: auto`
+ * lets one long register identifier claim a disproportionate share of the
+ * table, squeezing the explanatory columns.  Fixed layout gives every column
+ * a predictable budget, then the six-column PCIe pattern below reserves more
+ * room for behavior and firmware notes.
+ * Markdown 表格不携带语义列宽。`table-layout: auto` 会让一个很长的寄存器名
+ * 占据过多宽度，从而挤压说明列。固定布局先为每列分配稳定空间；下面再针对
+ * 六列表 PCIe 表格，为行为说明和固件备注保留更多宽度。
+ */
 #write table {
     display: table;
+    box-sizing: border-box;
+    table-layout: fixed;
     text-align: left;
     width: 100%;
     max-width: 100%;
@@ -271,12 +285,11 @@ blockquote strong { color: inherit; }
  * Header colour belongs to the header only.
  * 表头颜色只用于表头，不再误作用到第一条数据行。
  *
- * Typora emits a normal <thead> + <tbody> table.  Do not use
- * `tr:first-child` here: in <tbody>, it is the first data row and would
- * make the visual second row look like a second header.
- * Typora 会输出标准的 <thead> + <tbody> 表格。这里不能使用
- * `tr:first-child`：它在 <tbody> 内代表第一条数据行，会让视觉上的
- * 第二行误用表头颜色。
+ * Typora emits a normal <thead> + <tbody> table. Do not use `tr:first-child`:
+ * in <tbody>, it is the first data row and would make the visual second row
+ * look like a second header.
+ * Typora 会输出标准的 <thead> + <tbody> 表格。这里不能使用 `tr:first-child`：
+ * 它在 <tbody> 内代表第一条数据行，会让视觉上的第二行误用表头颜色。
  */
 #write table > thead {
     background: var(--jiandu-table-header);
@@ -293,7 +306,8 @@ blockquote strong { color: inherit; }
 
 #write th,
 #write td {
-    min-width: 2.7em;
+    box-sizing: border-box;
+    min-width: 0;
     padding: 0.58rem 0.72rem;
     vertical-align: top;
     overflow-wrap: anywhere;
@@ -308,6 +322,37 @@ blockquote strong { color: inherit; }
     font-weight: 700;
 }
 
+/*
+ * Common six-column PCIe table / 常见六列 PCIe 表格
+ * Register | Bits | Access | Reset | Behavior | Firmware notes
+ * 寄存器名不再吞掉前半张表，说明列获得主要阅读空间。
+ */
+#write table > thead > tr > th:nth-child(1):nth-last-child(6),
+#write table > tbody > tr > td:nth-child(1):nth-last-child(6) { width: 19%; }
+
+#write table > thead > tr > th:nth-child(2):nth-last-child(5),
+#write table > tbody > tr > td:nth-child(2):nth-last-child(5) { width: 8%; }
+
+#write table > thead > tr > th:nth-child(3):nth-last-child(4),
+#write table > tbody > tr > td:nth-child(3):nth-last-child(4) { width: 8%; }
+
+#write table > thead > tr > th:nth-child(4):nth-last-child(3),
+#write table > tbody > tr > td:nth-child(4):nth-last-child(3) { width: 12%; }
+
+#write table > thead > tr > th:nth-child(5):nth-last-child(2),
+#write table > tbody > tr > td:nth-child(5):nth-last-child(2) { width: 26%; }
+
+#write table > thead > tr > th:nth-child(6):last-child,
+#write table > tbody > tr > td:nth-child(6):last-child { width: 27%; }
+
+/* Allow long register identifiers to wrap inside table cells / 表格内的长寄存器名允许换行 */
+#write table code,
+#write table tt {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    font-size: 0.84em;
+}
 
 #write tr:last-child td { border-bottom: 0; }
 #write th:last-child,
@@ -339,12 +384,64 @@ kbd {
 }
 
 /* Task list / 任务列表 */
-#write input[type="checkbox"] {
-    width: 1.04em;
-    height: 1.04em;
-    margin: 0 0.44em 0 0;
-    vertical-align: -0.13em;
-    accent-color: var(--jiandu-checkbox);
+/*
+ * Drake-style task-list structure / 参考 Drake 的任务列表结构
+ *
+ * Native checkbox metrics differ across Electron/Chromium releases and can
+ * leave the square at the end of a line. Hide only the native control and use
+ * a positioned pseudo-element for the visual box; the original input remains
+ * clickable and keeps Typora task-state behavior.
+ * 原生复选框在不同 Electron/Chromium 版本中的度量不同，可能把方框挤到行尾。
+ * 这里只隐藏原生控件的视觉外观，再用定位伪元素绘制方框；原始 input 仍可点击，
+ * 任务状态逻辑仍由 Typora 保持。
+ */
+#write .ul-list li.md-task-list-item,
+#write li.md-task-list-item {
+    position: relative;
+    list-style: none !important;
+    margin-left: 0;
+    padding-left: 1.68em;
+}
+
+#write .ul-list li.md-task-list-item::before,
+#write li.md-task-list-item::before {
+    position: absolute;
+    top: 0.38em;
+    left: 0.16em;
+    box-sizing: border-box;
+    width: 1.02em;
+    height: 1.02em;
+    content: "";
+    background: var(--jiandu-paper);
+    border: 1px solid var(--jiandu-checkbox);
+    border-radius: 2px;
+}
+
+#write .ul-list li.md-task-list-item.task-list-done::after,
+#write li.md-task-list-item.task-list-done::after {
+    position: absolute;
+    top: 0.07em;
+    left: 0.30em;
+    content: "✓";
+    color: var(--jiandu-checkbox);
+    font-family: Arial, sans-serif;
+    font-size: 1.08em;
+    font-weight: 700;
+    line-height: 1;
+}
+
+#write .ul-list li.md-task-list-item > input[type="checkbox"],
+#write li.md-task-list-item > input[type="checkbox"] {
+    position: absolute !important;
+    top: 0.30em;
+    left: 0.08em;
+    z-index: 2;
+    width: 1.16em !important;
+    height: 1.16em !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    opacity: 0;
+    cursor: pointer;
 }
 
 .md-task-list-item.task-list-done {

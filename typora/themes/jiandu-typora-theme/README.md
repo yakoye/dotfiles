@@ -18,6 +18,10 @@
   图片自动居中、限制在可打印宽度内，并优先避免横向裁切。
 - PCIe-oriented table and code-block rules: long identifiers wrap instead of overflowing.  
   针对 PCIe 技术资料优化表格和代码块：长字段优先换行，而不是撑破页面。
+- Tables use a stable fixed layout. For six-column PCIe tables, the register column is intentionally limited so behavior and firmware-note columns retain reading space.  
+  表格采用稳定的固定列宽布局。六列 PCIe 表格会刻意限制寄存器名列，给行为说明和固件备注保留阅读空间。
+- Task lists use a Drake-style positioned checkbox, preventing the native square from drifting to the line end in different Typora/Electron versions.  
+  任务列表使用参考 Drake 的定位方框，避免不同 Typora/Electron 版本中的原生方框漂移到行尾。
 - Formal book / thesis / newspaper typography is the default; screen font remains a one-line setting and print fonts stay independent and stable.  
   默认采用正式书籍 / 论文 / 报刊式字体；屏幕字体仍只需改一行，打印字体独立固定，保证分页和技术排版稳定。
 
