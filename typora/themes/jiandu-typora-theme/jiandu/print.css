@@ -272,6 +272,50 @@
         break-inside: auto !important;
     }
 
+    /*
+     * Fixed print layout prevents a long register name from squeezing the
+     * explanation columns. Six-column PCIe tables get a deliberate budget.
+     * 固定打印列宽避免长寄存器名挤压说明列；六列 PCIe 表格使用明确的列宽配额。
+     */
+    #write table,
+    table {
+        table-layout: fixed !important;
+    }
+
+    #write th,
+    #write td,
+    th,
+    td {
+        box-sizing: border-box !important;
+        min-width: 0 !important;
+    }
+
+    #write table > thead > tr > th:nth-child(1):nth-last-child(6),
+    #write table > tbody > tr > td:nth-child(1):nth-last-child(6) { width: 19% !important; }
+
+    #write table > thead > tr > th:nth-child(2):nth-last-child(5),
+    #write table > tbody > tr > td:nth-child(2):nth-last-child(5) { width: 8% !important; }
+
+    #write table > thead > tr > th:nth-child(3):nth-last-child(4),
+    #write table > tbody > tr > td:nth-child(3):nth-last-child(4) { width: 8% !important; }
+
+    #write table > thead > tr > th:nth-child(4):nth-last-child(3),
+    #write table > tbody > tr > td:nth-child(4):nth-last-child(3) { width: 12% !important; }
+
+    #write table > thead > tr > th:nth-child(5):nth-last-child(2),
+    #write table > tbody > tr > td:nth-child(5):nth-last-child(2) { width: 26% !important; }
+
+    #write table > thead > tr > th:nth-child(6):last-child,
+    #write table > tbody > tr > td:nth-child(6):last-child { width: 27% !important; }
+
+    #write table code,
+    #write table tt {
+        white-space: normal !important;
+        overflow-wrap: anywhere !important;
+        word-break: break-word !important;
+        font-size: 0.84em !important;
+    }
+
     thead {
         display: table-header-group !important;
         background: var(--jiandu-table-header) !important;
@@ -392,12 +436,58 @@
         margin: 1.8pt 0 !important;
     }
 
-    #write input[type="checkbox"] {
+    /*
+     * Drake-style positioned task box / 参考 Drake 的定位任务方框
+     * Keep the real input clickable but remove it from inline layout, so a
+     * renderer-specific native checkbox cannot drift to the end of a line.
+     * 保留真实 input 的点击能力，但把它移出行内排版，避免不同渲染器的原生
+     * 复选框漂移到文本行尾。
+     */
+    #write .ul-list li.md-task-list-item,
+    #write li.md-task-list-item {
+        position: relative !important;
+        list-style: none !important;
+        padding-left: 14pt !important;
+    }
+
+    #write .ul-list li.md-task-list-item::before,
+    #write li.md-task-list-item::before {
+        position: absolute !important;
+        top: 2.4pt !important;
+        left: 0.8pt !important;
+        box-sizing: border-box !important;
         width: 8pt !important;
         height: 8pt !important;
-        margin-right: 4pt !important;
-        vertical-align: -1pt !important;
-        accent-color: var(--jiandu-accent) !important;
+        content: "" !important;
+        background: #ffffff !important;
+        border: 0.6pt solid #335e78 !important;
+        border-radius: 0 !important;
+    }
+
+    #write .ul-list li.md-task-list-item.task-list-done::after,
+    #write li.md-task-list-item.task-list-done::after {
+        position: absolute !important;
+        top: 0.1pt !important;
+        left: 1.5pt !important;
+        content: "✓" !important;
+        color: #244e69 !important;
+        font-family: Arial, sans-serif !important;
+        font-size: 9pt !important;
+        font-weight: 700 !important;
+        line-height: 1 !important;
+    }
+
+    #write .ul-list li.md-task-list-item > input[type="checkbox"],
+    #write li.md-task-list-item > input[type="checkbox"] {
+        position: absolute !important;
+        top: 1.7pt !important;
+        left: 0 !important;
+        z-index: 2 !important;
+        width: 10pt !important;
+        height: 10pt !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        opacity: 0 !important;
     }
 
     #write pre.md-meta-block {
