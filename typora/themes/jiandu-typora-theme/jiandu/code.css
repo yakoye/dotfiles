@@ -1,15 +1,5 @@
-/*
- * Code and source mode / 代码与源码模式
- *
- * Typora renders a fenced code block with `.md-fences` as its outer shell.
- * Do not style `#write pre` globally: Typora may place a nested `pre` or
- * CodeMirror surface inside `.md-fences`, which creates repeated cards.
- * Typora 使用 `.md-fences` 作为围栏代码块的外层容器。
- * 不要全局美化 `#write pre`：Typora 可能会在 `.md-fences` 内嵌套 `pre`
- * 或 CodeMirror 层，导致一个代码块出现多层边框和背景。
- */
+/* Code and source mode / 代码与源码模式 */
 
-/* Inline code / 行内代码 */
 #write code,
 #write tt {
     padding: 0.11em 0.34em;
@@ -22,16 +12,22 @@
     line-height: 1.4;
 }
 
-/* Fenced code outer shell only / 只美化围栏代码的外层 */
+#write pre code,
+#write .md-fences code {
+    padding: 0;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    font-size: inherit;
+}
+
 .md-fences,
-pre.md-fences {
+#write pre {
     box-sizing: border-box;
     margin: 1.2rem 0;
     padding: 0.92rem 1.08rem !important;
-    overflow: visible;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    overflow: auto;
     color: var(--jiandu-code-text);
     background: var(--jiandu-code-bg);
     border: 1px solid var(--jiandu-code-border);
@@ -43,44 +39,6 @@ pre.md-fences {
     -moz-tab-size: 4;
 }
 
-/*
- * Flatten Typora's inner fence layers / 压平 Typora 围栏代码内部层
- * This is the key rule that prevents nested code cards.
- * 这是防止代码块出现多层卡片的关键规则。
- */
-.md-fences pre,
-.md-fences .CodeMirror,
-.md-fences .CodeMirror-scroll,
-.md-fences .CodeMirror-sizer,
-.md-fences .CodeMirror-lines,
-pre.md-fences pre {
-    box-sizing: border-box !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: visible !important;
-    color: inherit !important;
-    background: transparent !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    font-family: inherit !important;
-    font-size: inherit !important;
-    line-height: inherit !important;
-}
-
-/* Keep in-fence code plain; inline-code skin must not leak into fences. */
-/* 围栏内的 code 保持无装饰，避免行内代码样式渗入。 */
-.md-fences code,
-pre.md-fences code {
-    padding: 0 !important;
-    color: inherit !important;
-    background: transparent !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    font: inherit !important;
-}
-
-/* Advanced fence toolbar / 高级代码块工具栏 */
 .md-fences .code-tooltip,
 .md-fences-adv-panel {
     color: var(--jiandu-muted);
@@ -88,99 +46,11 @@ pre.md-fences code {
     border-color: var(--jiandu-code-border);
 }
 
-/*
- * Code language selector / 代码语言选择器
- *
- * Typora places the "Code language / 代码语言" control in `.code-tooltip`
- * near the lower-right edge of an active fence.  It used to inherit a
- * transparent background, so the control was easy to miss against the code
- * card.  Give the outer tooltip and its editable label distinct, quiet
- * surfaces without changing the code block itself.
- *
- * Typora 会把“代码语言”控件放在活动代码块右下方的 `.code-tooltip` 中。
- * 之前它继承透明背景，和代码块底色过于接近，难以察觉。这里分别为外层
- * 工具栏和内部输入框提供低调但清晰的底色，不改变代码块本身的样式。
- */
-.md-fences .code-tooltip {
-    box-sizing: border-box;
-    min-width: 10.5rem;
-    padding: 0.3rem 0.42rem !important;
-    color: var(--jiandu-ui-text) !important;
-    background: var(--jiandu-popup-bg) !important;
-    border: 1px solid var(--jiandu-popup-border) !important;
-    border-radius: 5px 5px 0 0 !important;
-    box-shadow: 0 -1px 7px rgba(28, 42, 33, 0.10) !important;
-}
-
-.md-fences .code-tooltip input,
-.md-fences .code-tooltip select,
-.md-fences .code-tooltip .md-lang,
-.md-fences .md-lang {
-    box-sizing: border-box;
-    min-height: 1.45rem;
-    padding: 0.12rem 0.42rem !important;
-    color: var(--jiandu-ui-text) !important;
-    background: var(--jiandu-input-bg) !important;
-    border: 1px solid var(--jiandu-input-border) !important;
-    border-radius: 4px !important;
-    font-family: var(--jiandu-ui-font) !important;
-    font-size: 0.79rem !important;
-    line-height: 1.25rem !important;
-}
-
-.md-fences .code-tooltip input::placeholder,
-.md-fences .code-tooltip .md-lang::placeholder {
-    color: var(--jiandu-muted) !important;
-    opacity: 1;
-}
-
-.md-fences .code-tooltip input:focus,
-.md-fences .code-tooltip select:focus,
-.md-fences .code-tooltip .md-lang:focus,
-.md-fences .md-lang:focus {
-    outline: none !important;
-    border-color: var(--jiandu-accent) !important;
-    box-shadow: 0 0 0 2px var(--jiandu-focus-ring) !important;
-}
-
 .md-fences-adv-panel pre {
     margin: 0;
     padding: 0 !important;
     background: transparent;
     border: 0;
-}
-
-
-/*
- * Mermaid raw-block editor / Mermaid 源码编辑区
- *
- * Mermaid is an advanced Typora fence.  Let Typora measure its own source and
- * preview panels; do not turn this block into a fixed-height scrollbox.  The
- * source panel and its rendered diagram then remain two consecutive blocks,
- * matching the built-in GitHub theme behaviour.
- * Mermaid 属于 Typora 的高级围栏块。让 Typora 自行测量源码区和预览区，
- * 不把它改成固定高度的滚动框。这样源码区和渲染图会连续上下排列，表现与
- * 内置 GitHub 主题一致。
- */
-.md-fences.md-fences-advanced,
-pre.md-fences.md-fences-advanced {
-    overflow: visible !important;
-    max-height: none !important;
-    min-height: 0 !important;
-    padding: 8px 12px !important;
-    white-space: normal !important;
-}
-
-.md-fences.md-fences-advanced .CodeMirror,
-.md-fences.md-fences-advanced .CodeMirror-scroll,
-.md-fences.md-fences-advanced .CodeMirror-sizer,
-pre.md-fences.md-fences-advanced .CodeMirror,
-pre.md-fences.md-fences-advanced .CodeMirror-scroll,
-pre.md-fences.md-fences-advanced .CodeMirror-sizer {
-    height: auto !important;
-    max-height: none !important;
-    min-height: 0 !important;
-    overflow: visible !important;
 }
 
 /* CodeMirror syntax / CodeMirror 语法高亮 */
@@ -203,20 +73,9 @@ pre.md-fences.md-fences-advanced .CodeMirror-sizer {
     font-family: var(--jiandu-code-font);
 }
 
-/*
- * No current-line highlight / 不显示光标所在行高亮
- * Keep the caret and selected-text highlight; only the full-line tint is removed.
- * 保留光标与选中文本高亮；仅移除整行背景色。
- */
-.CodeMirror-activeline-background,
-.CodeMirror-activeline,
 .cm-s-inner .CodeMirror-activeline-background,
-.cm-s-inner .CodeMirror-activeline,
-.cm-s-typora-default .CodeMirror-activeline-background,
-.cm-s-typora-default .CodeMirror-activeline,
-.md-fences .CodeMirror-activeline-background,
-.md-fences .CodeMirror-activeline {
-    background: transparent !important;
+.cm-s-typora-default .CodeMirror-activeline-background {
+    background: var(--jiandu-active-bg);
 }
 
 .cm-s-inner span.cm-comment { color: var(--jiandu-syntax-comment); }

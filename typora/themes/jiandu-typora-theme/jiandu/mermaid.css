@@ -1,75 +1,19 @@
-/*
- * Mermaid and diagrams / Mermaid 与图表
- *
- * Compatibility rule / 兼容性原则
- * ------------------------------------------------------------
- * Typora owns the live Mermaid editor and its preview layout. In particular,
- * the preview SVG can receive a runtime width/height from Typora after the
- * source editor is opened. Do not force `display`, `width`, or `height` on
- * `.md-diagram-panel-preview svg`; otherwise some Typora builds reserve an
- * empty preview panel while the actual chart collapses.
- *
- * Typora 负责 Mermaid 编辑态及预览区的布局。尤其是点击图表后，Typora 会在
- * 运行时为预览 SVG 写入宽高。不能强制覆盖 `.md-diagram-panel-preview svg`
- * 的 display / width / height，否则部分 Typora 版本会留下一个空白预览框，
- * 图形本体却被压缩或不显示。
- *
- * This file therefore changes colours only. Sizing and source/preview layout
- * remain under Typora's native control, matching the stable GitHub-theme
- * behaviour used as the compatibility reference.
- *
- * 因此本文件只调整配色，不接管尺寸和源码/预览布局；保持 Typora 原生行为，
- * 与 GitHub 主题的稳定表现一致。
- */
+/* Mermaid and diagrams / Mermaid 与图表 */
 
-/*
- * Interactive Mermaid editor and preview / Mermaid 交互源码区与预览区
- *
- * Keep both panels in normal document flow.  Typora will add its own measured
- * SVG size after rendering; this theme deliberately does not override the
- * preview SVG width or height.
- * 源码区和预览区保持在文档正常流中。Typora 渲染后会写入 SVG 自身尺寸；
- * 本主题刻意不覆盖交互预览 SVG 的宽高。
- */
-.md-diagram-panel-preview {
-    display: block !important;
-    box-sizing: border-box !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    margin: 0.5rem 0 1.15rem !important;
-    padding: 0 !important;
-    overflow: visible !important;
-    background: transparent !important;
-    border: 0 !important;
-}
-
-.md-diagram-panel-preview > div {
-    max-width: 100% !important;
-    overflow: visible !important;
-}
-
-/* Rendered diagram container / 已渲染图表容器 */
 [id^="mermaidChart"] {
     max-width: 100%;
     color: var(--jiandu-text) !important;
     background: transparent !important;
 }
 
-/*
- * Responsive but non-invasive SVG containment / 响应式但不干预 SVG 高度
- * `max-width` prevents horizontal clipping. No `height:auto !important` here:
- * Typora's interactive preview needs its own measured height.
- * `max-width` 防止横向裁切；这里不要强制 `height:auto !important`，
- * 因为 Typora 的交互预览需要使用其自身计算出的高度。
- */
-[id^="mermaidChart"] svg {
+[id^="mermaidChart"] svg,
+.md-diagram-panel-preview svg {
+    display: block;
     max-width: 100% !important;
+    height: auto !important;
+    margin: 1.25rem auto;
 }
 
-/* Rendered and interactive preview colours / 已渲染图与交互预览配色 */
 [id^="mermaidChart"] .cluster rect,
 .md-diagram-panel-preview .cluster rect {
     fill: var(--jiandu-diagram-cluster) !important;
@@ -80,21 +24,16 @@
 [id^="mermaidChart"] .node circle,
 [id^="mermaidChart"] .node ellipse,
 [id^="mermaidChart"] .node polygon,
+[id^="mermaidChart"] .node path,
 .md-diagram-panel-preview .node rect,
 .md-diagram-panel-preview .node circle,
 .md-diagram-panel-preview .node ellipse,
 .md-diagram-panel-preview .node polygon,
+.md-diagram-panel-preview .node path,
 .md-diagram-panel-preview .actor,
 .md-diagram-panel-preview .entityBox {
     fill: var(--jiandu-diagram-node) !important;
     stroke: var(--jiandu-diagram-border) !important;
-}
-
-/* Keep arrowheads independent from node fills / 箭头不继承节点填充色 */
-[id^="mermaidChart"] marker path,
-.md-diagram-panel-preview marker path {
-    fill: var(--jiandu-diagram-line) !important;
-    stroke: var(--jiandu-diagram-line) !important;
 }
 
 [id^="mermaidChart"] text,
@@ -109,15 +48,6 @@
 .md-diagram-panel-preview .labelText,
 .md-diagram-panel-preview .loopText {
     fill: var(--jiandu-diagram-text) !important;
-    color: var(--jiandu-diagram-text) !important;
-    font-family: var(--jiandu-reading-font) !important;
-}
-
-/* Mermaid v10 may use HTML labels in foreignObject / Mermaid v10 可能在 foreignObject 中使用 HTML 标签 */
-[id^="mermaidChart"] foreignObject div,
-[id^="mermaidChart"] .label foreignObject div,
-.md-diagram-panel-preview foreignObject div,
-.md-diagram-panel-preview .label foreignObject div {
     color: var(--jiandu-diagram-text) !important;
     font-family: var(--jiandu-reading-font) !important;
 }
