@@ -1,5 +1,21 @@
 # Changelog / 更新记录
 
+## v0.1.13
+
+- Changed the screen default from Source Han Serif to Noto Sans Simplified Chinese / NotoSansSC for clearer desktop reading. A4 print/PDF still uses the formal Source Han Serif publishing stack.  
+  屏幕默认从思源宋体改为 Noto Sans Simplified Chinese / NotoSansSC，以获得更清晰的电脑阅读效果；A4 打印 / PDF 仍使用正式的思源宋体出版字体链。
+- Added font presets and bilingual comments for Maple Mono NL NF CN, 方正书宋_GBK、方正博雅宋、方正清刻本悦宋、方正报宋、方正粗黑、汉仪粗黑、汉仪旗黑与方正悠黑.  
+  新增 Maple Mono NL NF CN、方正书宋_GBK、方正博雅宋、方正清刻本悦宋、方正报宋、方正粗黑、汉仪粗黑、汉仪旗黑与方正悠黑的字体预设及中英双语说明。
+- Expanded `user-fonts.css` so body, heading, table, code, UI, and print/PDF fonts can be customized independently.  
+  扩展 `user-fonts.css`，使正文、标题、表格、代码、界面、打印 / PDF 字体均可独立配置。
+- Added `font-preview.md` with title, paragraph, table, quote, and code samples.  
+  新增 `font-preview.md`，内含标题、正文、表格、引用与代码样例。
+- Made the user-proven white export canvas permanent by setting every theme's `--jiandu-bg` to white. The screen document paper tone remains controlled by `--jiandu-paper`.  
+  将用户验证有效的白色导出画布固化：所有主题的 `--jiandu-bg` 统一设置为白色；屏幕文档纸张色仍由 `--jiandu-paper` 控制。
+- Set the package default checkbox baseline alignment to `-0.04em`.  
+  将主题默认任务方框基线对齐设置为 `-0.04em`。
+
+
 ## v0.1.12
 
 - Fix the A4 export canvas: all page-level Typora containers are now explicitly white, preventing coloured top/bottom bands in PDF pages. / 修复 A4 导出画布：所有 Typora 页面级容器统一显式白色，避免 PDF 顶部和底部出现主题色带。
