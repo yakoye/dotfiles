@@ -28,7 +28,10 @@ pre.md-fences {
     box-sizing: border-box;
     margin: 1.2rem 0;
     padding: 0.92rem 1.08rem !important;
-    overflow: auto;
+    overflow: visible;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
     color: var(--jiandu-code-text);
     background: var(--jiandu-code-bg);
     border: 1px solid var(--jiandu-code-border);
@@ -90,6 +93,39 @@ pre.md-fences code {
     padding: 0 !important;
     background: transparent;
     border: 0;
+}
+
+
+/*
+ * Mermaid raw-block editor / Mermaid 源码编辑区
+ *
+ * Mermaid is an advanced Typora fence.  Let Typora measure its own source and
+ * preview panels; do not turn this block into a fixed-height scrollbox.  The
+ * source panel and its rendered diagram then remain two consecutive blocks,
+ * matching the built-in GitHub theme behaviour.
+ * Mermaid 属于 Typora 的高级围栏块。让 Typora 自行测量源码区和预览区，
+ * 不把它改成固定高度的滚动框。这样源码区和渲染图会连续上下排列，表现与
+ * 内置 GitHub 主题一致。
+ */
+.md-fences.md-fences-advanced,
+pre.md-fences.md-fences-advanced {
+    overflow: visible !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    padding: 8px 12px !important;
+    white-space: normal !important;
+}
+
+.md-fences.md-fences-advanced .CodeMirror,
+.md-fences.md-fences-advanced .CodeMirror-scroll,
+.md-fences.md-fences-advanced .CodeMirror-sizer,
+pre.md-fences.md-fences-advanced .CodeMirror,
+pre.md-fences.md-fences-advanced .CodeMirror-scroll,
+pre.md-fences.md-fences-advanced .CodeMirror-sizer {
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    overflow: visible !important;
 }
 
 /* CodeMirror syntax / CodeMirror 语法高亮 */

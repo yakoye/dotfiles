@@ -449,42 +449,17 @@
     }
 
     /*
-     * Native GitHub-style task controls / 原生 GitHub 风格任务方框
-     *
-     * Use the real browser checkbox in the normal inline flow. This keeps the
-     * mark vertically aligned by Chromium itself and avoids a hand-positioned
-     * pseudo checkmark in the PDF renderer.
-     * 使用浏览器真实复选框并保留其正常行内布局。这样由 Chromium 自身处理
-     * 垂直基线对齐，PDF 渲染时也不再依赖手工定位的伪元素对号。
+     * Follow Typora's GitHub-theme task-list rule.  Do not draw a replacement
+     * checkbox or force task items into a custom layout.
+     * 参考 Typora GitHub 主题的任务列表规则：不自绘替代方框，也不强制重排
+     * 任务项，仅使用原生复选框与负左边距。
      */
-    #write .ul-list li.md-task-list-item,
-    #write li.md-task-list-item {
-        position: static !important;
-        list-style: none !important;
-        padding-left: 0 !important;
-    }
-
-    #write .ul-list li.md-task-list-item::before,
-    #write .ul-list li.md-task-list-item::after,
-    #write li.md-task-list-item::before,
-    #write li.md-task-list-item::after {
-        content: none !important;
-        display: none !important;
-    }
-
-    #write .ul-list li.md-task-list-item > input[type="checkbox"],
-    #write li.md-task-list-item > input[type="checkbox"] {
-        position: static !important;
+    #write li p.first {
         display: inline-block !important;
-        box-sizing: border-box !important;
-        width: auto !important;
-        height: auto !important;
+    }
+
+    #write .md-task-list-item > input {
         margin-left: -1.3em !important;
-        padding: 0 !important;
-        opacity: 1 !important;
-        -webkit-appearance: checkbox !important;
-        appearance: auto !important;
-        accent-color: #335e78 !important;
     }
 
     #write pre.md-meta-block {
@@ -518,8 +493,26 @@
         font-size: 8.8pt !important;
     }
 
-    /* Avoid blank print pages from fixed-height UI / 避免固定高度界面导致空白页 */
-    .md-pair-skip,
+    /*
+     * Remove Typora's pagination spacer from exported pages.
+     * The spacer may otherwise show as a pale header/footer band between A4
+     * pages.  Keep real document blocks intact; only the empty pairing helper
+     * is removed.
+     * 移除 Typora 的分页辅助空白块。它有时会在 A4 页面之间显示为浅灰的
+     * 页眉/页脚色带；这里只移除空的辅助块，不影响真实文档内容。
+     */
+    .md-pair-skip {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        background: transparent !important;
+        border: 0 !important;
+    }
+
     .md-end-block {
         min-height: 0 !important;
     }

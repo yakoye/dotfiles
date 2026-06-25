@@ -22,6 +22,35 @@
  * 与 GitHub 主题的稳定表现一致。
  */
 
+/*
+ * Interactive Mermaid editor and preview / Mermaid 交互源码区与预览区
+ *
+ * Keep both panels in normal document flow.  Typora will add its own measured
+ * SVG size after rendering; this theme deliberately does not override the
+ * preview SVG width or height.
+ * 源码区和预览区保持在文档正常流中。Typora 渲染后会写入 SVG 自身尺寸；
+ * 本主题刻意不覆盖交互预览 SVG 的宽高。
+ */
+.md-diagram-panel-preview {
+    display: block !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0.5rem 0 1.15rem !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: transparent !important;
+    border: 0 !important;
+}
+
+.md-diagram-panel-preview > div {
+    max-width: 100% !important;
+    overflow: visible !important;
+}
+
 /* Rendered diagram container / 已渲染图表容器 */
 [id^="mermaidChart"] {
     max-width: 100%;
