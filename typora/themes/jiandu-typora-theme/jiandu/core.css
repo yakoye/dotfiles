@@ -385,53 +385,27 @@ kbd {
 
 /* Task list / 任务列表 */
 /*
- * Native GitHub-style task controls / 原生 GitHub 风格任务方框
+ * Follow Typora's GitHub theme instead of rebuilding task controls.
+ * 参考 Typora 内置 GitHub 主题：不自绘方框，不重置任务项布局，只让原生
+ * checkbox 通过负左边距回到列表标记位置。
  *
- * Keep Typora/Chromium's real checkbox in normal inline flow. This follows the
- * simple GitHub-theme rule instead of drawing a separate pseudo checkbox, so
- * the checkmark uses the browser's own baseline and cannot float too high.
- * 保留 Typora/Chromium 的真实复选框并让其正常参与行内排版。这里沿用
- * GitHub 主题的简洁规则，不再用伪元素另画方框；对号由浏览器按基线对齐，
- * 不会再出现人为绘制的对号偏上的问题。
+ * Important: Typora places the first task paragraph in `p.first`.  Keeping it
+ * inline is what puts the checkbox and first text line on one baseline.
+ * 关键：Typora 会把任务第一段放在 `p.first` 中。将其保持为行内块，才能让
+ * 方框和第一行文本处在同一基线，而不是方框单独占一行。
  */
-#write .ul-list li.md-task-list-item,
-#write li.md-task-list-item {
-    position: static !important;
-    list-style: none !important;
-    padding-left: 0;
+#write li p.first {
+    display: inline-block;
 }
 
-#write .ul-list li.md-task-list-item::before,
-#write .ul-list li.md-task-list-item::after,
-#write li.md-task-list-item::before,
-#write li.md-task-list-item::after {
-    content: none !important;
-    display: none !important;
+#write .md-task-list-item > input {
+    margin-left: -1.3em;
 }
 
-#write .ul-list li.md-task-list-item > input[type="checkbox"],
-#write li.md-task-list-item > input[type="checkbox"] {
-    position: static !important;
-    display: inline-block !important;
-    box-sizing: border-box;
-    width: auto !important;
-    height: auto !important;
-    margin-left: -1.3em !important;
-    padding: 0 !important;
-    opacity: 1 !important;
-    -webkit-appearance: checkbox;
-    appearance: auto;
-    accent-color: var(--jiandu-checkbox);
-    cursor: pointer;
-}
-
+/* Keep Typora's own completed-state structure; only tune its text colour. */
+/* 保留 Typora 原生的完成态结构；这里只微调完成项文字颜色。 */
 .md-task-list-item.task-list-done {
     color: var(--jiandu-muted);
-}
-
-.md-task-list-item.task-list-done > p {
-    text-decoration: line-through;
-    text-decoration-color: var(--jiandu-task-strike);
 }
 
 /* YAML, footnotes and TOC / YAML、脚注与目录 */

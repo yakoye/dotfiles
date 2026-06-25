@@ -228,3 +228,7 @@ When you update this theme later, preserve your `jiandu/user-fonts.css` file if 
 
 The uploaded Drake theme was used as a compatibility reference for Typora element coverage, such as code blocks, Mermaid diagrams, sidebars, and print behavior. This package is newly organized and restyled for Jiandu. See `THIRD-PARTY-NOTICES.md` for the MIT attribution retained for that reference.  
 你提供的 Drake 主题被用作 Typora 元素覆盖范围的兼容性参考，例如代码块、Mermaid 图、侧栏和打印行为。本包按“简读”重新组织与设计；相关 MIT 署名见 `THIRD-PARTY-NOTICES.md`。
+
+## v0.1.9
+
+- Task-list and Mermaid layout compatibility refinements.
