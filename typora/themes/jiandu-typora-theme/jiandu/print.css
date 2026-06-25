@@ -10,6 +10,8 @@
 @page {
     size: A4;
     margin: 18mm 16mm 18mm 16mm;
+    /* Native white PDF paper canvas / 使用 PDF 原生白色纸张画布 */
+    background: #ffffff;
 }
 
 @media print {
@@ -74,34 +76,63 @@
         --jiandu-diagram-activation: #e5ebee !important;
     }
 
+    /*
+     * Page canvas / 页面画布
+     * Do not paint a screen-theme background then cover only #write with white.
+     * In Typora/Chromium that leaves coloured bands in empty page margins at
+     * page breaks. Keep page-level containers transparent; the PDF paper itself
+     * is naturally white.
+     *
+     * 不再先绘制屏幕主题背景、再只给 #write 盖白色。Typora/Chromium 会让
+     * 这种做法在分页空白页边露出有色横条。打印时页面级容器保持透明，
+     * 由 PDF 原生白纸画布承载内容。
+     */
     html,
-    body {
+    body,
+    .typora-export,
+    .typora-export-content,
+    #write {
         width: auto !important;
         min-width: 0 !important;
         height: auto !important;
+        min-height: 0 !important;
         margin: 0 !important;
         padding: 0 !important;
         color: var(--jiandu-text) !important;
-        background: #ffffff !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    html,
+    body {
         font-family: var(--jiandu-print-body-font) !important;
         font-size: 10.7pt !important;
         line-height: 1.62 !important;
         text-align: justify !important;
         text-justify: inter-ideograph !important;
         line-break: strict !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        /* Do not force screen page backgrounds into the PDF canvas.
+           不强制把屏幕页面背景写入 PDF 画布。 */
+        -webkit-print-color-adjust: auto;
+        print-color-adjust: auto;
     }
 
     #write {
         width: auto !important;
         max-width: none !important;
-        min-height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        color: var(--jiandu-text) !important;
-        background: #ffffff !important;
-        box-shadow: none !important;
+    }
+
+    /* Preserve intended subtle fills only inside document blocks.
+       仅为正文内部必要的浅色结构块保留颜色。 */
+    blockquote,
+    #write table thead,
+    #write table tbody tr:nth-child(even) td,
+    .md-fences,
+    #write pre.md-meta-block,
+    .md-toc {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
 
     #typora-sidebar,
@@ -462,9 +493,11 @@
         margin-left: -1.3em !important;
         margin-top: 0 !important;
         margin-bottom: 0 !important;
-        /* Match the screen baseline correction in A4/PDF output.
-           A4 / PDF 输出同步使用与屏幕一致的基线微调。 */
-        vertical-align: -0.12em !important;
+        /* Same native-control optical correction as the screen theme.
+           与屏幕主题相同的原生控件视觉微调。 */
+        position: relative !important;
+        top: var(--jiandu-task-checkbox-y) !important;
+        vertical-align: baseline !important;
     }
 
     #write pre.md-meta-block {

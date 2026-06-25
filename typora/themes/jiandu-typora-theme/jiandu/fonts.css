@@ -104,4 +104,9 @@
     --jiandu-screen-line-height: 1.82;
     --jiandu-screen-paragraph-spacing: 0.92rem;
     --jiandu-screen-content-width: 960px;
+
+    /* Native task-checkbox optical adjustment / 原生任务方框视觉微调
+       Positive values move the browser checkbox downward.
+       正数会将浏览器原生方框向下移动。 */
+    --jiandu-task-checkbox-y: 0.13em;
 }
