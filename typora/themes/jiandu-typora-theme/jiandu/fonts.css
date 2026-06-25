@@ -1,112 +1,161 @@
 /*
- * Jiandu Typora Theme — Font Settings / 简读 Typora 主题 — 字体设置
+ * Jiandu Typora Theme — Font Presets / 简读 Typora 主题 — 字体预设
  *
- * Default direction: professional Chinese publishing typography for books,
- * academic papers, newspapers, and technical reference material.
- * 默认方向：面向书籍、论文、报刊与技术参考资料的正式中文出版排版。
+ * Screen defaults prioritize crisp rendering first.  Publication-oriented
+ * Song serif remains available for formal screen reading and is retained as
+ * the stable default family for A4 print/PDF.
+ * 屏幕默认优先考虑清晰度；正式出版宋体仍可用于屏幕阅读，并继续作为 A4
+ * 打印 / PDF 的稳定正文默认字体。
  *
- * The default family is Source Han Serif / Noto Serif CJK SC: a modern,
- * neutral Song-serif stack for long-form reading and stable A4 output.
- * 默认字体为思源宋体 / Noto Serif CJK SC：现代、克制，适合长文阅读与稳定的 A4 输出。
- *
- * Change the one-line screen-font selection in `user-fonts.css`.
- * 屏幕字体的一行选择请在 `user-fonts.css` 中修改。
+ * Change user choices in `user-fonts.css`, not in this file.
+ * 用户选择请修改 `user-fonts.css`，不要改本文件。
  */
 :root {
-    /* UI font / 界面字体 */
-    --jiandu-ui-font:
-        "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC",
-        "Noto Sans CJK SC", Arial, sans-serif;
+    /*
+     * Core UI / 界面基础字体
+     * Used by Typora dialogs, table headers, image captions, and utility UI.
+     * 用于 Typora 界面、表头、图片说明和工具性 UI。
+     */
+    --jiandu-font-ui-sans:
+        "Noto Sans SC", "Noto Sans Simplified Chinese", "NotoSansSC",
+        "Source Han Sans SC", "Microsoft YaHei UI", "Microsoft YaHei",
+        "PingFang SC", Arial, sans-serif;
+
+    /* Compatibility alias / 兼容别名 */
+    --jiandu-font-noto-sans-sc: var(--jiandu-font-ui-sans);
 
     /*
-     * Reading-font presets / 阅读字体预设
-     *
-     * Publishing is the default. This stack deliberately uses neutral,
-     * publication-oriented Song serif families instead of handwriting,
-     * decorative display faces, or legacy display Song fonts.
-     * 默认使用“出版宋体”。该列表刻意采用中性、面向出版的宋体家族，
-     * 不使用手写体、装饰展示体或旧式展示宋体。
+     * Publication Song serif / 出版宋体
+     * Formal books, papers, newspapers, and stable A4 output.
+     * 正式书籍、论文、报刊与稳定 A4 输出。
      */
     --jiandu-font-publishing:
         "Source Han Serif SC", "Source Han Serif CN", "Source Han Serif",
         "Noto Serif CJK SC", "Noto Serif SC", "思源宋体",
         "Songti SC", "STSong", "SimSun", serif;
 
-    /*
-     * System Song fallback / 系统宋体回退
-     * Useful only when a compact, operating-system-native layout is preferred.
-     * 仅当你希望使用更紧凑、操作系统原生的书面宋体布局时选择。
-     */
+    /* Compact system Song fallback / 紧凑系统宋体回退 */
     --jiandu-font-system-song:
         "Songti SC", "STSong", "SimSun",
         "Source Han Serif SC", "Noto Serif CJK SC", serif;
 
     /*
-     * LXGW WenKai / 霞鹜文楷 — optional screen-reading preset
-     * This is intentionally optional rather than the publishing default.
-     * The alias list supports common English and Chinese family names.
-     * 这是可选的屏幕阅读预设，不作为出版默认字体。
-     * 别名同时覆盖常见英文与中文字体家族名称。
+     * Screen sans / 屏幕无衬线
+     * Recommended for sharp, high-clarity desktop reading.
+     * 推荐用于电脑屏幕的清晰、高对比阅读。
+     */
+    --jiandu-font-screen-sans:
+        "Noto Sans SC", "Noto Sans Simplified Chinese", "NotoSansSC",
+        "Source Han Sans SC", "Microsoft YaHei UI", "Microsoft YaHei",
+        "PingFang SC", sans-serif;
+
+    /*
+     * Maple Mono NL NF CN / Maple Mono 中文等宽字体
+     * Recommended for code, PCIe registers, terminal commands, and tables.
+     * 推荐用于代码、PCIe 寄存器、终端命令与表格字段。
+     */
+    --jiandu-font-maple-mono-nl-nf-cn:
+        "Maple Mono NL NF CN", "Maple Mono NF CN", "Maple Mono NL",
+        "Maple Mono", "Iosevka Curly", "JetBrains Mono", "Cascadia Code",
+        "Fira Code", Consolas, "Liberation Mono", monospace;
+
+    /* Compatibility aliases / 兼容别名 */
+    --jiandu-font-maple-mono: var(--jiandu-font-maple-mono-nl-nf-cn);
+    --jiandu-font-maple: var(--jiandu-font-maple-mono-nl-nf-cn);
+
+    /*
+     * FangZheng / 方正字体预设
+     * These are local-name stacks only. Jiandu does not include font files.
+     * 这些仅为本机字体名称回退链；简读不附带任何字体文件。
+     */
+
+    /* 方正书宋_GBK / FangZheng ShuSong GBK — formal book body */
+    --jiandu-font-fz-shusong-gbk:
+        "方正书宋_GBK", "方正书宋", "FZShuSong-Z01S", "FZShuSong",
+        "Source Han Serif SC", "Noto Serif CJK SC", serif;
+
+    /* 方正博雅宋 / FangZheng BoYaSong — refined book / essay body */
+    --jiandu-font-fz-boyasong:
+        "方正博雅宋", "FZBoYaSong", "FZBoYaSong-Z02S",
+        "Source Han Serif SC", "Noto Serif CJK SC", serif;
+
+    /* 方正清刻本悦宋 / FangZheng QingKeBen YueSong — classic reading body */
+    --jiandu-font-fz-qingkeben-yuesong:
+        "方正清刻本悦宋", "FZQingKeBenYueSong", "FZQingKeBenYueSongS",
+        "Source Han Serif SC", "Noto Serif CJK SC", serif;
+
+    /* 方正报宋 / FangZheng BaoSong — newspaper-like body / headline */
+    --jiandu-font-fz-baosong:
+        "方正报宋", "FZBaoSong-Z04S", "FZBaoSong",
+        "Source Han Serif SC", "Noto Serif CJK SC", serif;
+
+    /* 方正粗黑 / FangZheng CuHei — strong display headings */
+    --jiandu-font-fz-cuhe:
+        "方正粗黑", "FZCuHei-B03S", "FZCuHei",
+        "Noto Sans SC", "Source Han Sans SC", sans-serif;
+
+    /* 汉仪粗黑 / Hanyi CuHei — strong display headings */
+    --jiandu-font-hy-cuhe:
+        "汉仪粗黑", "HYCuHei", "HYCuHeiW",
+        "Noto Sans SC", "Source Han Sans SC", sans-serif;
+
+    /* Generic strong-display fallback / 通用强强调标题回退 */
+    --jiandu-font-heavy-black: var(--jiandu-font-fz-cuhe);
+
+    /* 汉仪旗黑 / Hanyi QiHei — clean modern headings */
+    --jiandu-font-hy-qihei:
+        "汉仪旗黑", "HYQiHei", "HYQiHeiW",
+        "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei UI", sans-serif;
+
+    /* 方正悠黑 / FangZheng YouHei — calm technical headings */
+    --jiandu-font-fz-youhei:
+        "方正悠黑", "FZYouHei", "FZYouHei-B02S",
+        "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei UI", sans-serif;
+
+    /*
+     * Optional earlier presets / 旧有可选预设
+     * They remain available only for users who explicitly choose them.
+     * 它们仍然可用，但仅在用户主动选择时使用。
      */
     --jiandu-font-wenkai:
         "LXGW WenKai GB", "LXGW WenKai", "LXGW WenKai Screen",
         "霞鹜文楷 GB", "霞鹜文楷", "霞鶩文楷 GB",
         "Source Han Serif SC", "Noto Serif CJK SC", serif;
-
-    /* Alias / 别名：与上面的霞鹜文楷预设等价 */
     --jiandu-font-lxgw-wenkai: var(--jiandu-font-wenkai);
 
-    /*
-     * KingHwa OldSong / 京华老宋体 — optional traditional-book preset
-     * This is for users who prefer an old-book reading character on screen.
-     * It remains optional; A4 print/PDF still uses the stable publishing stack.
-     * 供喜欢传统旧书阅读气质的用户在屏幕上选择。
-     * 它始终为可选项；A4 打印 / PDF 仍使用稳定的出版字体链。
-     */
     --jiandu-font-kinghwa-old-song:
         "KingHwaOldSong", "KingHwa OldSong",
         "京華老宋体", "京华老宋体",
         "Source Han Serif SC", "Noto Serif CJK SC", serif;
-
-    /* Compatibility aliases / 兼容别名 */
     --jiandu-font-kinghwa: var(--jiandu-font-kinghwa-old-song);
     --jiandu-font-old-song: var(--jiandu-font-kinghwa-old-song);
 
-    /*
-     * Technical sans / 技术无衬线
-     * Kept only for dense engineering editing; it is not a book-output default.
-     * 仅保留给密集工程编辑，不作为书刊式输出默认。
-     */
+    /* Dense engineering editing only / 仅适合密集工程编辑 */
     --jiandu-font-technical-sans:
-        "Source Han Sans SC", "Noto Sans CJK SC",
-        "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", sans-serif;
-
-    /* Code stays monospace / 代码始终使用等宽字体，不随正文预设切换 */
-    --jiandu-code-font:
-        "Iosevka Curly", "JetBrains Mono", "Cascadia Code",
-        "Fira Code", Consolas, "Liberation Mono", monospace;
+        "Noto Sans SC", "Noto Sans Simplified Chinese", "NotoSansSC",
+        "Source Han Sans SC", "Microsoft YaHei UI", "Microsoft YaHei",
+        "PingFang SC", sans-serif;
 
     /*
-     * Stable print fonts / 稳定的打印字体
-     * Print does not follow the screen one-line switch. This keeps A4 page
-     * breaks, image placement, and PCIe tables stable across documents.
-     * 打印不跟随屏幕的一行切换，以保证 A4 分页、图片位置和 PCIe 表格稳定。
+     * Internal defaults / 内部默认值
+     * These can be overridden in user-fonts.css.
+     * 可在 user-fonts.css 中覆盖。
      */
+    --jiandu-ui-font: var(--jiandu-font-ui-sans);
+    --jiandu-reading-font: var(--jiandu-font-screen-sans);
+    --jiandu-heading-font: var(--jiandu-font-screen-sans);
+    --jiandu-table-font: var(--jiandu-reading-font);
+    --jiandu-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
+
+    /* Stable A4 publishing defaults / 稳定 A4 出版默认值 */
     --jiandu-print-body-font: var(--jiandu-font-publishing);
     --jiandu-print-heading-font: var(--jiandu-font-publishing);
-
-    --jiandu-print-code-font:
-        "Iosevka Curly", "JetBrains Mono", "Cascadia Code",
-        Consolas, monospace;
+    --jiandu-print-table-font: var(--jiandu-print-body-font);
+    --jiandu-print-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
 
     /* Reading metrics / 阅读排版参数 */
     --jiandu-screen-font-size: 16px;
     --jiandu-screen-line-height: 1.82;
     --jiandu-screen-paragraph-spacing: 0.92rem;
     --jiandu-screen-content-width: 960px;
-
-    /* Native task-checkbox optical adjustment / 原生任务方框视觉微调
-       Positive values move the browser checkbox downward.
-       正数会将浏览器原生方框向下移动。 */
-    --jiandu-task-checkbox-y: 0.13em;
 }

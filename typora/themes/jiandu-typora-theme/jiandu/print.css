@@ -158,6 +158,12 @@
         color: var(--jiandu-text) !important;
     }
 
+    #write table,
+    #write table th,
+    #write table td {
+        font-family: var(--jiandu-print-table-font) !important;
+    }
+
     p {
         margin: 0 0 0.74em !important;
         text-align: justify !important;

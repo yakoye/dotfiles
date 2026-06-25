@@ -3,7 +3,7 @@
 > A reading-first Typora theme pack with an A4-oriented print / PDF engine.  
 > 一套以阅读体验为先、并重点面向 A4 打印 / 导出 PDF 的 Typora 主题包。
 
-**Version / 版本：** `0.1.10`  
+**Version / 版本：** `0.1.13`  
 **Default screen theme / 默认屏幕主题：** `Jiandu Natural Paper`
 
 ---
@@ -29,11 +29,17 @@
 
 ## Default Typography / 默认排版方向
 
-Jiandu now defaults to `--jiandu-font-publishing`, a publication-oriented Song-serif stack that prefers **Source Han Serif SC / 思源宋体** and then uses Noto Serif CJK SC and system Song fallbacks. This is intentionally a clean, modern Chinese publishing face: suitable for books, academic papers, newspapers, and PCIe technical reference material, rather than handwritten or decorative reading styles.  
-简读现在默认使用 `--jiandu-font-publishing`，这是一套面向出版排版的宋体回退链，优先调用 **Source Han Serif SC / 思源宋体**，再使用 Noto Serif CJK SC 与系统宋体回退。它刻意采用干净、现代、适合出版物的中文宋体风格，用于书籍、论文、报刊和 PCIe 技术参考资料，而不是手写体或装饰性阅读字体。
+**Screen default / 屏幕默认：** `Noto Sans Simplified Chinese / NotoSansSC` (via `--jiandu-font-noto-sans-sc`). It is selected for its clear desktop rendering, particularly for technical documents and mixed Chinese-English reading.  
+**屏幕默认：** `Noto Sans Simplified Chinese / NotoSansSC`（通过 `--jiandu-font-noto-sans-sc`）。它优先服务于电脑屏幕上的清晰显示，尤其适合技术资料与中英文混排。
 
-Screen headings use the same formal family and rely on size, weight, spacing, and thin rules for hierarchy. Coloured bars and dot markers are intentionally removed.  
-屏幕标题默认与正文使用同一正式字体，通过字号、字重、留白和细分隔线建立层级；已刻意去除彩色竖条和圆点装饰。
+**Print/PDF default / 打印与 PDF 默认：** `Source Han Serif / 思源宋体` publishing stack. It remains separate from the screen font to keep A4 layout, line wrapping, and PCIe tables stable.  
+**打印与 PDF 默认：** `Source Han Serif / 思源宋体` 出版字体链。它与屏幕字体分开，以保持 A4 分页、换行和 PCIe 表格稳定。
+
+`Maple Mono NL NF CN` is now the default code-stack preference, followed by Iosevka, JetBrains Mono, Cascadia Code, and other monospace fallbacks.  
+`Maple Mono NL NF CN` 现为默认代码字体优先项，后续依次回退到 Iosevka、JetBrains Mono、Cascadia Code 等等宽字体。
+
+Open `font-preview.md` after installation to compare title, body, table, and code combinations.  
+安装后可打开 `font-preview.md`，对比标题、正文、表格与代码的组合效果。
 
 ## Theme Names / 主题名称
 
@@ -83,53 +89,67 @@ Typora themes/
 5. Select a theme from **Themes / 主题** in Typora's menu.  
    在 Typora 菜单的 **主题** 中选择相应主题。
 
-> `assets/` and `print-test.md` are optional test files. They do not need to be copied into the Typora theme folder.  
-> `assets/` 和 `print-test.md` 是可选测试文件，不需要复制到 Typora 主题文件夹。
+> `assets/`, `print-test.md`, and `font-preview.md` are optional test files. They do not need to be copied into the Typora theme folder.  
+> `assets/`、`print-test.md` 与 `font-preview.md` 是可选测试文件，不需要复制到 Typora 主题文件夹。
 
 ---
 
-## Font Selection — Change One Line / 字体选择：只改一行
+## Typography Settings / 字体设置
 
-Open `jiandu/user-fonts.css`, then change **only** this line:
+Open `jiandu/user-fonts.css`. The first `:root` block contains the editable font slots for **body**, **headings**, **tables**, **code**, **UI**, and **print/PDF**.  
+打开 `jiandu/user-fonts.css`。第一个 `:root` 块提供 **正文**、**标题**、**表格**、**代码**、**界面** 与 **打印 / PDF** 的可编辑字体槽位。
 
-打开 `jiandu/user-fonts.css`，只修改下面这一行：
-
-```css
---jiandu-reading-font: var(--jiandu-font-publishing);
-```
-
-Available choices / 可选字体预设：
+Default screen combination / 默认屏幕组合：
 
 ```css
-/* Source Han Serif / 思源宋体 — default / 默认：正式书籍、论文、报刊与技术资料 */
---jiandu-reading-font: var(--jiandu-font-publishing);
-
-/* System Song fallback / 系统宋体回退 — compact system-native book layout / 紧凑的系统原生书面布局 */
---jiandu-reading-font: var(--jiandu-font-system-song);
-
-/* LXGW WenKai / 霞鹜文楷 — optional screen reading / 可选：屏幕长文、笔记与日记 */
---jiandu-reading-font: var(--jiandu-font-wenkai);
-
-/* KingHwa OldSong / 京华老宋体 — optional traditional book feeling / 可选：传统旧书阅读气质 */
---jiandu-reading-font: var(--jiandu-font-kinghwa-old-song);
-
-/* Technical sans / 技术无衬线 — dense engineering editing only / 仅适合密集工程编辑 */
---jiandu-reading-font: var(--jiandu-font-technical-sans);
+--jiandu-reading-font: var(--jiandu-font-noto-sans-sc);
+--jiandu-heading-font: var(--jiandu-font-noto-sans-sc);
+--jiandu-table-font: var(--jiandu-reading-font);
+--jiandu-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
+--jiandu-ui-font: var(--jiandu-font-noto-sans-sc);
 ```
 
-> Common aliases are also available: `--jiandu-font-lxgw-wenkai`, `--jiandu-font-kinghwa`, and `--jiandu-font-old-song`.  
-> 同时提供常用别名：`--jiandu-font-lxgw-wenkai`、`--jiandu-font-kinghwa` 与 `--jiandu-font-old-song`。
+Default print combination / 默认打印组合：
 
-### Important font behavior / 字体逻辑说明
+```css
+--jiandu-print-body-font: var(--jiandu-font-publishing);
+--jiandu-print-heading-font: var(--jiandu-font-publishing);
+--jiandu-print-table-font: var(--jiandu-print-body-font);
+--jiandu-print-code-font: var(--jiandu-font-maple-mono-nl-nf-cn);
+```
 
-- Your one-line choice affects screen body text, headings, quotes, and tables.  
-  这一行会影响屏幕正文、标题、引用和表格。
-- Code, register fields, commands, and ASCII diagrams remain in a monospace font.  
-  代码、寄存器字段、命令行和 ASCII 图始终使用等宽字体。
-- Print / PDF uses a dedicated, stable Source Han Serif–first publishing stack for body and headings, plus a separate code font. It deliberately does **not** follow the screen-font switch.  
-  打印 / PDF 使用独立、稳定、以思源宋体为优先的出版级正文与标题字体，并使用独立代码字体；不会跟随屏幕字体开关，从而减少分页和表格宽度变化。
-- A font must already be installed on your system. If Source Han Serif is missing, the next family in the fallback chain is used.  
-  对应字体需要已安装在系统中；若未安装思源宋体，会自动使用回退链中的下一种字体。
+### Available local presets / 可用本机字体预设
+
+| Variable / 变量 | Typical role / 典型用途 |
+| --- | --- |
+| `--jiandu-font-noto-sans-sc` | Noto Sans Simplified Chinese / NotoSansSC; clear desktop body, table, and UI text / 清晰的电脑正文、表格、界面文字 |
+| `--jiandu-font-maple-mono-nl-nf-cn` | Maple Mono NL NF CN; code, registers, terminal commands / 代码、寄存器、终端命令 |
+| `--jiandu-font-publishing` | Source Han Serif / 思源宋体; formal books, papers, and PDF output / 正式书刊、论文与 PDF |
+| `--jiandu-font-fz-shusong-gbk` | 方正书宋_GBK; formal book body / 正式书籍正文 |
+| `--jiandu-font-fz-boyasong` | 方正博雅宋; refined essay/book body / 雅致文章、书籍正文 |
+| `--jiandu-font-fz-qingkeben-yuesong` | 方正清刻本悦宋; classic literary reading / 古典感阅读正文 |
+| `--jiandu-font-fz-baosong` | 方正报宋; newspaper-like body or heading / 报刊式正文或标题 |
+| `--jiandu-font-fz-youhei` | 方正悠黑; calm technical headings / 沉静技术标题 |
+| `--jiandu-font-hy-qihei` | 汉仪旗黑; modern clean headings / 清爽现代标题 |
+| `--jiandu-font-fz-cuhe` | 方正粗黑; strong display headings / 强强调展示标题 |
+| `--jiandu-font-hy-cuhe` | 汉仪粗黑; strong display headings / 强强调展示标题 |
+| `--jiandu-font-heavy-black` | Generic strong-heading fallback / 通用强强调标题回退 |
+| `--jiandu-font-wenkai` | 霞鹜文楷; optional personal screen reading / 可选个人屏幕阅读 |
+| `--jiandu-font-kinghwa-old-song` | 京华老宋体; optional traditional reading style / 可选传统阅读风格 |
+
+The complete copy-paste combinations are commented in `user-fonts.css`, and `font-preview.md` contains actual Markdown samples for comparison.  
+完整的可复制组合已写入 `user-fonts.css` 注释中；`font-preview.md` 提供真实 Markdown 样例用于比较。
+
+### Task checkbox alignment / 任务方框对齐
+
+Your confirmed working setting is now the package default:
+
+```css
+--jiandu-task-checkbox-align: -0.04em;
+```
+
+Negative values move the native checkbox slightly down; positive values move it up.  
+负值会让原生方框略向下；正值会让它略向上。
 
 ## Code Blocks / 代码块
 
@@ -216,6 +236,21 @@ jiandu/
 ```
 
 ---
+
+## v0.1.13
+
+- The default screen body, heading, table, and UI stack now prefers **Noto Sans Simplified Chinese / NotoSansSC** for sharper desktop rendering; A4 print/PDF remains Source Han Serif–first.  
+  屏幕正文、标题、表格与界面默认改为优先使用 **Noto Sans Simplified Chinese / NotoSansSC**，以获得更清晰的电脑显示；A4 打印 / PDF 仍优先使用思源宋体。
+- Added configurable presets for Maple Mono NL NF CN, 方正书宋_GBK、方正博雅宋、方正清刻本悦宋、方正报宋、方正粗黑 / 汉仪粗黑、汉仪旗黑与方正悠黑.  
+  新增 Maple Mono NL NF CN、方正书宋_GBK、方正博雅宋、方正清刻本悦宋、方正报宋、方正粗黑 / 汉仪粗黑、汉仪旗黑与方正悠黑的可配置预设。
+- Expanded `user-fonts.css` with separate body, heading, table, code, UI, and print/PDF controls, plus ready-made copy-paste combinations.  
+  扩展 `user-fonts.css`：正文、标题、表格、代码、界面、打印 / PDF 均可独立配置，并附带可直接复制的组合。
+- Added `font-preview.md` for visual comparison of titles, paragraphs, tables, and code.  
+  新增 `font-preview.md`，用于直观对比标题、正文、表格和代码字体。
+- Applied the user-verified export-canvas safeguard: every theme now exposes a white `--jiandu-bg` page canvas, while its reading-paper tone continues to come from `--jiandu-paper`. This prevents Typora PDF export from showing coloured header/footer bands.  
+  应用用户验证有效的导出画布修复：所有主题的 `--jiandu-bg` 统一为白色页面画布，阅读纸张色仍由 `--jiandu-paper` 决定，从而避免 Typora 导出 PDF 出现有色页眉 / 页脚带。
+- Set the confirmed native-checkbox alignment to `--jiandu-task-checkbox-align: -0.04em`.  
+  将已确认有效的原生任务方框对齐值设为 `--jiandu-task-checkbox-align: -0.04em`。
 
 ## Update Notes / 更新建议
 
