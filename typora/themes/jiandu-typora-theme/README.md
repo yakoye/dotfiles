@@ -3,7 +3,7 @@
 > A reading-first Typora theme pack with an A4-oriented print / PDF engine.  
 > 一套以阅读体验为先、并重点面向 A4 打印 / 导出 PDF 的 Typora 主题包。
 
-**Version / 版本：** `0.1.4`  
+**Version / 版本：** `0.1.5`  
 **Default screen theme / 默认屏幕主题：** `Jiandu Natural Paper`
 
 ---

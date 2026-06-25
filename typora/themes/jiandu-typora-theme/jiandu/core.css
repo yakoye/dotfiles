@@ -267,9 +267,28 @@ blockquote strong { color: inherit; }
     line-height: 1.62;
 }
 
-#write thead,
-#write table tr:first-child {
+/*
+ * Header colour belongs to the header only.
+ * 表头颜色只用于表头，不再误作用到第一条数据行。
+ *
+ * Typora emits a normal <thead> + <tbody> table.  Do not use
+ * `tr:first-child` here: in <tbody>, it is the first data row and would
+ * make the visual second row look like a second header.
+ * Typora 会输出标准的 <thead> + <tbody> 表格。这里不能使用
+ * `tr:first-child`：它在 <tbody> 内代表第一条数据行，会让视觉上的
+ * 第二行误用表头颜色。
+ */
+#write table > thead {
     background: var(--jiandu-table-header);
+}
+
+/* Zebra stripes start from the second data row / 斑马纹从第二条数据行开始 */
+#write table > tbody > tr:nth-child(odd) {
+    background: var(--jiandu-table-bg);
+}
+
+#write table > tbody > tr:nth-child(even) {
+    background: var(--jiandu-table-stripe);
 }
 
 #write th,
@@ -289,9 +308,6 @@ blockquote strong { color: inherit; }
     font-weight: 700;
 }
 
-#write tr:nth-child(2n) {
-    background: var(--jiandu-table-stripe);
-}
 
 #write tr:last-child td { border-bottom: 0; }
 #write th:last-child,
