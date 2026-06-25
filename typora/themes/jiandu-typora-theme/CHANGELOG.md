@@ -1,3 +1,15 @@
+# Changelog / 更新记录
+
+## v0.1.10 — Native checkbox visual alignment / 原生复选框视觉对齐
+
+- **Task-list checkbox position / 任务列表方框位置**
+  - Kept the real Typora / Chromium checkbox and the GitHub-theme inline-flow approach.
+  - Added only `vertical-align: -0.12em` plus zero vertical margins, which lowers the native square slightly to align with the visual center of Song-serif body text.
+  - No pseudo-element checkbox, custom tick, absolute positioning, or replacement icon is used.
+  - 保留 Typora / Chromium 的真实复选框与 GitHub 主题的行内布局方式。
+  - 仅增加 `vertical-align: -0.12em` 和上下外边距归零，让原生方框轻微下移，与宋体正文的视觉中心对齐。
+  - 未使用伪元素方框、手绘对号、绝对定位或替代图标。
+
 
 ## v0.1.9 — GitHub-layout compatibility pass / GitHub 布局兼容修订
 
