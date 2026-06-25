@@ -110,6 +110,9 @@ flowchart LR
 
 ## 6. Task List / 任务列表
 
+**Expected / 预期：** The checkbox is the native browser control, vertically aligned by Chromium rather than a manually positioned `✓`.  
+**预期：** 复选框使用浏览器原生控件，由 Chromium 自动完成垂直对齐，而不是手工定位的 `✓`。
+
 - [ ] Verify the wide SVG has no right-edge clipping.  
       确认超宽 SVG 的右侧没有被裁切。
 - [ ] Verify the tall SVG remains proportional and readable.  
