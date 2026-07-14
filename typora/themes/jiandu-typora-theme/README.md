@@ -1,6 +1,6 @@
 # Jiandu Typora Theme
 
-> **v0.2.4 / v0.2.4**  
+> **v0.2.5 / v0.2.5**  
 > Reading-first Typora themes with coordinated screen font presets, WYSIWYG PDF export for ordinary themes, and one independent formal-print theme.  
 > 一套以阅读为先的 Typora 主题：提供统一的屏幕字体套餐、普通主题所见即所得 PDF 导出，以及一套独立固定的正式印刷主题。
 
@@ -59,8 +59,8 @@ Typora themes/
 4. Restart Typora, or switch away and back to reload the theme.  
    重启 Typora，或者先切换到其他主题再切回来。
 
-> `assets/`, `font-preview.md`, `table-layout-guide.md`, `table-layout-test.md`, `print-test.md`, `typography-test.md`, and `word-export.md` are tests and documentation. They do not need to be copied into Typora’s theme folder.  
-> `assets/`、`font-preview.md`、`table-layout-guide.md`、`table-layout-test.md`、`print-test.md`、`typography-test.md`、`word-export.md` 是测试与说明文件，不需要复制到 Typora 主题文件夹。
+> `assets/`, `font-preview.md`, `punctuation-test.md`, `table-layout-guide.md`, `table-layout-test.md`, `print-test.md`, `typography-test.md`, and `word-export.md` are tests and documentation. They do not need to be copied into Typora’s theme folder.  
+> `assets/`、`font-preview.md`、`punctuation-test.md`、`table-layout-guide.md`、`table-layout-test.md`、`print-test.md`、`typography-test.md`、`word-export.md` 是测试与说明文件，不需要复制到 Typora 主题文件夹。
 
 ## Choose a Screen Font Preset / 选择屏幕字体套餐
 
@@ -132,6 +132,30 @@ Task-checkbox baseline alignment is now fixed in `jiandu/core.css` and is no lon
 Do not copy this rule into `user-fonts.css`; it intentionally stays unchanged across all font presets.  
 不要把这条规则复制到 `user-fonts.css`；它会在所有字体套餐中保持不变。
 
+
+
+## Chinese and English Punctuation / 中英文标点
+
+Jiandu preserves the distinction between full-width CJK punctuation and ASCII punctuation.
+
+简读会保留中日韩全角标点与英文 ASCII 半角标点的区别。
+
+```text
+Chinese / 中文：，。；：？！、“”‘’《》（）【】……——
+English / 英文：, . ; : ? ! " ' < > ( ) [ ] ... —
+```
+
+The theme explicitly disables proportional CJK punctuation alternates (`palt` / `pwid`). This prevents a Chinese comma `，` from looking like a narrow English comma `,`.
+
+主题显式关闭中日韩标点的比例宽度替代字形（`palt` / `pwid`），避免中文逗号 `，` 看起来像狭窄的英文逗号 `,`。
+
+The theme does not convert characters. Please use a Chinese input method when you need Chinese punctuation.
+
+主题不会自动转换字符。需要中文标点时，请使用中文输入法输入相应字符。
+
+Open `punctuation-test.md` to verify headings, paragraphs, lists, quotes, tables, mixed-language text, and PDF output.
+
+请打开 `punctuation-test.md`，检查标题、正文、列表、引用、表格、中英文混排和 PDF 输出。
 
 ## Tables / 表格
 
@@ -257,6 +281,7 @@ All themes keep `--jiandu-bg: #ffffff` as the export-safe outer canvas; this fix
 - `font-preview.md` — compare screen presets and personal overrides. / 对比字体套餐与个人覆盖效果。
 - `print-test.md` — test A4 images, tables, code, Mermaid, task lists, and page breaks. / 测试 A4 图片、表格、代码、Mermaid、任务列表与分页。
 - `typography-test.md` — general rendering tests. / 通用排版测试。
+- `punctuation-test.md` — Chinese full-width and English ASCII punctuation checks. / 中文全角与英文半角标点检查。
 - `table-layout-guide.md` — automatic sizing, manual hints, exact header widths, and ratio examples. / 自然分列、手动提示、精确表头宽度与比例示例。
 - `table-layout-test.md` — live 2–6 column screen and PDF verification. / 二至六列表格的屏幕与 PDF 实测文档。
 - `word-export.md` — notes on SVG and Word export. / SVG 与 Word 导出说明。

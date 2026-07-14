@@ -64,6 +64,20 @@
         text-align: justify !important;
         text-justify: inter-ideograph !important;
         line-break: strict !important;
+
+        /*
+         * Preserve full-width CJK punctuation in PDF/print.
+         * PDF/打印中保留中日韩全角标点，不使用比例宽度替代字形。
+         */
+        font-feature-settings:
+            "kern" 1,
+            "liga" 1,
+            "calt" 1,
+            "palt" 0,
+            "pwid" 0 !important;
+        font-variant-east-asian: normal !important;
+        font-language-override: normal !important;
+
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }

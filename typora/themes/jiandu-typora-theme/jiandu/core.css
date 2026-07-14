@@ -34,8 +34,27 @@ body {
     font-size: 1rem;
     line-height: var(--jiandu-screen-line-height);
     font-kerning: normal;
-    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
-    font-variant-east-asian: proportional-width;
+
+    /*
+     * CJK punctuation integrity / 中日韩标点完整性
+     * ---------------------------------------------------------------
+     * Do not enable `proportional-width` here. That OpenType mode turns
+     * full-width CJK punctuation such as `，。；：？！` into proportional
+     * alternates, making Chinese punctuation look like Western punctuation.
+     *
+     * 此处不得启用 `proportional-width`。该 OpenType 模式会把
+     * `，。；：？！` 等全角中日韩标点替换成比例宽度字形，视觉上容易像
+     * 英文半角标点。
+     */
+    font-feature-settings:
+        "kern" 1,
+        "liga" 1,
+        "calt" 1,
+        "palt" 0,
+        "pwid" 0;
+    font-variant-east-asian: normal;
+    font-language-override: normal;
+
     text-align: justify;
     text-justify: inter-ideograph;
     line-break: strict;
@@ -47,6 +66,27 @@ body {
 ::selection {
     color: var(--jiandu-selection-text);
     background: var(--jiandu-selection);
+}
+
+/*
+ * Keep Chinese/Japanese/Korean punctuation distinct from ASCII punctuation
+ * across headings, body text, lists, quotes, tables, and captions.
+ * 标题、正文、列表、引用、表格与图注统一保留中日韩标点的默认全角字形，
+ * 不把它们压缩成类似英文逗号、句号的比例字形。
+ */
+#write,
+#write p,
+#write li,
+#write blockquote,
+#write table,
+#write figcaption,
+#write h1,
+#write h2,
+#write h3,
+#write h4,
+#write h5,
+#write h6 {
+    font-variant-east-asian: normal;
 }
 
 #write {

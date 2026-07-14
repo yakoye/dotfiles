@@ -1,5 +1,18 @@
 # Changelog / 更新记录
 
+## v0.2.5 — CJK Punctuation Integrity / 中日韩标点完整性
+
+- Removed `font-variant-east-asian: proportional-width`, which caused full-width Chinese punctuation such as `，。；：？！` to use narrow proportional alternates that looked like English punctuation.
+  移除 `font-variant-east-asian: proportional-width`。该设置会让 `，。；：？！` 等中文全角标点使用狭窄的比例替代字形，看起来类似英文标点。
+- Explicitly disabled OpenType `palt` and `pwid` alternates for prose while retaining kerning and standard ligatures.
+  在正文中显式关闭 OpenType `palt` 与 `pwid` 替代字形，同时保留字距调整和标准连字。
+- Applied the same punctuation behavior to screen and A4/PDF output.
+  屏幕显示和 A4/PDF 输出统一使用相同的标点规则。
+- Improved CJK fallback order for Noto Sans and GitHub Modern font stacks.
+  优化 Noto Sans 与 GitHub Modern 字体栈中的中日韩字体回退顺序。
+- Added `punctuation-test.md` covering Chinese and English commas, periods, colons, semicolons, question marks, quotation marks, brackets, dashes, ellipses, mixed text, lists, quotes, tables, and headings.
+  新增 `punctuation-test.md`，覆盖中英文逗号、句号、冒号、分号、问号、引号、括号、破折号、省略号、中英文混排、列表、引用、表格和标题。
+
 ## v0.2.4 — Exact Widths for Any Column Count / 任意列数的精确宽度
 
 - Added `jiandu-col-w-1` through `jiandu-col-w-100` header markers for exact whole-number percentage widths in any number of columns.
@@ -12,19 +25,6 @@
   新增 `table-layout-test.md`，并扩展中英双语指南，加入四列、五列与六列示例。
 - Matched exact-width behavior in A4/PDF output.
   A4/PDF 导出同样匹配精确列宽行为。
-
-## v0.2.4 — Exact Widths for Any Column Count / 任意列数的精确宽度
-
-- Added progressive `jiandu-col-w-1` through `jiandu-col-w-100` header markers. They support precise whole-number percentages for any number of columns, including four, five, six, and higher-column tables.
-  新增渐进增强的 `jiandu-col-w-1` 至 `jiandu-col-w-100` 表头标记。它支持任意列数的整数百分比精确宽度，包括四列、五列、六列和更多列。
-- Added `narrow-last` and common long-label comparison shortcuts: `ratio-3-2-2-2`, `ratio-3-2-2-2-2`, and `ratio-3-2-2-2-2-2`.
-  新增 `narrow-last`，以及常见“长标签 + 多列对比”快捷比例：`ratio-3-2-2-2`、`ratio-3-2-2-2-2`、`ratio-3-2-2-2-2-2`。
-- Preserved automatic sizing as the default and added exact-width support as an opt-in, so ordinary tables retain natural behavior.
-  保留自然分列作为默认，并将精确宽度作为可选能力，普通表格仍保持自然行为。
-- Added `table-layout-test.md` and expanded the bilingual layout guide with four-, five-, and six-column examples.
-  新增 `table-layout-test.md`，并扩展中英双语布局指南，加入四列、五列、六列表格示例。
-- Matched exact widths in A4/PDF output, not only on screen.
-  A4/PDF 导出中同样匹配精确列宽，而不只在屏幕显示生效。
 
 ## v0.2.3 — Universal Table Layout System / 通用表格布局系统
 

@@ -20,17 +20,22 @@
 
     /* Noto Sans Simplified Chinese / Noto Sans SC / 思源黑体 */
     --jiandu-font-noto-sans-sc:
-        "Noto Sans SC", "Noto Sans Simplified Chinese", "NotoSansSC",
+        "Noto Sans SC", "Noto Sans CJK SC",
+        "Noto Sans Simplified Chinese", "NotoSansSC",
         "Source Han Sans SC", "Source Han Sans CN", "思源黑体",
         "Microsoft YaHei UI", "Microsoft YaHei",
         "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
 
     /* GitHub-style modern UI and body / GitHub 风格现代界面与正文 */
     --jiandu-font-github-modern:
-        -apple-system, BlinkMacSystemFont, "Segoe UI", "Segoe UI Variable",
-        "Inter", "Noto Sans SC", "Noto Sans Simplified Chinese",
-        "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC",
-        "Hiragino Sans GB", Arial, sans-serif;
+        "Inter",
+        "Noto Sans SC", "Noto Sans CJK SC", "Noto Sans Simplified Chinese",
+        "Source Han Sans SC", "Source Han Sans CN",
+        "PingFang SC", "Hiragino Sans GB",
+        -apple-system, BlinkMacSystemFont,
+        "Segoe UI", "Segoe UI Variable",
+        "Microsoft YaHei UI", "Microsoft YaHei",
+        Arial, sans-serif;
 
     /* 方正悠黑 / FangZheng YouHei — calm technical headings */
     --jiandu-font-fz-youhei:

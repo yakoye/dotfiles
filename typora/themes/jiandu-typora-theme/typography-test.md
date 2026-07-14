@@ -33,6 +33,19 @@ PCIe 设备完成复位后，会先进行链路训练，再执行枚举与资源
 ---
 
 
+
+## Chinese and English Punctuation / 中英文标点
+
+中文全角：逗号，句号。分号；冒号：问号？感叹号！顿号、破折号——省略号……引号“”‘’括号（）【】书名号《》。
+
+English ASCII: comma, period. semicolon; colon: question? exclamation! quotes " " ' ' brackets () [] {}.
+
+中英文混排：PCIe 6.0 的状态为 L0，速率为 64 GT/s；the link is active, and no error is reported.
+
+Expected / 预期：中文标点保持全角字形，英文标点保持半角字形；中文逗号不得再显示成类似英文逗号的比例字形。
+
+完整检查见 `punctuation-test.md`。
+
 ## Table Layout System / 表格布局系统
 
 普通表格默认按实际内容自然分列；短代码列不会因为主题的全局固定规则被放大，长说明列会获得更多阅读空间。
